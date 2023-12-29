@@ -1,0 +1,4 @@
+name: frostAPI
+version: '${version}'
+main: frostpyro.frostapi.FrostAPI
+api-version: '1.20'
