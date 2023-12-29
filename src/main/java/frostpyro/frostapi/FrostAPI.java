@@ -1,5 +1,6 @@
 package frostpyro.frostapi;
 
+import frostpyro.frostapi.listeners.Casting;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -15,6 +16,8 @@ public final class FrostAPI extends JavaPlugin {
         generateSkillBuildFolder();
 
         loadConfigs();
+
+        new Casting(this);
     }
 
     @Override
@@ -25,13 +28,13 @@ public final class FrostAPI extends JavaPlugin {
         return plugin;
     }
     public void generateSkillFolder(){
-        File FOLDER = new File(getDataFolder(), "skill");
+        File FOLDER = new File(getDataFolder(), "\\skill");
         if(FOLDER.exists()) return;
         FOLDER.mkdirs();
     }
 
     public void generateSkillBuildFolder(){
-        File FOLDER = new File(getDataFolder(), "skillBuild");
+        File FOLDER = new File(getDataFolder(), "\\skillBuild");
         if(FOLDER.exists()) return;
         FOLDER.mkdirs();
     }

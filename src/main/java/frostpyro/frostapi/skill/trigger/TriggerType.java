@@ -1,10 +1,11 @@
-package frostpyro.frostapi.trigger;
+package frostpyro.frostapi.skill.trigger;
 
 
 import javax.annotation.Nonnull;
-import javax.xml.validation.Validator;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TriggerType {
     /**
@@ -24,7 +25,8 @@ public class TriggerType {
     PROJECTILE_LAND = new TriggerType("PROJECTILE_LAND"),
     DAMAGED = new TriggerType("DAMAGED"),
     SHIFT = new TriggerType("SHIFT"),
-    GENERAL = new TriggerType("GENERAL")
+    GENERAL = new TriggerType("GENERAL"),
+    KILL_ENTITY = new TriggerType("KILL_ENTITY")
     ;
     private static final Map<String, TriggerType> ID = new HashMap<>();
     private TriggerType(String type){
@@ -42,13 +44,22 @@ public class TriggerType {
         register(DAMAGED);
         register(SHIFT);
         register(GENERAL);
+        register(KILL_ENTITY);
     }
     public String getType(){
         return this.type;
     }
 
-    public static void register(TriggerType type){
+    public static void register(@Nonnull TriggerType type){
         ID.put(type.getType(), type);
     }
 
+    public static Collection<TriggerType> triggerTypes(){
+        return ID.values();
+    }
+
+
+    public boolean equals(String string){
+        return Objects.equals(string, type);
+    }
 }
