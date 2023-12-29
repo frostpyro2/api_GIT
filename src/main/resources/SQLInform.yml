@@ -1,0 +1,6 @@
+MySQL:
+  link:
+  name:
+  password:
+  quarry: "CREATE TABLE IF NOT EXISTS"
+  modQuarry:
