@@ -35,10 +35,6 @@ public class PlayerData {
         this.money = money;
     }
 
-    public void skillCast(TriggerType type){
-
-    }
-
     public void setSkillID(int id){
         this.skillID = id;
     }
@@ -81,7 +77,6 @@ public class PlayerData {
             Bukkit.getLogger().info(ChatColor.RED+ "FUCK YOU");
             return;
         }
-        Bukkit.getLogger().info(ChatColor.RED+ "THANK YOU");
         skill = new Skill(section, trigger, this);
         skill.skillActivate();
     }

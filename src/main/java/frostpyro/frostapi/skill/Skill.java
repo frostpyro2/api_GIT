@@ -8,9 +8,10 @@ import org.bukkit.configuration.ConfigurationSection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class Skill extends SkillManager {
-    private final Map<PlayerData, Long> coolDown = new HashMap<>();
+    private Map<PlayerData, Long> coolDown = new HashMap<>();
     private PlayerData playerData;
 
     public Skill() {
@@ -19,6 +20,7 @@ public class Skill extends SkillManager {
 
     public Skill(ConfigurationSection configuration, TriggerType type, PlayerData playerData) {
         super(configuration, type, playerData);
+        this.playerData = playerData;
     }
 
 
@@ -30,6 +32,6 @@ public class Skill extends SkillManager {
             coolDown.remove(playerData);
         }
         super.activateSkill();
-        coolDown.put(playerData, System.currentTimeMillis() + (super.coolDown * 1000L));
+        coolDown.put(playerData, System.currentTimeMillis() + (super.COOL_DOWN() * 1000L));
     }
 }

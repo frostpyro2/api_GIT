@@ -27,7 +27,7 @@ public abstract class SkillManager{
 
     }
 
-    protected int coolDown;
+    protected int coolDown = 0;
 
     public abstract void skillActivate();
     public void activateSkill(){
@@ -36,7 +36,6 @@ public abstract class SkillManager{
             return;
         }
         TEST();
-        COOL_DOWN();
         PARTICLE();
         DISPLAY();
         HEAL();
@@ -45,7 +44,6 @@ public abstract class SkillManager{
     private void TEST(){
         String str = configuration.getString("TEST");
         if(str == null){
-            Bukkit.getLogger().info(ChatColor.RED+ "FUCK YOU");
             return;
         }
         playerData.getPlayer().sendMessage(str);
@@ -84,8 +82,13 @@ public abstract class SkillManager{
         Collection<String> str = section.getKeys(false);
     }
 
-    private void COOL_DOWN(){
-        coolDown = configuration.getInt("COOL_DOWN");
+    protected int COOL_DOWN(){
+        if(configuration.get("COOL_DOWN") == null){
+            Bukkit.getConsoleSender().sendMessage("this is null");
+            return 0;
+        }
+
+        return configuration.getInt("COOL_DOWN");
     }
     /*
       파일 구조: 예시
