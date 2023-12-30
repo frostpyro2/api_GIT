@@ -6,6 +6,7 @@ import frostpyro.frostapi.skill.trigger.TriggerType;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Skill extends SkillManager {
@@ -16,8 +17,8 @@ public class Skill extends SkillManager {
         super();
     }
 
-    public Skill(ConfigurationSection configuration, TriggerType type) {
-        super(configuration, type);
+    public Skill(ConfigurationSection configuration, TriggerType type, PlayerData playerData) {
+        super(configuration, type, playerData);
     }
 
 

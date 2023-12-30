@@ -1,6 +1,9 @@
 package frostpyro.frostapi.handler;
 
+import frostpyro.frostapi.players.PlayerData;
 import frostpyro.frostapi.skill.trigger.TriggerType;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Collection;
@@ -9,6 +12,7 @@ import java.util.List;
 public abstract class SkillManager{
     private ConfigurationSection configuration;
     private TriggerType type;
+    private PlayerData playerData;
 
     private boolean trigger = true;
 
@@ -16,30 +20,44 @@ public abstract class SkillManager{
 
     }
 
-    public SkillManager(ConfigurationSection configuration, TriggerType type){
+    public SkillManager(ConfigurationSection configuration, TriggerType type, PlayerData playerData){
         this.configuration = configuration;
         this.type = type;
+        this.playerData = playerData;
+
     }
 
-    protected int coolDown = 0;
+    protected int coolDown;
 
     public abstract void skillActivate();
     public void activateSkill(){
         TRIGGER_TYPE();
-        if(!trigger) return;
+        if(!trigger){
+            return;
+        }
+        TEST();
         COOL_DOWN();
         PARTICLE();
         DISPLAY();
         HEAL();
         DAMAGE();
     }
-
+    private void TEST(){
+        String str = configuration.getString("TEST");
+        if(str == null){
+            Bukkit.getLogger().info(ChatColor.RED+ "FUCK YOU");
+            return;
+        }
+        playerData.getPlayer().sendMessage(str);
+    }
 
     private void TRIGGER_TYPE() {
-        ConfigurationSection section = configuration.getConfigurationSection("TRIGGER_TYPE");
-        if(section == null) return;
-        List<String> str = section.getStringList("TRIGGER_TYPE");
-        if(!str.contains(type.getType())) trigger = false;
+        List<String> str = configuration.getStringList("TRIGGER_TYPE");
+        if(!str.contains(type.getType())){
+            Bukkit.getConsoleSender().sendMessage(str.get(0));
+            Bukkit.getLogger().info(ChatColor.RED+ "WHY?????????????");
+            trigger = false;
+        }
     }
 
     private void DAMAGE(){
@@ -67,15 +85,17 @@ public abstract class SkillManager{
     }
 
     private void COOL_DOWN(){
-        ConfigurationSection section = configuration.getConfigurationSection("COOL_DOWN");
-        if(section == null) return;
-        coolDown = section.getInt("COOL_DOWN");
+        coolDown = configuration.getInt("COOL_DOWN");
     }
     /*
       파일 구조: 예시
 
       SKILL_NAME:
+           TEST: hello world!
            SKILL_ID:
+           ITEM:
+                MATERIAL: NETHERITE_SWORD
+                MODEL: 1
            TRIGGER_TYPE:
                -LEFT_CLICK
                -ATTACK
