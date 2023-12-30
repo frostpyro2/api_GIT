@@ -1,10 +1,9 @@
 package frostpyro.frostapi;
 
-import frostpyro.frostapi.listeners.Casting;
+import frostpyro.frostapi.listeners.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
 
 public final class FrostAPI extends JavaPlugin {
     private static FrostAPI plugin;
@@ -17,7 +16,7 @@ public final class FrostAPI extends JavaPlugin {
 
         loadConfigs();
 
-        new Casting(this);
+        new Event(this);
     }
 
     @Override

@@ -5,8 +5,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
 
-public class Casting implements Listener {
-    public Casting(FrostAPI plugin){
+public class Event implements Listener {
+    public Event(FrostAPI plugin){
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
