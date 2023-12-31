@@ -81,7 +81,6 @@ public class PlayerData {
             }
         }
         if(section == null){
-            Bukkit.getLogger().info(ChatColor.RED+ "FUCK YOU");
             return;
         }
         skill = new Skill(section, this, trigger);
