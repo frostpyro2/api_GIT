@@ -14,6 +14,7 @@ import org.bukkit.event.block.Action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -47,7 +48,7 @@ public class PlayerData {
         return Bukkit.getPlayer(UUID.fromString(this.uuid));
     }
 
-    public void castSkill(TriggerType trigger){
+    public void castSkill(TriggerType...trigger){
         List<String> ymlList = FrostAPI.getPlugin().skillName();
         ConfigurationSection section = null;
         Skill skill;
@@ -67,8 +68,14 @@ public class PlayerData {
                 Bukkit.getLogger().info("SET THE FIRST LINE OF THE FILE:"+yml);
                 return;
             }
+            List<String> stringList = new ArrayList<>();
+            for(TriggerType type : trigger){
+                stringList.add(type.getType());
+            }
+            List<String> finalList = new ArrayList<>(testSection.getStringList("TRIGGER_TYPE"));
+            finalList.retainAll(stringList);
 
-            if(testSection.getInt("SKILL_ID") == this.getSkillID() && testSection.getStringList("TRIGGER_TYPE").contains(trigger.getType())){
+            if(testSection.getInt("SKILL_ID") == this.getSkillID() && !finalList.isEmpty()){
                 section = testSection;
                 break;
             }
@@ -77,7 +84,7 @@ public class PlayerData {
             Bukkit.getLogger().info(ChatColor.RED+ "FUCK YOU");
             return;
         }
-        skill = new Skill(section, trigger, this);
+        skill = new Skill(section, this, trigger);
         skill.skillActivate();
     }
 }

@@ -18,8 +18,8 @@ public class Skill extends SkillManager {
         super();
     }
 
-    public Skill(ConfigurationSection configuration, TriggerType type, PlayerData playerData) {
-        super(configuration, type, playerData);
+    public Skill(ConfigurationSection configuration, PlayerData playerData, TriggerType...type) {
+        super(configuration,playerData, type);
         this.playerData = playerData;
     }
 

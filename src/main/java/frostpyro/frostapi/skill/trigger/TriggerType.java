@@ -18,8 +18,11 @@ public class TriggerType {
 
     @Nonnull
     public static TriggerType ATTACK = new TriggerType("ATTACK"),
+    SHIFT_ATTACK = new TriggerType("SHIFT_ATTACK"),
     LEFT_CLICK = new TriggerType("LEFT_CLICK"),
     RIGHT_CLICK = new TriggerType("RIGHT_CLICK"),
+    SHIFT_LEFT_CLICK = new TriggerType("SHIFT_LEFT_CLICK"),
+    SHIFT_RIGHT_CLICK = new TriggerType("SHIFT_RIGHT_CLICK"),
     PROJECTILE_HIT = new TriggerType("PROJECTILE_HIT"),
     PROJECTILE_TICK = new TriggerType("PROJECTILE_TICK"),
     PROJECTILE_LAND = new TriggerType("PROJECTILE_LAND"),
@@ -36,6 +39,8 @@ public class TriggerType {
         register(ATTACK);
         register(LEFT_CLICK);
         register(RIGHT_CLICK);
+        register(SHIFT_LEFT_CLICK);
+        register(SHIFT_RIGHT_CLICK);
 
         register(PROJECTILE_HIT);
         register(PROJECTILE_TICK);

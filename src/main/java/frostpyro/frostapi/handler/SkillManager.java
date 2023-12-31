@@ -6,12 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public abstract class SkillManager{
     private ConfigurationSection configuration;
-    private TriggerType type;
+    private TriggerType[] type;
     private PlayerData playerData;
 
     private boolean trigger = true;
@@ -20,7 +22,7 @@ public abstract class SkillManager{
 
     }
 
-    public SkillManager(ConfigurationSection configuration, TriggerType type, PlayerData playerData){
+    public SkillManager(ConfigurationSection configuration, PlayerData playerData, TriggerType...type){
         this.configuration = configuration;
         this.type = type;
         this.playerData = playerData;
@@ -51,7 +53,13 @@ public abstract class SkillManager{
 
     private void TRIGGER_TYPE() {
         List<String> str = configuration.getStringList("TRIGGER_TYPE");
-        if(!str.contains(type.getType())){
+        List<String> temp = new ArrayList<>();
+        for(TriggerType template : type){
+            temp.add(template.getType());
+        }
+        List<String> intersect = new ArrayList<>(str);
+        intersect.retainAll(temp);
+        if(str.isEmpty()){
             Bukkit.getConsoleSender().sendMessage(str.get(0));
             Bukkit.getLogger().info(ChatColor.RED+ "WHY?????????????");
             trigger = false;
