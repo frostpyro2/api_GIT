@@ -28,6 +28,7 @@ public class TriggerType {
     PROJECTILE_LAND = new TriggerType("PROJECTILE_LAND"),
     DAMAGED = new TriggerType("DAMAGED"),
     SHIFT = new TriggerType("SHIFT"),
+    SHIFT_SHIFT = new TriggerType("SHIFT_SHIFT"),
     GENERAL = new TriggerType("GENERAL"),
     KILL_ENTITY = new TriggerType("KILL_ENTITY")
     ;
@@ -50,6 +51,7 @@ public class TriggerType {
         register(SHIFT);
         register(GENERAL);
         register(KILL_ENTITY);
+        register(SHIFT_SHIFT);
     }
     public String getType(){
         return this.type;

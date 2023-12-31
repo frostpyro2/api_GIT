@@ -17,6 +17,7 @@ public abstract class SkillManager{
     private PlayerData playerData;
 
     private boolean trigger = true;
+    private boolean item = true;
 
     public SkillManager(){
 
@@ -33,6 +34,10 @@ public abstract class SkillManager{
 
     public abstract void skillActivate();
     public void activateSkill(){
+        ITEM();
+        if(!item){
+            return;
+        }
         TRIGGER_TYPE();
         if(!trigger){
             return;
@@ -49,6 +54,10 @@ public abstract class SkillManager{
             return;
         }
         playerData.getPlayer().sendMessage(str);
+    }
+
+    private void ITEM(){
+
     }
 
     private void TRIGGER_TYPE() {

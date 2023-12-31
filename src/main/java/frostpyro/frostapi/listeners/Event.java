@@ -44,11 +44,9 @@ public class Event implements Listener {
         if(!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
-        if(playerData.getPlayer().isSneaking()){
-            playerData.castSkill(TriggerType.ATTACK, TriggerType.SHIFT);
-            return;
-        }
-        playerData.castSkill(TriggerType.ATTACK);
+        final boolean shift = playerData.getPlayer().isSneaking();
+        final TriggerType type = shift ? TriggerType.SHIFT_ATTACK : TriggerType.ATTACK;
+        playerData.castSkill(type);
     }
 
     @EventHandler
@@ -56,10 +54,6 @@ public class Event implements Listener {
         if(!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
-        if(playerData.getPlayer().isSneaking()){
-            playerData.castSkill(TriggerType.DAMAGED, TriggerType.SHIFT);
-            return;
-        }
         playerData.castSkill(TriggerType.DAMAGED);
     }
 }
