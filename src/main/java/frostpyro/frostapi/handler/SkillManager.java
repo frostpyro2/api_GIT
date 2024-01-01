@@ -68,9 +68,7 @@ public abstract class SkillManager{
         }
         List<String> intersect = new ArrayList<>(str);
         intersect.retainAll(temp);
-        if(str.isEmpty()){
-            Bukkit.getConsoleSender().sendMessage(str.get(0));
-            Bukkit.getLogger().info(ChatColor.RED+ "WHY?????????????");
+        if(intersect.isEmpty()){
             trigger = false;
         }
     }
