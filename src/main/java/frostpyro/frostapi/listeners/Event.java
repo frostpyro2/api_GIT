@@ -38,7 +38,9 @@ public class Event implements Listener {
         PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
         final boolean shift = event.getPlayer().isSneaking();
         final boolean left = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
-        final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : TriggerType.RIGHT_CLICK);
+        final boolean physic = event.getAction() == Action.PHYSICAL;
+        final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : physic ? null : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : physic ? null : TriggerType.RIGHT_CLICK);
+        if(type == null) return;
         playerData.castSkill(type);
     }
 
