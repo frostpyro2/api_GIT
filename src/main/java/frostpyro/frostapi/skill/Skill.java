@@ -4,11 +4,9 @@ import frostpyro.frostapi.handler.SkillManager;
 import frostpyro.frostapi.players.PlayerData;
 import frostpyro.frostapi.skill.trigger.TriggerType;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Skill extends SkillManager {
     private Map<PlayerData, Long> coolDown = new HashMap<>();
@@ -18,8 +16,8 @@ public class Skill extends SkillManager {
         super();
     }
 
-    public Skill(ConfigurationSection configuration, PlayerData playerData, TriggerType...type) {
-        super(configuration,playerData, type);
+    public Skill(ConfigurationSection configuration, PlayerData playerData, Set<Entity> entitySet, TriggerType...type) {
+        super(configuration,playerData, entitySet, type);
         this.playerData = playerData;
     }
 

@@ -5,16 +5,18 @@ import frostpyro.frostapi.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public abstract class SkillManager{
     private ConfigurationSection configuration;
     private TriggerType[] type;
     private PlayerData playerData;
+
+    private Set<Entity> entitySet;
 
     private boolean trigger = true;
     private boolean item = true;
@@ -23,11 +25,11 @@ public abstract class SkillManager{
 
     }
 
-    public SkillManager(ConfigurationSection configuration, PlayerData playerData, TriggerType...type){
+    public SkillManager(ConfigurationSection configuration, PlayerData playerData, Set<Entity> entitySet, TriggerType...type){
         this.configuration = configuration;
         this.type = type;
         this.playerData = playerData;
-
+        this.entitySet = entitySet;
     }
 
     protected int coolDown = 0;
@@ -76,7 +78,15 @@ public abstract class SkillManager{
     private void DAMAGE(){
         ConfigurationSection section = configuration.getConfigurationSection("DAMAGE");
         if(section == null) return;
-        Collection<String> str = section.getKeys(false);
+
+
+        Player player = playerData.getPlayer();
+        for(Entity entity : player.getNearbyEntities(3,3,3)){
+            if(!(entity instanceof LivingEntity)) continue;
+
+            entitySet.add(entity);
+            ((LivingEntity)entity).damage(5, player);
+        }
     }
 
     private void HEAL(){

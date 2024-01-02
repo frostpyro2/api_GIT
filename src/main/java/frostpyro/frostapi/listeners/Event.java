@@ -33,7 +33,7 @@ public class Event implements Listener {
         final boolean physic = event.getAction() == Action.PHYSICAL;
         final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : physic ? null : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : physic ? null : TriggerType.RIGHT_CLICK);
         if(type == null) return;
-        playerData.castSkill(type);
+        playerData.castSkill(entitySet,type);
     }
 
     @EventHandler
@@ -48,8 +48,7 @@ public class Event implements Listener {
             entitySet.remove(entity);
             return;
         }
-        entitySet.add(entity);
-        playerData.castSkill(type);
+        playerData.castSkill(entitySet, type);
     }
 
     @EventHandler
@@ -58,7 +57,7 @@ public class Event implements Listener {
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
         final boolean shift = event.getPlayer().isSneaking();
         final TriggerType type = shift ? TriggerType.ENTITY_RIGHT_SHIFT : TriggerType.ENTITY_RIGHT;
-        playerData.castSkill(type);
+        playerData.castSkill(entitySet, type);
     }
 
     @EventHandler
@@ -66,7 +65,7 @@ public class Event implements Listener {
         if(!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
-        playerData.castSkill(TriggerType.DAMAGED);
+        playerData.castSkill(entitySet, TriggerType.DAMAGED);
     }
 
     @EventHandler
@@ -78,7 +77,7 @@ public class Event implements Listener {
                 long lastShift = shiftPressTime.get(playerData);
                 long time = System.currentTimeMillis();
                 if(time - lastShift < 200) {
-                    playerData.castSkill(TriggerType.SHIFT_SHIFT);
+                    playerData.castSkill(entitySet, TriggerType.SHIFT_SHIFT);
                 }
             }
             shiftPressTime.put(playerData, System.currentTimeMillis());
@@ -90,6 +89,6 @@ public class Event implements Listener {
         Player player = event.getPlayer();
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
         if(event.isSneaking())
-            playerData.castSkill(TriggerType.SHIFT);
+            playerData.castSkill(entitySet, TriggerType.SHIFT);
     }
 }

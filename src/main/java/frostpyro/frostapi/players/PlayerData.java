@@ -9,15 +9,13 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerData {
     private String uuid;
@@ -48,7 +46,7 @@ public class PlayerData {
         return Bukkit.getPlayer(UUID.fromString(this.uuid));
     }
 
-    public void castSkill(TriggerType...trigger){
+    public void castSkill(Set<Entity> entitySet, TriggerType...trigger){
         List<String> ymlList = FrostAPI.getPlugin().skillName();
         ConfigurationSection section = null;
         Skill skill;
@@ -83,7 +81,7 @@ public class PlayerData {
         if(section == null){
             return;
         }
-        skill = new Skill(section, this, trigger);
+        skill = new Skill(section, this, entitySet,trigger);
         skill.skillActivate();
     }
 }
