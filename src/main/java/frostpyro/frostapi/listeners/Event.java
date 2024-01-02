@@ -11,24 +11,25 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 
 public class Event implements Listener {
+    Set<Entity> entitySet = new HashSet<>();
     public Event(FrostAPI plugin){
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -47,10 +48,25 @@ public class Event implements Listener {
     @EventHandler
     private void hit(EntityDamageByEntityEvent event){
         if(!(event.getDamager() instanceof Player)) return;
+        Entity entity = event.getEntity();
         Player player = (Player) event.getDamager();
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
         final boolean shift = playerData.getPlayer().isSneaking();
         final TriggerType type = shift ? TriggerType.SHIFT_ATTACK : TriggerType.ATTACK;
+        if(entitySet.contains(entity)){
+            entitySet.remove(entity);
+            return;
+        }
+        entitySet.add(entity);
+        playerData.castSkill(type);
+    }
+
+    @EventHandler
+    private void entityRight(PlayerInteractAtEntityEvent event){
+        Player player = event.getPlayer();
+        PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
+        final boolean shift = event.getPlayer().isSneaking();
+        final TriggerType type = shift ? TriggerType.ENTITY_RIGHT_SHIFT : TriggerType.ENTITY_RIGHT;
         playerData.castSkill(type);
     }
 
