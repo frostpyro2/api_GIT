@@ -2,7 +2,6 @@ package frostpyro.frostapi.listeners;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.players.PlayerData;
-import frostpyro.frostapi.skill.Skill;
 import frostpyro.frostapi.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
