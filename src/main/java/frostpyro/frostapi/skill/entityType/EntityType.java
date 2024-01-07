@@ -6,7 +6,8 @@ import java.util.Map;
 public class EntityType {
     private String type;
     public static EntityType SELF = new EntityType("SELF"),
-    NEARBY = new EntityType("NEARBY");
+    NEARBY = new EntityType("NEARBY"),
+    EVERYTHING = new EntityType("EVERYTHING");
 
     public EntityType(){
 
@@ -23,6 +24,7 @@ public class EntityType {
     static{
         register(SELF);
         register(NEARBY);
+        register(EVERYTHING);
     }
 
     public String getType(){

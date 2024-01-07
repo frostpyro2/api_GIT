@@ -1,4 +1,4 @@
-package frostpyro.frostapi.skill.trigger;
+package frostpyro.frostapi.skill.handler.trigger;
 
 
 import javax.annotation.Nonnull;

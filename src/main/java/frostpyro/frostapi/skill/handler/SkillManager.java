@@ -1,9 +1,8 @@
-package frostpyro.frostapi.handler;
+package frostpyro.frostapi.skill.handler;
 
 import frostpyro.frostapi.players.PlayerData;
-import frostpyro.frostapi.skill.trigger.TriggerType;
+import frostpyro.frostapi.skill.handler.trigger.TriggerType;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -141,10 +140,21 @@ public abstract class SkillManager{
                SIZE: 5
            DAMAGE:
                AMOUNT: 5
+               POINT:
+                - SELF
+                - DISPLAY
+                - LOCATION
+                - NEARBY
+               ENTITY: NEARBY
            SELF_DAMAGE:
                AMOUNT:
            HEAL:
-               HEAL_TYPE: SELF
+               ENTITY: SELF
                AMOUNT: 1
+               POINT:
+                - SELF
+                - NEARBY
+                - DISPLAY
+                - LOCATION
      */
 }

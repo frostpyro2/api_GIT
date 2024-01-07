@@ -1,15 +1,18 @@
 package frostpyro.frostapi.skill;
 
-import frostpyro.frostapi.handler.SkillManager;
+import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.skill.handler.SkillManager;
 import frostpyro.frostapi.players.PlayerData;
-import frostpyro.frostapi.skill.trigger.TriggerType;
+import frostpyro.frostapi.skill.handler.trigger.TriggerType;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
 public class Skill extends SkillManager {
     private Map<PlayerData, Long> coolDown = new HashMap<>();
+    private Set<PlayerData> coolDownSet = new HashSet<>();
     private PlayerData playerData;
 
     public Skill() {
@@ -25,11 +28,16 @@ public class Skill extends SkillManager {
 
     @Override
     public void skillActivate() {
-        if(coolDown.containsKey(playerData)){
-            if(coolDown.get(playerData) > System.currentTimeMillis()) return;
-            coolDown.remove(playerData);
+        if(!coolDownSet.contains(playerData)){
+            super.activateSkill();
+            coolDownSet.add(playerData);
         }
-        super.activateSkill();
-        coolDown.put(playerData, System.currentTimeMillis() + (super.COOL_DOWN() * 1000L));
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                coolDownSet.remove(playerData);
+            }
+        }.runTaskLater(FrostAPI.getPlugin(), super.COOL_DOWN() * 20L);
+
     }
 }

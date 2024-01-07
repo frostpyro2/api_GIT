@@ -2,16 +2,14 @@ package frostpyro.frostapi.players;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.skill.Skill;
-import frostpyro.frostapi.skill.trigger.TriggerType;
+import frostpyro.frostapi.skill.handler.trigger.TriggerType;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 
 import java.io.File;
 import java.io.IOException;
