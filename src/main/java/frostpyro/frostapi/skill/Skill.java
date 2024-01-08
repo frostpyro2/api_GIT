@@ -11,33 +11,22 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class Skill extends SkillManager {
-    private Map<PlayerData, Long> coolDown = new HashMap<>();
-    private Set<PlayerData> coolDownSet = new HashSet<>();
     private PlayerData playerData;
 
     public Skill() {
         super();
     }
-
-    public Skill(ConfigurationSection configuration, PlayerData playerData, Set<Entity> entitySet, TriggerType...type) {
+    private ConfigurationSection section;
+    public Skill(ConfigurationSection configuration, PlayerData playerData, Set<Entity> entitySet, TriggerType type) {
         super(configuration,playerData, entitySet, type);
         this.playerData = playerData;
+        this.section = configuration;
     }
 
 
 
     @Override
     public void skillActivate() {
-        if(!coolDownSet.contains(playerData)){
-            super.activateSkill();
-            coolDownSet.add(playerData);
-        }
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                coolDownSet.remove(playerData);
-            }
-        }.runTaskLater(FrostAPI.getPlugin(), super.COOL_DOWN() * 20L);
-
+        super.activateSkill();
     }
 }

@@ -44,7 +44,7 @@ public class PlayerData {
         return Bukkit.getPlayer(UUID.fromString(this.uuid));
     }
 
-    public void castSkill(Set<Entity> entitySet, TriggerType...trigger){
+    public void castSkill(Set<Entity> entitySet, TriggerType trigger){
         List<String> ymlList = FrostAPI.getPlugin().skillName();
         ConfigurationSection section = null;
         Skill skill;
@@ -64,14 +64,11 @@ public class PlayerData {
                 Bukkit.getLogger().info("SET THE FIRST LINE OF THE FILE:"+yml);
                 return;
             }
-            List<String> stringList = new ArrayList<>();
-            for(TriggerType type : trigger){
-                stringList.add(type.getType());
-            }
-            List<String> finalList = new ArrayList<>(testSection.getStringList("TRIGGER_TYPE"));
-            finalList.retainAll(stringList);
 
-            if(testSection.getInt("SKILL_ID") == this.getSkillID() && !finalList.isEmpty()){
+            List<String> finalList = new ArrayList<>(testSection.getStringList("TRIGGER_TYPE"));
+
+
+            if(testSection.getInt("SKILL_ID") == this.getSkillID() && finalList.contains(trigger.getType())){
                 section = testSection;
                 break;
             }

@@ -5,26 +5,30 @@ import frostpyro.frostapi.skill.handler.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
+import java.io.ObjectInputFilter;
 import java.util.*;
 
 public abstract class SkillManager{
     private ConfigurationSection configuration;
-    private TriggerType[] type;
+    private TriggerType type;
     private PlayerData playerData;
 
     private Set<Entity> entitySet;
 
     private boolean trigger = true;
     private boolean item = true;
+    private int particle_num = 0;
+    private ItemDisplay display = null;
 
     public SkillManager(){
 
     }
 
-    public SkillManager(ConfigurationSection configuration, PlayerData playerData, Set<Entity> entitySet, TriggerType...type){
+    public SkillManager(ConfigurationSection configuration, PlayerData playerData, Set<Entity> entitySet, TriggerType type){
         this.configuration = configuration;
         this.type = type;
         this.playerData = playerData;
@@ -44,10 +48,8 @@ public abstract class SkillManager{
             return;
         }
         TEST();
-        PARTICLE();
-        DISPLAY();
         HEAL();
-        DAMAGE();
+        DAMAGE_N_EFFECT();
     }
     private void TEST(){
         String str = configuration.getString("TEST");
@@ -63,45 +65,44 @@ public abstract class SkillManager{
 
     private void TRIGGER_TYPE() {
         List<String> str = configuration.getStringList("TRIGGER_TYPE");
-        List<String> temp = new ArrayList<>();
-        for(TriggerType template : type){
-            temp.add(template.getType());
-        }
-        List<String> intersect = new ArrayList<>(str);
-        intersect.retainAll(temp);
-        if(intersect.isEmpty()){
+        if(!str.contains(type.getType())){
             trigger = false;
         }
     }
 
-    private void DAMAGE(){
+    private void DAMAGE_N_EFFECT(){
         ConfigurationSection section = configuration.getConfigurationSection("DAMAGE");
         if(section == null) return;
-
+        int amount = section.getInt("AMOUNT");
+        double distance = section.getDouble("INIT_DIST");
+        boolean all = section.getBoolean("TARGET_ALL");
+        int targetTime = section.getInt("TARGET_TIME");
+        String point = section.getString("POINT");
 
         Player player = playerData.getPlayer();
-        for(Entity entity : player.getNearbyEntities(3,3,3)){
+        int x = 1;
+        for(Entity entity : player.getNearbyEntities(distance, distance, distance)){
             if(!(entity instanceof LivingEntity)) continue;
+            double dist = 5;
+            if(configuration.getConfigurationSection("SELF_DAMAGE") == null){
+                if(entity == player){
+                    continue;
+                }
+            }
+
+
 
             entitySet.add(entity);
-            ((LivingEntity)entity).damage(5, player);
+            ((LivingEntity)entity).damage(amount, player);
+            x++;
+            if(!all && x > targetTime){
+                break;
+            }
         }
     }
 
     private void HEAL(){
         ConfigurationSection section = configuration.getConfigurationSection("HEAL");
-        if(section == null) return;
-        Collection<String> str = section.getKeys(false);
-    }
-
-    private void PARTICLE(){
-        ConfigurationSection section = configuration.getConfigurationSection("PARTICLE");
-        if(section == null) return;
-        Collection<String> str = section.getKeys(false);
-    }
-
-    private void DISPLAY(){
-        ConfigurationSection section = configuration.getConfigurationSection("DISPLAY");
         if(section == null) return;
         Collection<String> str = section.getKeys(false);
     }
@@ -145,6 +146,7 @@ public abstract class SkillManager{
                 - DISPLAY
                 - LOCATION
                 - NEARBY
+               INIT_DIST: 10
                ENTITY: NEARBY
            SELF_DAMAGE:
                AMOUNT:
