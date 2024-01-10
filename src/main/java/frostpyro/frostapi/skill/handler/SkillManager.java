@@ -48,8 +48,6 @@ public abstract class SkillManager{
             return;
         }
         TEST();
-        HEAL();
-        DAMAGE_N_EFFECT();
     }
     private void TEST(){
         String str = configuration.getString("TEST");
@@ -70,42 +68,14 @@ public abstract class SkillManager{
         }
     }
 
-    private void DAMAGE_N_EFFECT(){
-        ConfigurationSection section = configuration.getConfigurationSection("DAMAGE");
-        if(section == null) return;
-        int amount = section.getInt("AMOUNT");
-        double distance = section.getDouble("INIT_DIST");
-        boolean all = section.getBoolean("TARGET_ALL");
-        int targetTime = section.getInt("TARGET_TIME");
-        String point = section.getString("POINT");
+    private void DAMAGE_APPLY(){
 
-        Player player = playerData.getPlayer();
-        int x = 1;
-        for(Entity entity : player.getNearbyEntities(distance, distance, distance)){
-            if(!(entity instanceof LivingEntity)) continue;
-            double dist = 5;
-            if(configuration.getConfigurationSection("SELF_DAMAGE") == null){
-                if(entity == player){
-                    continue;
-                }
-            }
-
-
-
-            entitySet.add(entity);
-            ((LivingEntity)entity).damage(amount, player);
-            x++;
-            if(!all && x > targetTime){
-                break;
-            }
-        }
     }
 
-    private void HEAL(){
-        ConfigurationSection section = configuration.getConfigurationSection("HEAL");
-        if(section == null) return;
-        Collection<String> str = section.getKeys(false);
+    private void HEAL_APPLY(){
+
     }
+
 
     protected int COOL_DOWN(){
         if(configuration.get("COOL_DOWN") == null){
@@ -140,23 +110,25 @@ public abstract class SkillManager{
                FRAME: 7
                SIZE: 5
            DAMAGE:
+               DELAY: 1
                AMOUNT: 5
                POINT:
-                - SELF
                 - DISPLAY
                 - LOCATION
-                - NEARBY
+                - SELF
                INIT_DIST: 10
                ENTITY: NEARBY
            SELF_DAMAGE:
+               DELAY:
                AMOUNT:
            HEAL:
                ENTITY: SELF
                AMOUNT: 1
                POINT:
-                - SELF
-                - NEARBY
                 - DISPLAY
                 - LOCATION
+                - SELF
+          ACTION:
+
      */
 }
