@@ -8,6 +8,11 @@ public class DamageApply extends TargetEntity {
     private double damage;
     private LivingEntity damageGive;
 
+    public DamageApply(LivingEntity livingEntity, double damage){
+        super(livingEntity);
+        this.damage = damage;
+    }
+
     public DamageApply(LivingEntity livingEntity, double damage, LivingEntity damageGive) {
         super(livingEntity);
         this.damage = damage;
@@ -16,6 +21,10 @@ public class DamageApply extends TargetEntity {
 
     @Override
     public void actFunction() {
+        if(damageGive == null) {
+            super.getLivingEntity().damage(damage);
+            return;
+        }
         super.getLivingEntity().damage(damage, damageGive);
     }
 
