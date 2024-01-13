@@ -5,7 +5,7 @@ import org.bukkit.entity.LivingEntity;
 
 public class DamageApply extends TargetEntity {
 
-    private double damage;
+    private final double damage;
     private LivingEntity damageGive;
 
     public DamageApply(LivingEntity livingEntity, double damage){
@@ -21,6 +21,7 @@ public class DamageApply extends TargetEntity {
 
     @Override
     public void actFunction() {
+        if(super.getLivingEntity() == null) return;
         if(damageGive == null) {
             super.getLivingEntity().damage(damage);
             return;

@@ -3,8 +3,10 @@ package frostpyro.frostapi.skill.handler.entityAction.heal_handler;
 import frostpyro.frostapi.skill.handler.entityAction.TargetEntity;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
+import org.w3c.dom.Attr;
 
 import javax.swing.text.html.parser.Entity;
+import java.util.Objects;
 
 public class HealApply extends TargetEntity {
     private double healAmount;
@@ -17,7 +19,13 @@ public class HealApply extends TargetEntity {
 
     @Override
     public void actFunction() {
-        if(super.getLivingEntity().getHealth() >= super.getLivingEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) return;
+        if(!isNull()) return;
+        if(super.getLivingEntity().getHealth() >= Objects.requireNonNull(super.getLivingEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue()) return;
         super.getLivingEntity().setHealth(super.getLivingEntity().getHealth() + healAmount);
+    }
+
+    private boolean isNull(){
+        if(super.getLivingEntity() == null) return false;
+        return super.getLivingEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH) == null;
     }
 }
