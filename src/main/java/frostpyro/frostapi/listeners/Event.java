@@ -20,6 +20,7 @@ import java.util.*;
 
 
 public class Event implements Listener {
+    private Map<String, Boolean> boolMap = new HashMap<>();
     Set<Entity> entitySet = new HashSet<>();
     public Event(FrostAPI plugin){
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
@@ -28,17 +29,22 @@ public class Event implements Listener {
     @EventHandler
     private void click(PlayerInteractEvent event){
         PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
+        boolMap.put(playerData.getUuid(), false);
         final boolean shift = event.getPlayer().isSneaking();
         final boolean left = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
         final boolean physic = event.getAction() == Action.PHYSICAL;
         final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : physic ? null : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : physic ? null : TriggerType.RIGHT_CLICK);
         if(type == null) return;
         playerData.castSkill(type);
+        boolMap.remove(playerData.getUuid());
     }
 
     @EventHandler
     private void hit(AttackEvent event){
         PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
+        if(boolMap.get(playerData.getUuid()) != null ){
+            if(!boolMap.get(playerData.getUuid())) return;
+        }
         final boolean shift = event.getPlayer().isSneaking();
         final TriggerType type = shift ? TriggerType.SHIFT_ATTACK : TriggerType.ATTACK;
         playerData.castSkill(type);

@@ -2,11 +2,13 @@ package frostpyro.frostapi.listeners.customEvents;
 
 import frostpyro.frostapi.players.PlayerData;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public class AttackEvent extends Event {
+public class AttackEvent extends Event implements Cancellable {
+    private boolean canceled;
     private static HandlerList handler = new HandlerList();
 
     private PlayerData playerData;
@@ -18,6 +20,15 @@ public class AttackEvent extends Event {
         this.player = player;
     }
 
+    @Override
+    public boolean isCancelled() {
+        return canceled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.canceled = cancel;
+    }
 
     public AttackEvent(boolean isAsync) {
         super(isAsync);

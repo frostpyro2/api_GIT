@@ -4,6 +4,7 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.skill.Skill;
 import frostpyro.frostapi.skill.handler.trigger.TriggerType;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,6 +45,10 @@ public class PlayerData {
         return Bukkit.getPlayer(UUID.fromString(this.uuid));
     }
 
+    public String getUuid(){
+        return uuid;
+    }
+
     public void castSkill(TriggerType trigger){
         List<String> ymlList = FrostAPI.getPlugin().skillName();
         ConfigurationSection section = null;
@@ -78,5 +83,6 @@ public class PlayerData {
         }
         skill = new Skill(section, this, trigger);
         skill.skillActivate();
+        this.getPlayer().sendMessage(ChatColor.GREEN + "skill triggered!");
     }
 }
