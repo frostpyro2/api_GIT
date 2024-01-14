@@ -1,16 +1,16 @@
-package frostpyro.frostapi.skill.handler.action_handler.move_handler;
+package frostpyro.frostapi.skill.handler.action_handler.move_handler.onVertical;
 
 import frostpyro.frostapi.skill.handler.action_handler.TargetAction;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 
-public class JumpHandler extends TargetAction {
+public class JumpApply extends TargetAction {
     private double jump;
-    public JumpHandler() {
+    public JumpApply() {
         super();
     }
 
-    public JumpHandler(LivingEntity livingEntity, double jump) {
+    public JumpApply(LivingEntity livingEntity, double jump) {
         super(livingEntity);
         this.jump = jump;
     }
