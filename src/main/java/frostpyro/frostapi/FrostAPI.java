@@ -1,6 +1,7 @@
 package frostpyro.frostapi;
 
 import frostpyro.frostapi.listeners.Event;
+import frostpyro.frostapi.listeners.customEventListener.CustomEventProvoke;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -26,7 +27,7 @@ public final class FrostAPI extends JavaPlugin {
         generateSkillBuildFolder();
 
 
-
+        new CustomEventProvoke(this);
         new Event(this);
     }
 

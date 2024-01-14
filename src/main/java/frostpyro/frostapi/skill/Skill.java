@@ -17,8 +17,8 @@ public class Skill extends SkillManager {
         super();
     }
     private ConfigurationSection section;
-    public Skill(ConfigurationSection configuration, PlayerData playerData, Set<Entity> entitySet, TriggerType type) {
-        super(configuration,playerData, entitySet, type);
+    public Skill(ConfigurationSection configuration, PlayerData playerData, TriggerType type) {
+        super(configuration,playerData, type);
         this.playerData = playerData;
         this.section = configuration;
     }

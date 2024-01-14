@@ -17,8 +17,6 @@ public abstract class SkillManager{
     private TriggerType type;
     private PlayerData playerData;
 
-    private Set<Entity> entitySet;
-
     private boolean trigger = true;
     private boolean item = true;
     private int particle_num = 0;
@@ -28,11 +26,10 @@ public abstract class SkillManager{
 
     }
 
-    public SkillManager(ConfigurationSection configuration, PlayerData playerData, Set<Entity> entitySet, TriggerType type){
+    public SkillManager(ConfigurationSection configuration, PlayerData playerData, TriggerType type){
         this.configuration = configuration;
         this.type = type;
         this.playerData = playerData;
-        this.entitySet = entitySet;
     }
 
     protected int coolDown = 0;
@@ -48,6 +45,7 @@ public abstract class SkillManager{
             return;
         }
         TEST();
+        DAMAGE_APPLY();
     }
     private void TEST(){
         String str = configuration.getString("TEST");
@@ -69,7 +67,11 @@ public abstract class SkillManager{
     }
 
     private void DAMAGE_APPLY(){
-
+        Player player = playerData.getPlayer();
+        for(Entity entity : player.getNearbyEntities(3,3,3)){
+            if(!(entity instanceof LivingEntity)) continue;
+            ((LivingEntity)entity).damage(5, player);
+        }
     }
 
     private void HEAL_APPLY(){

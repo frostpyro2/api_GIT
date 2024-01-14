@@ -44,7 +44,7 @@ public class PlayerData {
         return Bukkit.getPlayer(UUID.fromString(this.uuid));
     }
 
-    public void castSkill(Set<Entity> entitySet, TriggerType trigger){
+    public void castSkill(TriggerType trigger){
         List<String> ymlList = FrostAPI.getPlugin().skillName();
         ConfigurationSection section = null;
         Skill skill;
@@ -76,7 +76,7 @@ public class PlayerData {
         if(section == null){
             return;
         }
-        skill = new Skill(section, this, entitySet,trigger);
+        skill = new Skill(section, this, trigger);
         skill.skillActivate();
     }
 }

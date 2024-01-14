@@ -1,6 +1,7 @@
 package frostpyro.frostapi.listeners;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.listeners.customEvents.AttackEvent;
 import frostpyro.frostapi.players.PlayerData;
 import frostpyro.frostapi.skill.handler.trigger.TriggerType;
 import org.bukkit.Bukkit;
@@ -32,22 +33,15 @@ public class Event implements Listener {
         final boolean physic = event.getAction() == Action.PHYSICAL;
         final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : physic ? null : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : physic ? null : TriggerType.RIGHT_CLICK);
         if(type == null) return;
-        playerData.castSkill(entitySet,type);
+        playerData.castSkill(type);
     }
 
     @EventHandler
-    private void hit(EntityDamageByEntityEvent event){
-        if(!(event.getDamager() instanceof Player)) return;
-        Entity entity = event.getEntity();
-        Player player = (Player) event.getDamager();
-        PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
-        final boolean shift = playerData.getPlayer().isSneaking();
+    private void hit(AttackEvent event){
+        PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
+        final boolean shift = event.getPlayer().isSneaking();
         final TriggerType type = shift ? TriggerType.SHIFT_ATTACK : TriggerType.ATTACK;
-        if(entitySet.contains(entity)){
-            entitySet.remove(entity);
-            return;
-        }
-        playerData.castSkill(entitySet, type);
+        playerData.castSkill(type);
     }
 
     @EventHandler
@@ -56,7 +50,7 @@ public class Event implements Listener {
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
         final boolean shift = event.getPlayer().isSneaking();
         final TriggerType type = shift ? TriggerType.ENTITY_RIGHT_SHIFT : TriggerType.ENTITY_RIGHT;
-        playerData.castSkill(entitySet, type);
+        playerData.castSkill(type);
     }
 
     @EventHandler
@@ -64,7 +58,7 @@ public class Event implements Listener {
         if(!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
-        playerData.castSkill(entitySet, TriggerType.DAMAGED);
+        playerData.castSkill(TriggerType.DAMAGED);
     }
 
     @EventHandler
@@ -76,7 +70,7 @@ public class Event implements Listener {
                 long lastShift = shiftPressTime.get(playerData);
                 long time = System.currentTimeMillis();
                 if(time - lastShift < 200) {
-                    playerData.castSkill(entitySet, TriggerType.SHIFT_SHIFT);
+                    playerData.castSkill(TriggerType.SHIFT_SHIFT);
                 }
             }
             shiftPressTime.put(playerData, System.currentTimeMillis());
@@ -88,6 +82,6 @@ public class Event implements Listener {
         Player player = event.getPlayer();
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
         if(event.isSneaking())
-            playerData.castSkill(entitySet, TriggerType.SHIFT);
+            playerData.castSkill(TriggerType.SHIFT);
     }
 }
