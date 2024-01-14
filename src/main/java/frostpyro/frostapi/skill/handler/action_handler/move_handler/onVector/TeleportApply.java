@@ -5,6 +5,7 @@ import org.bukkit.entity.LivingEntity;
 
 public class TeleportApply extends TargetAction {
     private double teleport;
+    private float angle;
     public TeleportApply() {
         super();
     }

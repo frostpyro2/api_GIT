@@ -5,13 +5,15 @@ import org.bukkit.entity.LivingEntity;
 
 public class DashApply extends TargetAction {
     private double speed;
+    private float angle;
     public DashApply() {
         super();
     }
 
-    public DashApply(LivingEntity livingEntity, double speed) {
+    public DashApply(LivingEntity livingEntity, double speed, float angle) {
         super(livingEntity);
         this.speed = speed;
+        this.angle = angle;
     }
 
     @Override
