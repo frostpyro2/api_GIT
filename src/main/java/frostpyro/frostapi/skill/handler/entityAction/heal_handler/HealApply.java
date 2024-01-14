@@ -26,6 +26,6 @@ public class HealApply extends TargetEntity {
 
     private boolean isNull(){
         if(super.getLivingEntity() == null) return false;
-        return super.getLivingEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH) == null;
+        return super.getLivingEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH) != null;
     }
 }
