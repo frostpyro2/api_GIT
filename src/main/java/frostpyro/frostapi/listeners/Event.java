@@ -58,8 +58,7 @@ public class Event implements Listener {
 
     @EventHandler
     private void getHit(EntityDamageEvent event){
-        if(!(event.getEntity() instanceof Player)) return;
-        Player player = (Player) event.getEntity();
+        if(!(event.getEntity() instanceof Player player)) return;
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
         playerData.castSkill(TriggerType.DAMAGED);
     }
