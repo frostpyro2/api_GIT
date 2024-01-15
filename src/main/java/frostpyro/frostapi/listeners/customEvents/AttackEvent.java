@@ -7,6 +7,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import javax.annotation.Nonnull;
+
 public class AttackEvent extends Event implements Cancellable {
     private boolean canceled;
     private static HandlerList handler = new HandlerList();
@@ -46,6 +48,7 @@ public class AttackEvent extends Event implements Cancellable {
         this.playerData = playerData;
     }
     @Override
+    @Nonnull
     public HandlerList getHandlers() {
         return handler;
     }

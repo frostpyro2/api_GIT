@@ -30,13 +30,12 @@ public class Event implements Listener {
     private void click(PlayerInteractEvent event){
         PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
         uuidSet.add(playerData.getUuid());
+        if(event.getAction() == Action.PHYSICAL) return;
         final boolean shift = event.getPlayer().isSneaking();
         final boolean left = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
-        final boolean physic = event.getAction() == Action.PHYSICAL;
-        final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : physic ? null : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : physic ? null : TriggerType.RIGHT_CLICK);
-        if(type == null) return;
+        final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : TriggerType.RIGHT_CLICK);
         playerData.castSkill(type);
-
+        uuidSet.remove(playerData.getUuid());
     }
 
     @EventHandler
