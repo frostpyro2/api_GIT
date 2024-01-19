@@ -1,9 +1,8 @@
-package frostpyro.frostapi.skill.handler.total_handler;
+package frostpyro.frostapi.handler.total_handler;
 
-import frostpyro.frostapi.skill.handler.entityAction.EntityHealthInteract;
-import frostpyro.frostapi.skill.handler.entityAction.TargetEntity;
-import frostpyro.frostapi.skill.handler.entityAction.damage_handler.DamageApply;
-import frostpyro.frostapi.skill.handler.entityAction.heal_handler.HealApply;
+import frostpyro.frostapi.handler.entityAction.EntityHealthInteract;
+import frostpyro.frostapi.handler.entityAction.damage_handler.DamageApply;
+import frostpyro.frostapi.handler.entityAction.heal_handler.HealApply;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.ArrayList;

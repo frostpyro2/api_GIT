@@ -1,6 +1,6 @@
-package frostpyro.frostapi.skill.handler.action_handler.move_handler.onVertical;
+package frostpyro.frostapi.handler.action_handler.move_handler.onVertical;
 
-import frostpyro.frostapi.skill.handler.action_handler.TargetAction;
+import frostpyro.frostapi.handler.action_handler.TargetAction;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 

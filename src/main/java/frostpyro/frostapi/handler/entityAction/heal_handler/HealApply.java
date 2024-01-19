@@ -1,11 +1,9 @@
-package frostpyro.frostapi.skill.handler.entityAction.heal_handler;
+package frostpyro.frostapi.handler.entityAction.heal_handler;
 
-import frostpyro.frostapi.skill.handler.entityAction.TargetEntity;
+import frostpyro.frostapi.handler.entityAction.TargetEntity;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
-import org.w3c.dom.Attr;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.Objects;
 
 public class HealApply extends TargetEntity {

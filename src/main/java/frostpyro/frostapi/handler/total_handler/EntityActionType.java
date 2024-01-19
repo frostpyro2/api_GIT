@@ -1,4 +1,4 @@
-package frostpyro.frostapi.skill.handler.total_handler;
+package frostpyro.frostapi.handler.total_handler;
 
 public enum EntityActionType {
     HEAL,

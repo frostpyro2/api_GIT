@@ -1,8 +1,6 @@
-package frostpyro.frostapi.skill.handler.entityAction;
+package frostpyro.frostapi.handler.entityAction;
 
 import org.bukkit.entity.LivingEntity;
-
-import javax.annotation.Nullable;
 
 public abstract class TargetEntity {
     private LivingEntity livingEntity;

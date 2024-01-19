@@ -1,6 +1,6 @@
-package frostpyro.frostapi.skill.handler.entityAction.damage_handler;
+package frostpyro.frostapi.handler.entityAction.damage_handler;
 
-import frostpyro.frostapi.skill.handler.entityAction.TargetEntity;
+import frostpyro.frostapi.handler.entityAction.TargetEntity;
 import org.bukkit.entity.LivingEntity;
 
 public class DamageApply extends TargetEntity {

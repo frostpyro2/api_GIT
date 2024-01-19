@@ -1,4 +1,4 @@
-package frostpyro.frostapi.skill.handler.entityAction;
+package frostpyro.frostapi.handler.entityAction;
 
 public class EntityHealthInteract<T extends TargetEntity>{
     private T t;

@@ -1,14 +1,9 @@
 package frostpyro.frostapi.skill;
 
-import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.skill.handler.SkillManager;
+import frostpyro.frostapi.handler.SkillManager;
 import frostpyro.frostapi.players.PlayerData;
-import frostpyro.frostapi.skill.handler.trigger.TriggerType;
+import frostpyro.frostapi.handler.trigger.TriggerType;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Entity;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.*;
 
 public class Skill extends SkillManager {
     private PlayerData playerData;

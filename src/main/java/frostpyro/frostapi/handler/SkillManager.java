@@ -1,7 +1,7 @@
-package frostpyro.frostapi.skill.handler;
+package frostpyro.frostapi.handler;
 
 import frostpyro.frostapi.players.PlayerData;
-import frostpyro.frostapi.skill.handler.trigger.TriggerType;
+import frostpyro.frostapi.handler.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -9,7 +9,6 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-import java.io.ObjectInputFilter;
 import java.util.*;
 
 public abstract class SkillManager{
