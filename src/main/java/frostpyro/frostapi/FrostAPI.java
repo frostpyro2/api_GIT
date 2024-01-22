@@ -4,6 +4,7 @@ import frostpyro.frostapi.listeners.Event;
 import frostpyro.frostapi.listeners.customEventListener.CustomEventProvoke;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -92,4 +93,6 @@ public final class FrostAPI extends JavaPlugin {
         }
         return configuration.getStringList("skillNames");
     }
+
+    public NamespacedKey exp = new NamespacedKey(this, "EXP");
 }
