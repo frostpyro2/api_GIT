@@ -5,7 +5,6 @@ import frostpyro.frostapi.listeners.customEventListener.CustomEventProvoke;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,8 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class FrostAPI extends JavaPlugin {
@@ -30,6 +27,8 @@ public final class FrostAPI extends JavaPlugin {
 
         new CustomEventProvoke(this);
         new Event(this);
+
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: FROST_API");
     }
 
     @Override
