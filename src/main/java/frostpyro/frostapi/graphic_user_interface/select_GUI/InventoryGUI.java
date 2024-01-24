@@ -19,6 +19,7 @@ public class InventoryGUI implements User_Interface{
     @Override
     public void show() {
         itemSet(new ItemStack(Material.DIAMOND),1);
+        itemSet(new ItemStack(Material.EMERALD), 2);
         player.openInventory(inventory);
     }
 
