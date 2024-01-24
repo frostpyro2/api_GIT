@@ -88,7 +88,6 @@ public class Event implements Listener {
             playerData.castSkill(TriggerType.SHIFT);
     }
 
-    /*
     @EventHandler
     private void reload(ServerLoadEvent event){
         for(Player player : Bukkit.getOnlinePlayers()){
@@ -110,5 +109,4 @@ public class Event implements Listener {
         User_Interface userInterface = new ExpGUI(player);
         userInterface.disappear();
     }
-     */
 }
