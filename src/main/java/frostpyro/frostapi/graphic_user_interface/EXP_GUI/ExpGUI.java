@@ -22,7 +22,7 @@ public class ExpGUI implements User_Interface {
 
     @Override
     public void show() {
-        expBar.setProgress(1.1);
+        expBar.setProgress(0.5);
         expBar.addPlayer(player);
     }
 
