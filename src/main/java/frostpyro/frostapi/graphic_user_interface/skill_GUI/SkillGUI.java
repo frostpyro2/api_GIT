@@ -18,4 +18,9 @@ public class SkillGUI implements User_Interface {
     public void guiType() {
 
     }
+
+    @Override
+    public void disappear() {
+
+    }
 }

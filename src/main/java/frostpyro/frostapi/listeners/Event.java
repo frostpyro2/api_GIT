@@ -1,6 +1,8 @@
 package frostpyro.frostapi.listeners;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.graphic_user_interface.EXP_GUI.ExpGUI;
+import frostpyro.frostapi.graphic_user_interface.User_Interface;
 import frostpyro.frostapi.listeners.customEvents.AttackEvent;
 import frostpyro.frostapi.players.PlayerData;
 import frostpyro.frostapi.handler.trigger.TriggerType;
@@ -11,10 +13,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.event.server.ServerLoadEvent;
 
+import javax.swing.plaf.basic.BasicTreeUI;
 import java.util.*;
 
 
@@ -85,4 +87,28 @@ public class Event implements Listener {
         if(event.isSneaking())
             playerData.castSkill(TriggerType.SHIFT);
     }
+
+    /*
+    @EventHandler
+    private void reload(ServerLoadEvent event){
+        for(Player player : Bukkit.getOnlinePlayers()){
+            User_Interface userInterface = new ExpGUI(player);
+            userInterface.show();
+        }
+    }
+
+    @EventHandler
+    private void join(PlayerJoinEvent event){
+        Player player = event.getPlayer();
+        User_Interface userInterface = new ExpGUI(player);
+        userInterface.show();
+    }
+
+    @EventHandler
+    private void left(PlayerQuitEvent event){
+        Player player = event.getPlayer();
+        User_Interface userInterface = new ExpGUI(player);
+        userInterface.disappear();
+    }
+     */
 }

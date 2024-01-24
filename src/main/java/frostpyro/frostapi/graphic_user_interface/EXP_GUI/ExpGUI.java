@@ -28,4 +28,9 @@ public class ExpGUI implements User_Interface {
         expBar.setProgress(1.1);
         expBar.addPlayer(player);
     }
+
+    @Override
+    public void disappear() {
+        expBar.removePlayer(player);
+    }
 }

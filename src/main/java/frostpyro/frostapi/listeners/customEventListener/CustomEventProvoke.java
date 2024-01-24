@@ -27,5 +27,6 @@ public class CustomEventProvoke implements Listener {
 
         AttackEvent attackEvent = new AttackEvent(player);
         Bukkit.getPluginManager().callEvent(attackEvent);
+        event.setCancelled(true);
     }
 }
