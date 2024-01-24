@@ -3,8 +3,7 @@ package frostpyro.frostapi.graphic_user_interface.EXP_GUI;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.graphic_user_interface.User_Interface;
 import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BossBar;
+import org.bukkit.boss.*;
 import org.bukkit.entity.Player;
 
 public class ExpGUI implements User_Interface {
@@ -15,7 +14,7 @@ public class ExpGUI implements User_Interface {
     public ExpGUI(Player player){
         this.player = player;
     }
-    private BossBar expBar = Bukkit.getBossBar(FrostAPI.getPlugin().exp);
+    private KeyedBossBar expBar = Bukkit.createBossBar(FrostAPI.getPlugin().exp, "EXP", BarColor.YELLOW, BarStyle.SOLID);
     @Override
     public void guiType() {
 
@@ -23,8 +22,6 @@ public class ExpGUI implements User_Interface {
 
     @Override
     public void show() {
-        expBar.setTitle("EXP");
-        expBar.setColor(BarColor.WHITE);
         expBar.setProgress(1.1);
         expBar.addPlayer(player);
     }
