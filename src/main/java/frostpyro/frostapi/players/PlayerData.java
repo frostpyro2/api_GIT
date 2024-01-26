@@ -47,6 +47,12 @@ public class PlayerData {
     public String getUuid(){
         return uuid;
     }
+    public double getExp(){
+        return exp;
+    }
+    public void setExp(double exp){
+        this.exp = exp;
+    }
 
     public void castSkill(TriggerType trigger){
         List<String> ymlList = FrostAPI.getPlugin().skillName();

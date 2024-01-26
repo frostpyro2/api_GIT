@@ -4,6 +4,7 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.graphic_user_interface.EXP_GUI.ExpGUI;
 import frostpyro.frostapi.graphic_user_interface.User_Interface;
 import frostpyro.frostapi.listeners.customEvents.AttackEvent;
+import frostpyro.frostapi.listeners.customEvents.ExpChangeEvent;
 import frostpyro.frostapi.players.PlayerData;
 import frostpyro.frostapi.handler.trigger.TriggerType;
 import org.bukkit.Bukkit;
@@ -16,7 +17,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.ServerLoadEvent;
 
-import javax.swing.plaf.basic.BasicTreeUI;
 import java.util.*;
 
 
@@ -108,5 +108,10 @@ public class Event implements Listener {
         Player player = event.getPlayer();
         User_Interface userInterface = new ExpGUI(player);
         userInterface.disappear();
+    }
+
+    @EventHandler
+    private void dataChange(ExpChangeEvent event){
+        PlayerData playerData = event.getPlayerData();
     }
 }

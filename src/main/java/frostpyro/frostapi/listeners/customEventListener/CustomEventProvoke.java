@@ -2,13 +2,15 @@ package frostpyro.frostapi.listeners.customEventListener;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.listeners.customEvents.AttackEvent;
+import frostpyro.frostapi.listeners.customEvents.ExpChangeEvent;
+import frostpyro.frostapi.players.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.checkerframework.checker.units.qual.A;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 public class CustomEventProvoke implements Listener {
     public CustomEventProvoke(FrostAPI plugin){
@@ -28,5 +30,15 @@ public class CustomEventProvoke implements Listener {
         AttackEvent attackEvent = new AttackEvent(player);
         Bukkit.getPluginManager().callEvent(attackEvent);
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    private void kill(EntityDeathEvent event){
+        if(event.getEntity().getKiller() == null) return;
+        Player player = event.getEntity().getKiller();
+
+        PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 1,0,0,0);
+        ExpChangeEvent expChangeEvent = new ExpChangeEvent(playerData);
+        Bukkit.getPluginManager().callEvent(expChangeEvent);
     }
 }
