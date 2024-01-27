@@ -50,7 +50,7 @@ public final class FrostAPI extends JavaPlugin {
         FOLDER.mkdirs();
     }
 
-    private FileConfiguration skill, build, sql;
+    public FileConfiguration skill, build, sql;
     private void loadConfigs(){
         File skill = new File(getDataFolder(), "skillName.yml"), build = new File(getDataFolder(), "skillBuildName.yml"), sql = new File(getDataFolder(), "SQLInform.yml");
         if(!skill.exists()){
