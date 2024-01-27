@@ -28,7 +28,7 @@ public final class FrostAPI extends JavaPlugin {
         new CustomEventProvoke(this);
         new Event(this);
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: FROST_API");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }
 
     @Override
