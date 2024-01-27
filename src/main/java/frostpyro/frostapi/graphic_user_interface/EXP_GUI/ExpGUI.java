@@ -16,7 +16,7 @@ public class ExpGUI implements User_Interface {
     }
     private KeyedBossBar expBar = Bukkit.createBossBar(FrostAPI.getPlugin().exp, "EXP", BarColor.YELLOW, BarStyle.SOLID);
     @Override
-    public void guiType() {
+    public void guiSetting() {
 
     }
 

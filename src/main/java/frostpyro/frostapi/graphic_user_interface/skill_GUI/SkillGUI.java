@@ -15,7 +15,7 @@ public class SkillGUI implements User_Interface {
     }
 
     @Override
-    public void guiType() {
+    public void guiSetting() {
 
     }
 

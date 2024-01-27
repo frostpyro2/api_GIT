@@ -24,7 +24,7 @@ public class InventoryGUI implements User_Interface{
     }
 
     @Override
-    public void guiType() {
+    public void guiSetting() {
 
     }
 
