@@ -16,6 +16,7 @@ public class ParticleApply extends TargetEffect<Particle> {
 
     @Override
     public void action() {
+        //TODO: do some fucking thing that can define the shape of particle
         target.getWorld().spawnParticle(super.getObj(), location, 1);
     }
 }
