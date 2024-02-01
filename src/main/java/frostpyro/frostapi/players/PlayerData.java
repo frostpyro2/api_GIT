@@ -63,6 +63,7 @@ public class PlayerData {
             File file = new File(FrostAPI.getPlugin().getDataFolder(), "\\skill\\"+ymlFile);
             FileConfiguration configuration = new YamlConfiguration();
             try{
+                if(!file.exists()) break;
                 configuration.load(file);
             }
             catch (IOException | InvalidConfigurationException e){
