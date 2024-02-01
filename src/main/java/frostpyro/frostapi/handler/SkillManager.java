@@ -87,49 +87,30 @@ public abstract class SkillManager{
         return configuration.getInt("COOL_DOWN");
     }
     /*
-      파일 구조: 예시
 
-      SKILL_NAME:
-           TEST: hello world!
-           SKILL_ID:
-           ITEM:
-                MATERIAL: NETHERITE_SWORD
-                MODEL: 1
-           TRIGGER_TYPE:
-               -LEFT_CLICK
-               -ATTACK
-           ATTACK_TYPE: MELEE
-           COOL_DOWN: 5
-           PARTICLE:
-               PARTICLE_TYPE: FLAME
-               SPEED: 0.1
-               DIST: 1
-               QUANTITY: 3
-           DISPLAY:
-               ITEM: COAL
-               CUSTOM_INIT: 1
-               FRAME: 7
-               SIZE: 5
-           DAMAGE:
-               DELAY: 1
-               AMOUNT: 5
-               POINT:
-                - DISPLAY
-                - LOCATION
-                - SELF
-               INIT_DIST: 10
-               ENTITY: NEARBY
-           SELF_DAMAGE:
-               DELAY:
-               AMOUNT:
-           HEAL:
-               ENTITY: SELF
-               AMOUNT: 1
-               POINT:
-                - DISPLAY
-                - LOCATION
-                - SELF
-          ACTION:
+      SKILL NAME:
+        ID:
+        ITEM:
+        TRIGGER_TYPE:
+        COOL_DOWN:
+        CASTER:
+            HEAL:
 
+        TARGET:
+
+            VISUAL_EFFECT:
+
+            DAMAGE:
+
+            JUMP:
+
+
+
+        VISUAL_EFFECT:
+            PARTICLE:
+
+            //OR
+
+            ITEM_DISPLAY:
      */
 }
