@@ -94,4 +94,5 @@ public final class FrostAPI extends JavaPlugin {
     }
 
     public NamespacedKey exp = new NamespacedKey(this, "EXP");
+    public NamespacedKey skillType = new NamespacedKey(this, "SKILL");
 }
