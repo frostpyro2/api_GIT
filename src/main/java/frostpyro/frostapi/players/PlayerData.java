@@ -1,18 +1,9 @@
 package frostpyro.frostapi.players;
 
-import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.skill.Skill;
-import frostpyro.frostapi.handler.trigger.TriggerType;
+import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class PlayerData {
@@ -55,40 +46,6 @@ public class PlayerData {
     }
 
     public void castSkill(TriggerType trigger){
-        List<String> ymlList = FrostAPI.getPlugin().skillName();
-        ConfigurationSection section = null;
-        Skill skill;
-        for(String yml : Objects.requireNonNull(ymlList)){
-            String ymlFile = yml + ".yml";
-            File file = new File(FrostAPI.getPlugin().getDataFolder(), "\\skill\\"+ymlFile);
-            FileConfiguration configuration = new YamlConfiguration();
-            try{
-                if(!file.exists()) break;
-                configuration.load(file);
-            }
-            catch (IOException | InvalidConfigurationException e){
-                e.printStackTrace();
-                return;
-            }
-            ConfigurationSection testSection = configuration.getConfigurationSection(yml);
-            if(testSection == null){
-                Bukkit.getLogger().info("SET THE FIRST LINE OF THE FILE:"+yml);
-                return;
-            }
 
-            List<String> finalList = new ArrayList<>(testSection.getStringList("TRIGGER_TYPE"));
-
-
-            if(testSection.getInt("SKILL_ID") == this.getSkillID() && finalList.contains(trigger.getType())){
-                section = testSection;
-                break;
-            }
-        }
-        if(section == null){
-            return;
-        }
-        skill = new Skill(section, this, trigger);
-        skill.skillActivate();
-        this.getPlayer().sendMessage(ChatColor.GREEN + "skill triggered!");
     }
 }

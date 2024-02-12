@@ -1,7 +1,8 @@
-package frostpyro.frostapi.handler.trigger;
+package frostpyro.frostapi.util.skill.trigger;
 
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class TriggerType {
     private String type;
     public TriggerType(){}
 
-    @Nonnull
+    @NotNull
     public static TriggerType ATTACK = new TriggerType("ATTACK"),
     ENTITY_RIGHT = new TriggerType("ENTITY_RIGHT"),
     ENTITY_RIGHT_SHIFT = new TriggerType("ENTITY_RIGHT_SHIFT"),
@@ -62,7 +63,7 @@ public class TriggerType {
         return this.type;
     }
 
-    public static void register(@Nonnull TriggerType type){
+    public static void register(@NotNull TriggerType type){
         ID.put(type.getType(), type);
     }
 

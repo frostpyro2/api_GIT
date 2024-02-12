@@ -1,12 +1,12 @@
-package frostpyro.frostapi.listeners;
+package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.graphic_user_interface.EXP_GUI.ExpGUI;
 import frostpyro.frostapi.graphic_user_interface.User_Interface;
-import frostpyro.frostapi.listeners.customEvents.AttackEvent;
-import frostpyro.frostapi.listeners.customEvents.ExpChangeEvent;
+import frostpyro.frostapi.api.listeners.customEvents.AttackEvent;
+import frostpyro.frostapi.api.listeners.customEvents.ExpChangeEvent;
 import frostpyro.frostapi.players.PlayerData;
-import frostpyro.frostapi.handler.trigger.TriggerType;
+import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -20,10 +20,10 @@ import org.bukkit.event.server.ServerLoadEvent;
 import java.util.*;
 
 
-public class Event implements Listener {
+public class SkillTriggerListener implements Listener {
     private Set<String> uuidSet = new HashSet<>();
     Set<Entity> entitySet = new HashSet<>();
-    public Event(FrostAPI plugin){
+    public SkillTriggerListener(FrostAPI plugin){
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
     private Map<PlayerData, Long> shiftPressTime = new HashMap<>();

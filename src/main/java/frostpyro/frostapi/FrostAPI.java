@@ -1,7 +1,7 @@
 package frostpyro.frostapi;
 
-import frostpyro.frostapi.listeners.Event;
-import frostpyro.frostapi.listeners.customEventListener.CustomEventProvoke;
+import frostpyro.frostapi.event.SkillTriggerListener;
+import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -25,8 +25,8 @@ public final class FrostAPI extends JavaPlugin {
         generateSkillBuildFolder();
 
 
-        new CustomEventProvoke(this);
-        new Event(this);
+        new AttackEventListener(this);
+        new SkillTriggerListener(this);
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }
