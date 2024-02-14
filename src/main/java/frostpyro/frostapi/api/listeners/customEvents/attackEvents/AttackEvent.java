@@ -1,4 +1,4 @@
-package frostpyro.frostapi.api.listeners.customEvents;
+package frostpyro.frostapi.api.listeners.customEvents.attackEvents;
 
 import frostpyro.frostapi.players.PlayerData;
 import org.bukkit.entity.Entity;
@@ -21,9 +21,11 @@ public class AttackEvent extends EntityDamageEvent implements Cancellable {
     private Player player;
 
     private LivingEntity entity;
+    private LivingEntity damager;
 
-    public AttackEvent(LivingEntity entity, Player player) {
+    public AttackEvent(LivingEntity entity, LivingEntity damager, Player player) {
         super(entity, DamageCause.ENTITY_ATTACK, 0);
+        this.damager = damager;
         this.player = player;
     }
 
@@ -47,6 +49,10 @@ public class AttackEvent extends EntityDamageEvent implements Cancellable {
 
     public void setPlayerData(PlayerData playerData){
         this.playerData = playerData;
+    }
+
+    public LivingEntity getDamager(){
+        return this.damager;
     }
     @Override
     @NotNull

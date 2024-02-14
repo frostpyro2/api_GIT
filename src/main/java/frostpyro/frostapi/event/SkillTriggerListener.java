@@ -3,12 +3,11 @@ package frostpyro.frostapi.event;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.graphic_user_interface.EXP_GUI.ExpGUI;
 import frostpyro.frostapi.graphic_user_interface.User_Interface;
-import frostpyro.frostapi.api.listeners.customEvents.AttackEvent;
+import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.api.listeners.customEvents.ExpChangeEvent;
 import frostpyro.frostapi.players.PlayerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +21,6 @@ import java.util.*;
 
 public class SkillTriggerListener implements Listener {
     private Set<String> uuidSet = new HashSet<>();
-    Set<Entity> entitySet = new HashSet<>();
     public SkillTriggerListener(FrostAPI plugin){
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -30,19 +28,16 @@ public class SkillTriggerListener implements Listener {
     @EventHandler
     private void click(PlayerInteractEvent event){
         PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
-        uuidSet.add(playerData.getUuid());
         if(event.getAction() == Action.PHYSICAL) return;
         final boolean shift = event.getPlayer().isSneaking();
         final boolean left = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
         final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : TriggerType.RIGHT_CLICK);
         playerData.castSkill(type);
-        uuidSet.remove(playerData.getUuid());
     }
 
     @EventHandler
     private void hit(AttackEvent event){
         PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
-        if(uuidSet.contains(playerData.getUuid())) return;
         final boolean shift = event.getPlayer().isSneaking();
         final TriggerType type = shift ? TriggerType.SHIFT_ATTACK : TriggerType.ATTACK;
         playerData.castSkill(type);
