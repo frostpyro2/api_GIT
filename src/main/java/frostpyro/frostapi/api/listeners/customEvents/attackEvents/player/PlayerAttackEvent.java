@@ -1,5 +1,6 @@
-package frostpyro.frostapi.api.listeners.customEvents.attackEvents;
+package frostpyro.frostapi.api.listeners.customEvents.attackEvents.player;
 
+import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.players.PlayerData;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

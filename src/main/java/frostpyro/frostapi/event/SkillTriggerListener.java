@@ -1,7 +1,7 @@
 package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.api.listeners.customEvents.attackEvents.PlayerAttackEvent;
+import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
 import frostpyro.frostapi.graphic_user_interface.EXP_GUI.ExpGUI;
 import frostpyro.frostapi.graphic_user_interface.User_Interface;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
@@ -38,7 +38,7 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void hit(AttackEvent event){
-        event.getDamager().sendMessage("damaged!");
+        event.getEntity().sendMessage("damaged!");
     }
 
     @EventHandler
