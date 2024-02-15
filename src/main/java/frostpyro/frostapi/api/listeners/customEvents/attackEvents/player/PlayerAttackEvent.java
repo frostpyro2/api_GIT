@@ -13,15 +13,24 @@ import javax.annotation.concurrent.NotThreadSafe;
 public class PlayerAttackEvent extends AttackEvent {
     private static HandlerList handlerList = new HandlerList();
     private Player damager;
+    private PlayerData damagerData;
     public PlayerAttackEvent(LivingEntity entity, Player damger) {
         super(entity);
         this.damager = damger;
+    }
+
+    public PlayerAttackEvent(LivingEntity entity, PlayerData damager){
+        super(entity);
+        damagerData = damager;
     }
 
     public Player getPlayer(){
         return damager;
     }
 
+    public PlayerData getPlayerData(){
+        return damagerData;
+    }
 
     @Override
     @NotNull
