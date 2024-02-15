@@ -16,17 +16,14 @@ public class AttackEvent extends EntityDamageEvent implements Cancellable {
     private boolean canceled;
     private static HandlerList handler = new HandlerList();
 
-    private PlayerData playerData;
-
-    private Player player;
-
-    private LivingEntity entity;
     private LivingEntity damager;
+    public AttackEvent(LivingEntity entity){
+        super(entity, DamageCause.ENTITY_ATTACK, 0);
+    }
 
-    public AttackEvent(LivingEntity entity, LivingEntity damager, Player player) {
+    public AttackEvent(LivingEntity entity, LivingEntity damager) {
         super(entity, DamageCause.ENTITY_ATTACK, 0);
         this.damager = damager;
-        this.player = player;
     }
 
     @Override
@@ -39,18 +36,6 @@ public class AttackEvent extends EntityDamageEvent implements Cancellable {
         this.canceled = cancel;
     }
 
-    public PlayerData getPlayerData(){
-        return playerData;
-    }
-
-    public Player getPlayer(){
-        return player;
-    }
-
-    public void setPlayerData(PlayerData playerData){
-        this.playerData = playerData;
-    }
-
     public LivingEntity getDamager(){
         return this.damager;
     }
@@ -60,6 +45,7 @@ public class AttackEvent extends EntityDamageEvent implements Cancellable {
         return handler;
     }
 
+    @NotNull
     public static HandlerList getHandlerList(){
         return handler;
     }

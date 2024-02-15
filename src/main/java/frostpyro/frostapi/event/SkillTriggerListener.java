@@ -1,6 +1,7 @@
 package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.api.listeners.customEvents.attackEvents.PlayerAttackEvent;
 import frostpyro.frostapi.graphic_user_interface.EXP_GUI.ExpGUI;
 import frostpyro.frostapi.graphic_user_interface.User_Interface;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
@@ -37,10 +38,12 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void hit(AttackEvent event){
-        PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
-        final boolean shift = event.getPlayer().isSneaking();
-        final TriggerType type = shift ? TriggerType.SHIFT_ATTACK : TriggerType.ATTACK;
-        playerData.castSkill(type);
+        event.getDamager().sendMessage("damaged!");
+    }
+
+    @EventHandler
+    private void playerHit(PlayerAttackEvent event){
+        event.getPlayer().sendMessage("Damage applied!");
     }
 
     @EventHandler
