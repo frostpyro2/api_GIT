@@ -3,6 +3,8 @@ package frostpyro.frostapi.api.listeners.customEventListener;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
+import frostpyro.frostapi.api.listeners.customEvents.projectileEvent.ProjectileEvent;
+import frostpyro.frostapi.api.listeners.customEvents.projectileEvent.player.PlayerProjectileEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -30,11 +32,12 @@ public class AttackEventListener implements Listener {
 
     @EventHandler
     private void projectileAttack(ProjectileHitEvent event){
-        AttackEvent attackEvent;
+        if(event.getHitEntity() == null) return;
+        ProjectileEvent projectileEvent;
         if(event.getEntity().getShooter() instanceof Player)
-            attackEvent = new PlayerAttackEvent((LivingEntity)event.getHitEntity(), (Player) event.getEntity().getShooter());
+            projectileEvent = new PlayerProjectileEvent(event.getEntity(), event.getHitEntity(), (Player) event.getEntity().getShooter());
         else
-            attackEvent = new AttackEvent((LivingEntity)event.getHitEntity(), (LivingEntity) event.getEntity().getShooter());
-        Bukkit.getPluginManager().callEvent(attackEvent);
+            projectileEvent = new ProjectileEvent(event.getEntity(), event.getHitEntity());
+        Bukkit.getPluginManager().callEvent(projectileEvent);
     }
 }

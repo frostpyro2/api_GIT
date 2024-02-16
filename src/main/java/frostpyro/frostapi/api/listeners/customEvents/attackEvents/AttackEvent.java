@@ -1,16 +1,10 @@
 package frostpyro.frostapi.api.listeners.customEvents.attackEvents;
 
-import frostpyro.frostapi.players.PlayerData;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nonnull;
 
 public class AttackEvent extends EntityDamageEvent implements Cancellable {
     private boolean canceled;

@@ -23,6 +23,7 @@ public final class FrostAPI extends JavaPlugin {
         // Plugin startup logic
         generateSkillFolder();
         generateSkillBuildFolder();
+        generatePlayerDataFolder();
 
 
         new AttackEventListener(this);
@@ -46,6 +47,12 @@ public final class FrostAPI extends JavaPlugin {
 
     private void generateSkillBuildFolder(){
         File FOLDER = new File(getDataFolder(), "\\skillBuild");
+        if(FOLDER.exists()) return;
+        FOLDER.mkdirs();
+    }
+
+    private void generatePlayerDataFolder(){
+        File FOLDER = new File(getDataFolder(), "\\player");
         if(FOLDER.exists()) return;
         FOLDER.mkdirs();
     }

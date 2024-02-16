@@ -1,4 +1,4 @@
-package frostpyro.frostapi.players;
+package frostpyro.frostapi.dataManage.player;
 
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;

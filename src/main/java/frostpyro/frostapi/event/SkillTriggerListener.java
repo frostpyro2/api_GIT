@@ -6,7 +6,7 @@ import frostpyro.frostapi.graphic_user_interface.EXP_GUI.ExpGUI;
 import frostpyro.frostapi.graphic_user_interface.User_Interface;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.api.listeners.customEvents.ExpChangeEvent;
-import frostpyro.frostapi.players.PlayerData;
+import frostpyro.frostapi.dataManage.player.PlayerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

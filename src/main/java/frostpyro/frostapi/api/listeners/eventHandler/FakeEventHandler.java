@@ -1,6 +1,6 @@
 package frostpyro.frostapi.api.listeners.eventHandler;
 
-import frostpyro.frostapi.players.PlayerData;
+import frostpyro.frostapi.dataManage.player.PlayerData;
 
 public class FakeEventHandler {
 

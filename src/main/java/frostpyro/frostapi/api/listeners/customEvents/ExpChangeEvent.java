@@ -1,6 +1,6 @@
 package frostpyro.frostapi.api.listeners.customEvents;
 
-import frostpyro.frostapi.players.PlayerData;
+import frostpyro.frostapi.dataManage.player.PlayerData;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
