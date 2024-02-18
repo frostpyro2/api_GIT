@@ -79,37 +79,10 @@ public class SkillTriggerListener implements Listener {
     }
 
     @EventHandler
-    private void shift(PlayerToggleSneakEvent event){
+    private void shift(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
         PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
-        if(event.isSneaking())
+        if (event.isSneaking())
             playerData.castSkill(TriggerType.SHIFT);
-    }
-
-    @EventHandler
-    private void reload(ServerLoadEvent event){
-        for(Player player : Bukkit.getOnlinePlayers()){
-            User_Interface userInterface = new ExpGUI(player);
-            userInterface.show();
-        }
-    }
-
-    @EventHandler
-    private void join(PlayerJoinEvent event){
-        Player player = event.getPlayer();
-        User_Interface userInterface = new ExpGUI(player);
-        userInterface.show();
-    }
-
-    @EventHandler
-    private void left(PlayerQuitEvent event){
-        Player player = event.getPlayer();
-        User_Interface userInterface = new ExpGUI(player);
-        userInterface.disappear();
-    }
-
-    @EventHandler
-    private void dataChange(ExpChangeEvent event){
-        PlayerData playerData = event.getPlayerData();
     }
 }
