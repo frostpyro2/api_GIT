@@ -1,5 +1,6 @@
 package frostpyro.frostapi;
 
+import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
 import org.bukkit.Bukkit;
@@ -25,7 +26,7 @@ public final class FrostAPI extends JavaPlugin {
         generateSkillBuildFolder();
         generatePlayerDataFolder();
 
-
+        new DataListener(this);
         new AttackEventListener(this);
         new SkillTriggerListener(this);
 

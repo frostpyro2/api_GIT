@@ -23,6 +23,14 @@ public class PlayerProjectileEvent extends ProjectileEvent {
         this.player= player;
     }
 
+    public Player getPlayer(){
+        return player;
+    }
+
+    public PlayerData getPlayerData(){
+        return playerData;
+    }
+
     @Override
     public @NotNull HandlerList getHandlers(){
         return handlerList;

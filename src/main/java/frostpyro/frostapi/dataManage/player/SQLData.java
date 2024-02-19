@@ -9,4 +9,9 @@ public class SQLData implements DataManage {
     public PlayerData getPlayerData(Player player) {
         return null;
     }
+
+    @Override
+    public void createData(Player player) {
+
+    }
 }
