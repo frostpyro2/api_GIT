@@ -2,6 +2,8 @@ package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
+import frostpyro.frostapi.dataManage.player.DataManage;
+import frostpyro.frostapi.dataManage.player.YamlData;
 import frostpyro.frostapi.graphic_user_interface.EXP_GUI.ExpGUI;
 import frostpyro.frostapi.graphic_user_interface.User_Interface;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
@@ -17,23 +19,26 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.server.ServerLoadEvent;
 
+import javax.xml.crypto.Data;
 import java.util.*;
 
 
 public class SkillTriggerListener implements Listener {
     private Set<String> uuidSet = new HashSet<>();
+    private DataManage manage = new YamlData();
     public SkillTriggerListener(FrostAPI plugin){
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
     private Map<PlayerData, Long> shiftPressTime = new HashMap<>();
     @EventHandler
     private void click(PlayerInteractEvent event){
-        PlayerData playerData = new PlayerData(event.getPlayer().getUniqueId().toString(), event.getPlayer().getName(), 0, 0, 0, 0);
+        PlayerData data = manage.getPlayerData(event.getPlayer());
+        if(data.getSkillID() == 0) return;
         if(event.getAction() == Action.PHYSICAL) return;
-        final boolean shift = event.getPlayer().isSneaking();
-        final boolean left = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
-        final TriggerType type = shift ? (left ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.SHIFT_RIGHT_CLICK) : (left ? TriggerType.LEFT_CLICK : TriggerType.RIGHT_CLICK);
-        playerData.castSkill(type);
+        boolean isSneaking = data.getPlayer().isSneaking();
+        boolean isLeftClick = event.getAction() == Action.LEFT_CLICK_AIR;
+        TriggerType type = isLeftClick ? (isSneaking ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.LEFT_CLICK) : (isSneaking ? TriggerType.SHIFT_RIGHT_CLICK : TriggerType.RIGHT_CLICK);
+        data.castSkill(type);
     }
 
     @EventHandler
@@ -43,14 +48,13 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void playerHit(PlayerAttackEvent event){
-        event.getPlayer().sendMessage("Damage applied!");
+        event.getPlayerData().getPlayer().sendMessage("damage!");
     }
 
     @EventHandler
     private void entityRight(PlayerInteractAtEntityEvent event){
-        Player player = event.getPlayer();
-        PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
-        final boolean shift = event.getPlayer().isSneaking();
+        PlayerData playerData = manage.getPlayerData(event.getPlayer());
+        final boolean shift = playerData.getPlayer().isSneaking();
         final TriggerType type = shift ? TriggerType.ENTITY_RIGHT_SHIFT : TriggerType.ENTITY_RIGHT;
         playerData.castSkill(type);
     }
