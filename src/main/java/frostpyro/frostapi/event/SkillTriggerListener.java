@@ -32,13 +32,13 @@ public class SkillTriggerListener implements Listener {
     private Map<PlayerData, Long> shiftPressTime = new HashMap<>();
     @EventHandler
     private void click(PlayerInteractEvent event){
-        PlayerData data = manage.getPlayerData(event.getPlayer());
-        if(data.getSkillID() == 0) return;
+        PlayerData playerData = manage.getPlayerData(event.getPlayer());
+        if(playerData.getSkillID() == 0) return;
         if(event.getAction() == Action.PHYSICAL) return;
-        boolean isSneaking = data.getPlayer().isSneaking();
+        boolean isSneaking = playerData.getPlayer().isSneaking();
         boolean isLeftClick = event.getAction() == Action.LEFT_CLICK_AIR;
         TriggerType type = isLeftClick ? (isSneaking ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.LEFT_CLICK) : (isSneaking ? TriggerType.SHIFT_RIGHT_CLICK : TriggerType.RIGHT_CLICK);
-        data.castSkill(type);
+        playerData.castSkill(type);
     }
 
     @EventHandler
