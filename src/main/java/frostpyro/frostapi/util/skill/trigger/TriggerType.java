@@ -20,8 +20,6 @@ public class TriggerType {
     @NotNull
     public static TriggerType ATTACK = new TriggerType("ATTACK"),
     ENTITY_RIGHT = new TriggerType("ENTITY_RIGHT"),
-    ENTITY_RIGHT_SHIFT = new TriggerType("ENTITY_RIGHT_SHIFT"),
-    SHIFT_ATTACK = new TriggerType("SHIFT_ATTACK"),
     LEFT_CLICK = new TriggerType("LEFT_CLICK"),
     RIGHT_CLICK = new TriggerType("RIGHT_CLICK"),
     SHIFT_LEFT_CLICK = new TriggerType("SHIFT_LEFT_CLICK"),
@@ -45,9 +43,7 @@ public class TriggerType {
         register(RIGHT_CLICK);
         register(SHIFT_LEFT_CLICK);
         register(SHIFT_RIGHT_CLICK);
-        register(SHIFT_ATTACK);
         register(ENTITY_RIGHT);
-        register(ENTITY_RIGHT_SHIFT);
 
         register(PROJECTILE_HIT);
         register(PROJECTILE_TICK);
