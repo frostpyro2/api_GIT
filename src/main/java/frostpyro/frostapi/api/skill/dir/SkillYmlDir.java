@@ -8,7 +8,8 @@ public enum SkillYmlDir {
     HOMING("homing"),
     DISPLAY("display"),
     ITEM("item"),
-    MODEL("model")
+    MODEL("model"),
+    FRAME("frame")
     ;
     private String string;
     SkillYmlDir(String string){
