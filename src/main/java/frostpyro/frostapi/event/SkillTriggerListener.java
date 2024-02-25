@@ -54,8 +54,7 @@ public class SkillTriggerListener implements Listener {
     @EventHandler
     private void entityRight(PlayerInteractAtEntityEvent event){
         PlayerData playerData = manage.getPlayerData(event.getPlayer());
-        final boolean shift = playerData.getPlayer().isSneaking();
-        final TriggerType type = shift ? TriggerType.ENTITY_RIGHT_SHIFT : TriggerType.ENTITY_RIGHT;
+        TriggerType type = TriggerType.ENTITY_RIGHT;
         playerData.castSkill(type);
     }
 
