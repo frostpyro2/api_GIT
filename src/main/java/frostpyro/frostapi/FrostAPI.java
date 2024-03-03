@@ -1,19 +1,24 @@
 package frostpyro.frostapi;
 
+import frostpyro.frostapi.dataManage.player.PlayerData;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
+import frostpyro.frostapi.threads.SkillThread;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class FrostAPI extends JavaPlugin {
     private static FrostAPI plugin;
@@ -103,4 +108,6 @@ public final class FrostAPI extends JavaPlugin {
 
     public NamespacedKey exp = new NamespacedKey(this, "EXP");
     public NamespacedKey skillType = new NamespacedKey(this, "SKILL");
+    public Set<PlayerData> playerSet = new HashSet<>();
+    public Thread skillThread;
 }

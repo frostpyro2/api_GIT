@@ -1,5 +1,7 @@
 package frostpyro.frostapi.dataManage.player;
 
+import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.threads.SkillThread;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,6 +15,8 @@ public class PlayerData {
     private int level;
     private double exp;
     private double money;
+
+    private Thread thread = new Thread(new SkillThread(this), "check");
 
     public PlayerData(String uuid, String name, int skillID, int level, double exp, double money){
         this.uuid = uuid;
@@ -46,6 +50,6 @@ public class PlayerData {
     }
 
     public void castSkill(TriggerType trigger){
-
+        if(this.skillID == 0) return;
     }
 }

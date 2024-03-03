@@ -6,8 +6,11 @@ import frostpyro.frostapi.dataManage.player.DataManage;
 import frostpyro.frostapi.dataManage.player.YamlData;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.player.PlayerData;
+import frostpyro.frostapi.threads.SkillThread;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,7 +31,6 @@ public class SkillTriggerListener implements Listener {
     @EventHandler
     private void click(PlayerInteractEvent event){
         PlayerData playerData = manage.getPlayerData(event.getPlayer());
-        if(playerData.getSkillID() == 0) return;
         if(event.getAction() == Action.PHYSICAL) return;
         boolean isSneaking = playerData.getPlayer().isSneaking();
         boolean isLeftClick = event.getAction() == Action.LEFT_CLICK_AIR;
@@ -43,7 +45,7 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void playerHit(PlayerAttackEvent event){
-        event.getPlayerData().getPlayer().sendMessage("damage!");
+        event.getPlayerData().castSkill(TriggerType.ATTACK);
     }
 
     @EventHandler
