@@ -2,6 +2,7 @@ package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
+import frostpyro.frostapi.api.listeners.eventHandler.FakeEntityDamageByEntityEvent;
 import frostpyro.frostapi.dataManage.player.DataManage;
 import frostpyro.frostapi.dataManage.player.YamlData;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 

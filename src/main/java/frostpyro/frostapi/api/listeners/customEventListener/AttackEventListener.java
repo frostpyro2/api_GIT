@@ -30,6 +30,7 @@ public class AttackEventListener implements Listener {
             attackEvent = new PlayerAttackEvent((LivingEntity) event.getEntity(), manage.getPlayerData((Player) ((EntityDamageByEntityEvent) event).getDamager()));
         else
             attackEvent = new AttackEvent((LivingEntity) event.getEntity(), (LivingEntity) ((EntityDamageByEntityEvent) event).getDamager());
+        if(attackEvent.isCancelled()) return;
         Bukkit.getPluginManager().callEvent(attackEvent);
     }
 
