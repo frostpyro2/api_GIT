@@ -1,7 +1,7 @@
 package frostpyro.frostapi.api.listeners.customEvents.projectileEvent.player;
 
 import frostpyro.frostapi.api.listeners.customEvents.projectileEvent.ProjectileEvent;
-import frostpyro.frostapi.dataManage.player.PlayerData;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;

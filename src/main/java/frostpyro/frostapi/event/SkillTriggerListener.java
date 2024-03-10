@@ -1,12 +1,11 @@
 package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.api.damageManager.DamageType;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
-import frostpyro.frostapi.dataManage.player.DataManage;
-import frostpyro.frostapi.dataManage.player.YamlData;
+import frostpyro.frostapi.dataManage.data.DataManage;
+import frostpyro.frostapi.dataManage.stat.player.YamlData;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
-import frostpyro.frostapi.dataManage.player.PlayerData;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,7 +27,7 @@ public class SkillTriggerListener implements Listener {
     private Map<PlayerData, Long> shiftPressTime = new HashMap<>();
     @EventHandler
     private void click(PlayerInteractEvent event){
-        PlayerData playerData = manage.getPlayerData(event.getPlayer());
+        PlayerData playerData = (PlayerData) manage.getEntityData(event.getPlayer());
         if(event.getAction() == Action.PHYSICAL) return;
         boolean isSneaking = playerData.getPlayer().isSneaking();
         boolean isLeftClick = event.getAction() == Action.LEFT_CLICK_AIR;
@@ -48,22 +47,18 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void entityRight(PlayerInteractAtEntityEvent event){
-        PlayerData playerData = manage.getPlayerData(event.getPlayer());
-        TriggerType type = TriggerType.ENTITY_RIGHT;
-        playerData.castSkill(type);
+
     }
 
     @EventHandler
     private void getHit(EntityDamageEvent event){
         if(!(event.getEntity() instanceof Player player)) return;
-        PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
-        playerData.castSkill(TriggerType.DAMAGED);
     }
 
     @EventHandler
     private void shift_twice(PlayerToggleSneakEvent event){
         Player player = event.getPlayer();
-        PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
+        PlayerData playerData = new PlayerData(player.getUniqueId(), player.getName(), 0, 0, 0, 0);
         if(event.isSneaking()){
             if(shiftPressTime.containsKey(playerData)){
                 long lastShift = shiftPressTime.get(playerData);
@@ -79,7 +74,7 @@ public class SkillTriggerListener implements Listener {
     @EventHandler
     private void shift(PlayerToggleSneakEvent event) {
         Player player = event.getPlayer();
-        PlayerData playerData = new PlayerData(player.getUniqueId().toString(), player.getName(), 0, 0, 0, 0);
+        PlayerData playerData = new PlayerData(player.getUniqueId(), player.getName(), 0, 0, 0, 0);
         if (event.isSneaking())
             playerData.castSkill(TriggerType.SHIFT);
     }

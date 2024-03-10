@@ -1,11 +1,6 @@
 package frostpyro.frostapi.threads;
 
-import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.dataManage.player.PlayerData;
-import org.bukkit.entity.Player;
-
-import java.util.HashSet;
-import java.util.Set;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 
 public class SkillThread implements Runnable{
     private PlayerData playerData;

@@ -1,24 +1,22 @@
-package frostpyro.frostapi.dataManage.player;
+package frostpyro.frostapi.dataManage.stat.player;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.dataManage.data.DataManage;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 
-public class YamlData implements DataManage{
+public class YamlData implements DataManage {
     String[] strings = {"skillID", "level", "exp", "money"};
 
     @Override
-    public @Nullable PlayerData getPlayerData(Player player) {
-        File playerFile = new File(FrostAPI.getPlugin().getDataFolder(), "player\\"+player.getName()+"_"+ player.getUniqueId().toString()+".yml");
+    public @Nullable PlayerData getEntityData(LivingEntity livingEntity) {
+        File playerFile = new File(FrostAPI.getPlugin().getDataFolder(), "player\\"+livingEntity.getName()+"_"+ livingEntity.getUniqueId().toString()+".yml");
         FileConfiguration configuration = new YamlConfiguration();
         try{
             configuration.load(playerFile);
@@ -26,12 +24,12 @@ public class YamlData implements DataManage{
         catch (IOException | InvalidConfigurationException e){
             return null;
         }
-        return new PlayerData(player.getUniqueId().toString(), player.getName(), configuration.getInt("skillID"), configuration.getInt("level"), configuration.getDouble("exp"), configuration.getDouble("money"));
+        return new PlayerData(livingEntity.getUniqueId(), livingEntity.getName(), configuration.getInt("skillID"), configuration.getInt("level"), configuration.getDouble("exp"), configuration.getDouble("money"));
     }
 
     @Override
-    public void createData(Player player){
-       File file = new File(FrostAPI.getPlugin().getDataFolder(), "player\\" + player.getName() + "_" + player.getUniqueId() + ".yml");
+    public void createData(LivingEntity livingEntity){
+       File file = new File(FrostAPI.getPlugin().getDataFolder(), "player\\" + livingEntity.getName() + "_" + livingEntity.getUniqueId() + ".yml");
        if(!file.getParentFile().exists()){
            file.getParentFile().mkdirs();
        }

@@ -1,17 +1,15 @@
 package frostpyro.frostapi;
 
-import frostpyro.frostapi.dataManage.player.PlayerData;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
-import frostpyro.frostapi.threads.SkillThread;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
