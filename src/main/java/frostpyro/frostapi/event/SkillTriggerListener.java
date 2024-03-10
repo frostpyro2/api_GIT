@@ -1,22 +1,18 @@
 package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.api.damageManager.DamageType;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
-import frostpyro.frostapi.api.listeners.eventHandler.FakeEntityDamageByEntityEvent;
 import frostpyro.frostapi.dataManage.player.DataManage;
 import frostpyro.frostapi.dataManage.player.YamlData;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.player.PlayerData;
-import frostpyro.frostapi.threads.SkillThread;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 

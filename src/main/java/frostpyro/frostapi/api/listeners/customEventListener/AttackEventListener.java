@@ -1,6 +1,8 @@
 package frostpyro.frostapi.api.listeners.customEventListener;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.api.damageManager.DamagePacket;
+import frostpyro.frostapi.api.damageManager.DamageType;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
 import frostpyro.frostapi.api.listeners.customEvents.projectileEvent.ProjectileEvent;
@@ -21,17 +23,18 @@ public class AttackEventListener implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
     DataManage manage = new YamlData();
+
+    AttackEvent attackEvent;
     @EventHandler
     private void attack(EntityDamageEvent event){
         if(!(event instanceof EntityDamageByEntityEvent)) return;
-        AttackEvent attackEvent;
         if(!(((EntityDamageByEntityEvent) event).getDamager() instanceof LivingEntity)) return;
-        if(((EntityDamageByEntityEvent) event).getDamager() instanceof Player)
-            attackEvent = new PlayerAttackEvent((LivingEntity) event.getEntity(), manage.getPlayerData((Player) ((EntityDamageByEntityEvent) event).getDamager()));
+        DamagePacket packet = new DamagePacket((LivingEntity) event.getEntity(), (LivingEntity) ((EntityDamageByEntityEvent) event).getDamager(), DamageType.DEFAULT);
+        if((((EntityDamageByEntityEvent) event).getDamager() instanceof Player))
+            attackEvent = new PlayerAttackEvent(event.getEntity(), packet, manage.getPlayerData((Player) ((EntityDamageByEntityEvent) event).getDamager()));
         else
-            attackEvent = new AttackEvent((LivingEntity) event.getEntity(), (LivingEntity) ((EntityDamageByEntityEvent) event).getDamager());
-        if(attackEvent.isCancelled()) return;
-        Bukkit.getPluginManager().callEvent(attackEvent);
+            attackEvent = new AttackEvent(event.getEntity(), packet);
+        Bukkit.getServer().getPluginManager().callEvent(attackEvent);
     }
 
     @EventHandler

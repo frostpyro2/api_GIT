@@ -1,7 +1,10 @@
 package frostpyro.frostapi.api.listeners.customEvents.attackEvents.player;
 
+import frostpyro.frostapi.api.damageManager.DamagePacket;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.player.PlayerData;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -11,16 +14,13 @@ public class PlayerAttackEvent extends AttackEvent {
     private static HandlerList handlerList = new HandlerList();
     private Player damager;
     private PlayerData damagerData;
-    public PlayerAttackEvent(LivingEntity entity, Player damger) {
-        super(entity);
-        this.damager = damger;
+
+    public PlayerAttackEvent(@NotNull Entity what, DamagePacket packet, PlayerData playerData) {
+        super(what, packet);
+        this.damagerData = playerData;
     }
 
-    public PlayerAttackEvent(LivingEntity entity, PlayerData damager){
-        super(entity);
-        damagerData = damager;
-    }
-
+    @Deprecated(forRemoval = true)
     public Player getPlayer(){
         return damager;
     }

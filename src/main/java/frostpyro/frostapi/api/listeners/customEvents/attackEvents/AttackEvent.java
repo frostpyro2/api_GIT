@@ -1,23 +1,24 @@
 package frostpyro.frostapi.api.listeners.customEvents.attackEvents;
 
+import frostpyro.frostapi.api.damageManager.DamagePacket;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class AttackEvent extends EntityDamageEvent implements Cancellable {
+public class AttackEvent extends EntityEvent implements Cancellable {
     private boolean canceled;
     private static HandlerList handler = new HandlerList();
 
-    private LivingEntity damager;
-    public AttackEvent(LivingEntity entity){
-        super(entity, DamageCause.ENTITY_ATTACK, 0);
-    }
+    private DamagePacket packet;
 
-    public AttackEvent(LivingEntity entity, LivingEntity damager) {
-        super(entity, DamageCause.ENTITY_ATTACK, 0);
-        this.damager = damager;
+    public AttackEvent(@NotNull Entity what, DamagePacket packet) {
+        super(what);
+        this.packet = packet;
     }
 
     @Override
@@ -30,8 +31,8 @@ public class AttackEvent extends EntityDamageEvent implements Cancellable {
         this.canceled = cancel;
     }
 
-    public LivingEntity getDamager(){
-        return this.damager;
+    public DamagePacket getPacket(){
+        return this.packet;
     }
     @Override
     @NotNull

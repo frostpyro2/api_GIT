@@ -1,4 +1,4 @@
-package frostpyro.frostapi.api.listeners.eventHandler;
+package frostpyro.frostapi.api.listeners.fakeEventHandler.eventHandler;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
