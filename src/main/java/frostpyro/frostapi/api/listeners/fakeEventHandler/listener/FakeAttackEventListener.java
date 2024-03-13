@@ -15,7 +15,6 @@ public class FakeAttackEventListener implements Listener {
 
     @EventHandler
     private void fakeEvent(AttackEvent event){
-        if(!event.getPacket().getType().equals(DamageType.DEFAULT))
-            event.setCancelled(true);
+
     }
 }

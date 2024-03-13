@@ -1,5 +1,9 @@
 package frostpyro.frostapi.api.damageManager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SkillDamage {
     private DamagePacket packet;
     private double amount;
@@ -10,8 +14,6 @@ public class SkillDamage {
     }
 
     public void damage(){
-        if(packet.getType().equals(DamageType.DEFAULT)||packet.getType().equals(DamageType.PROJECTILE))
-            return;
         if(packet.getDamagee() == null){
             packet.getTarget().damage(amount);
             return;
