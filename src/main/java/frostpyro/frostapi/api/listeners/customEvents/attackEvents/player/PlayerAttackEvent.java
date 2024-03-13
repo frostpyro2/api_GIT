@@ -1,6 +1,5 @@
 package frostpyro.frostapi.api.listeners.customEvents.attackEvents.player;
 
-import frostpyro.frostapi.api.damageManager.DamagePacket;
 import frostpyro.frostapi.api.damageManager.attackData.AttackData;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;

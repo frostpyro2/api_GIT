@@ -1,10 +1,6 @@
 package frostpyro.frostapi.api.listeners.customEvents.attackEvents;
 
-import frostpyro.frostapi.api.damageManager.DamagePacket;
 import frostpyro.frostapi.api.damageManager.attackData.AttackData;
-import org.bukkit.damage.DamageSource;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;

@@ -1,4 +1,4 @@
-package frostpyro.frostapi.api.damageManager;
+package frostpyro.frostapi.api.damageManager.damageData;
 
 import org.bukkit.entity.LivingEntity;
 
@@ -7,21 +7,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DamagePacket implements Cloneable{
-    private LivingEntity target;
-    private LivingEntity damagee;
     private DamageType[] type;
-    public DamagePacket(LivingEntity target){
-        this.target = target;
-    }
+    private double damage;
 
-    public DamagePacket(LivingEntity target, LivingEntity damagee, DamageType...type) {
-        this.target = target;
-        this.damagee = damagee;
+    public DamagePacket(double damage, DamageType...type) {
+        this.damage = damage;
         this.type = type;
     }
 
     public void setType(DamageType...type){
         this.type = type;
+    }
+
+    public double getDamage(){
+        return damage;
     }
 
     public DamageType[] getTypeArray() {
@@ -30,14 +29,6 @@ public class DamagePacket implements Cloneable{
 
     public List<DamageType> getTypeList(){
         return new ArrayList<>(Arrays.asList(type));
-    }
-
-    public LivingEntity getTarget(){
-        return target;
-    }
-
-    public LivingEntity getDamagee(){
-        return damagee;
     }
 
     @Override

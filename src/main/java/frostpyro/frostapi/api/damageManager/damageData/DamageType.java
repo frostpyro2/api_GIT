@@ -1,4 +1,4 @@
-package frostpyro.frostapi.api.damageManager;
+package frostpyro.frostapi.api.damageManager.damageData;
 
 public enum DamageType {
     DEFAULT,
