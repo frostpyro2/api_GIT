@@ -1,8 +1,10 @@
 package frostpyro.frostapi.api.damageManager.damageData;
 
 public enum DamageType {
-    DEFAULT,
+    PHYSICAL,
     MELEESKILL,
     PROJECTILE,
-    PROJECTILESKILL
+    PROJECTILESKILL,
+    MAGIC,
+    DOT
 }

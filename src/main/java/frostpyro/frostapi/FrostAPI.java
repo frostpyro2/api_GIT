@@ -1,5 +1,6 @@
 package frostpyro.frostapi;
 
+import frostpyro.frostapi.api.damageManager.damageData.DamageManage;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
@@ -20,6 +21,7 @@ import java.util.Set;
 
 public final class FrostAPI extends JavaPlugin {
     private static FrostAPI plugin;
+    private DamageManage damage;
     @Override
     public void onEnable() {
         plugin = this;
@@ -42,6 +44,10 @@ public final class FrostAPI extends JavaPlugin {
     }
     public static FrostAPI getPlugin(){
         return plugin;
+    }
+
+    public DamageManage getDamage(){
+        return damage;
     }
     private void generateSkillFolder(){
         File FOLDER = new File(getDataFolder(), "\\skill");

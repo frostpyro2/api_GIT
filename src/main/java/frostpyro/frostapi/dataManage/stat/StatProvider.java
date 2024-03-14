@@ -1,9 +1,18 @@
 package frostpyro.frostapi.dataManage.stat;
 
+import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 public class StatProvider {
@@ -67,5 +76,20 @@ public class StatProvider {
 
     public void castSkill(TriggerType type){
         if(skillID == 0) return;
+    }
+
+    public static StatProvider get(LivingEntity livingEntity){
+        File playerFile = new File(FrostAPI.getPlugin().getDataFolder(), "player\\"+livingEntity.getName()+"_"+ livingEntity.getUniqueId().toString()+".yml");
+        FileConfiguration configuration = new YamlConfiguration();
+        try{
+            configuration.load(playerFile);
+        }
+        catch (IOException | InvalidConfigurationException e){
+            return null;
+        }
+        if(livingEntity instanceof Player){
+            return new PlayerData(livingEntity.getUniqueId(), livingEntity.getName(), configuration.getInt("skillID"), configuration.getInt("level"), configuration.getDouble("exp"), configuration.getDouble("money"));
+        }
+        return new StatProvider(livingEntity.getUniqueId(), livingEntity.getName(), configuration.getInt("skillID"), configuration.getDouble("exp"), configuration.getInt("level"));
     }
 }

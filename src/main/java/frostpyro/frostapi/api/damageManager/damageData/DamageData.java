@@ -29,4 +29,8 @@ public class DamageData {
 
         return Math.max(MIN, tmp);
     }
+
+    public double getDamage(double damage){
+        return Math.max(MIN, damage);
+    }
 }
