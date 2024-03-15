@@ -1,7 +1,15 @@
 package frostpyro.frostapi.guild;
 
+import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +28,15 @@ public class Guild {
         this.guildMember = guildMember;
         masterName = guildMaster.getName();
         masterUUID = guildMaster.getUuid();
+    }
+
+    private static List<StatProvider> statProviders(FileConfiguration configuration){
+        List<StatProvider> temp = new ArrayList<>();
+        for(String string : configuration.getStringList("members")){
+            String[] tempStr = string.split("_");
+            temp.add(StatProvider.get(UUID.fromString(tempStr[1])));
+        }
+        return temp;
     }
 
     public StatProvider getGuildMaster() {
@@ -50,8 +67,21 @@ public class Guild {
         return guildMember.contains(member);
     }
 
-    @Deprecated
     public static Guild get(StatProvider master){
-        return null;
+        File file = new File(FrostAPI.getPlugin().getDataFolder(), "guild\\" + master.getName()+"_"+master.getUuid()+".yml");
+        if(!file.exists()) return null;
+        FileConfiguration configuration = new YamlConfiguration();
+        try{
+            configuration.load(file);
+        }
+        catch (IOException | InvalidConfigurationException e){
+            return null;
+        }
+
+        return new Guild(master, statProviders(configuration));
+    }
+
+    public static void create(StatProvider master){
+
     }
 }

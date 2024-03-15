@@ -2,8 +2,6 @@ package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
-import frostpyro.frostapi.dataManage.data.DataManage;
-import frostpyro.frostapi.dataManage.stat.player.YamlData;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
@@ -20,19 +18,13 @@ import java.util.*;
 
 public class SkillTriggerListener implements Listener {
     private Set<String> uuidSet = new HashSet<>();
-    private DataManage manage = new YamlData();
     public SkillTriggerListener(FrostAPI plugin){
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
     private Map<PlayerData, Long> shiftPressTime = new HashMap<>();
     @EventHandler
     private void click(PlayerInteractEvent event){
-        PlayerData playerData = (PlayerData) manage.getEntityData(event.getPlayer());
-        if(event.getAction() == Action.PHYSICAL) return;
-        boolean isSneaking = playerData.getPlayer().isSneaking();
-        boolean isLeftClick = event.getAction() == Action.LEFT_CLICK_AIR;
-        TriggerType type = isLeftClick ? (isSneaking ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.LEFT_CLICK) : (isSneaking ? TriggerType.SHIFT_RIGHT_CLICK : TriggerType.RIGHT_CLICK);
-        playerData.castSkill(type);
+
     }
 
     @EventHandler

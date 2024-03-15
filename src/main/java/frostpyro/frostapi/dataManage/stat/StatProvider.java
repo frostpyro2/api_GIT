@@ -92,4 +92,10 @@ public class StatProvider {
         }
         return new StatProvider(livingEntity.getUniqueId(), livingEntity.getName(), configuration.getInt("skillID"), configuration.getDouble("exp"), configuration.getInt("level"));
     }
+
+    public static StatProvider get(UUID uuid){
+        Entity entity = Bukkit.getEntity(uuid);
+        if(entity == null) return null;
+        return get((LivingEntity) entity);
+    }
 }

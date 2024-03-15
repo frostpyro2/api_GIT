@@ -1,8 +1,6 @@
 package frostpyro.frostapi.event;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.dataManage.data.DataManage;
-import frostpyro.frostapi.dataManage.stat.player.YamlData;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,10 +14,7 @@ public class DataListener implements Listener {
 
     @EventHandler
     private void join(PlayerJoinEvent event){
-        DataManage manage = new YamlData();
-        if(manage.getEntityData(event.getPlayer()) == null){
-            manage.createData(event.getPlayer());
-        }
+
     }
 
     @EventHandler
