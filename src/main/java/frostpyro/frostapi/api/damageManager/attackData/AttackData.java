@@ -2,7 +2,6 @@ package frostpyro.frostapi.api.damageManager.attackData;
 
 import frostpyro.frostapi.api.damageManager.damageData.DamageData;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
-import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import org.bukkit.entity.LivingEntity;
 
 public class AttackData {

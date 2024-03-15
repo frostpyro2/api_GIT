@@ -1,34 +1,29 @@
 package frostpyro.frostapi.dataManage.stat.player;
 
 import frostpyro.frostapi.dataManage.stat.StatProvider;
-import frostpyro.frostapi.util.skill.trigger.TriggerType;
-import org.bukkit.Bukkit;
+import frostpyro.frostapi.dataManage.stat.data.StatMap;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 
-import java.util.*;
+public class PlayerData implements StatProvider {
+    private PlayerDataTmp playerDataTmp;
+    private EquipmentSlot slot;
 
-public class PlayerData extends StatProvider {
-    private double money;
-
-    public PlayerData(UUID uuid, String name, int skillID, int level, double exp, double money){
-        super(uuid, name, skillID, exp, level);
-        this.money = money;
-    }
-
-    public double getMoney() {
-        return money;
-    }
-
-    public void setMoney(double money) {
-        this.money = money;
-    }
-
-    public Player getPlayer(){
-        return (Player) super.getEntity();
+    private Player player;
+    public PlayerData(PlayerDataTmp playerDataTmp, EquipmentSlot slot){
+        player = (Player) playerDataTmp.getEntity();
+        this.playerDataTmp = playerDataTmp;
+        this.slot = slot;
     }
 
     @Override
-    public void castSkill(TriggerType type) {
-        super.castSkill(type);
+    public LivingEntity getEntity() {
+        return player;
+    }
+
+    @Override
+    public double getStat(String stat) {
+        return 0;
     }
 }

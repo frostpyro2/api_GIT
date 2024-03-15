@@ -1,7 +1,7 @@
 package frostpyro.frostapi;
 
 import frostpyro.frostapi.api.damageManager.damageData.DamageManage;
-import frostpyro.frostapi.dataManage.stat.player.PlayerData;
+import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
@@ -112,6 +112,6 @@ public final class FrostAPI extends JavaPlugin {
 
     public NamespacedKey exp = new NamespacedKey(this, "EXP");
     public NamespacedKey skillType = new NamespacedKey(this, "SKILL");
-    public Set<PlayerData> playerSet = new HashSet<>();
+    public Set<PlayerDataTmp> playerSet = new HashSet<>();
     public Thread skillThread;
 }

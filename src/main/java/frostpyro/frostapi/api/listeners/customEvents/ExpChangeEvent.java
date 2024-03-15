@@ -1,6 +1,6 @@
 package frostpyro.frostapi.api.listeners.customEvents;
 
-import frostpyro.frostapi.dataManage.stat.player.PlayerData;
+import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -8,18 +8,18 @@ import javax.annotation.Nonnull;
 //detects data's change
 public class ExpChangeEvent extends Event {
     private static HandlerList handlerList = new HandlerList();
-    private PlayerData playerData;
-    public ExpChangeEvent(PlayerData playerData) {
+    private PlayerDataTmp playerDataTmp;
+    public ExpChangeEvent(PlayerDataTmp playerDataTmp) {
         super();
-        this.playerData = playerData;
+        this.playerDataTmp = playerDataTmp;
     }
 
     public ExpChangeEvent(boolean isAsync) {
         super(isAsync);
     }
 
-    public PlayerData getPlayerData(){
-        return playerData;
+    public PlayerDataTmp getPlayerData(){
+        return playerDataTmp;
     }
 
     @Override

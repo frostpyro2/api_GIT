@@ -12,19 +12,6 @@ public class DamageManage {
 
 
     public AttackData findAttack(EntityDamageEvent event){
-        Entity damaged = event.getEntity();
-        if(event instanceof EntityDamageByEntityEvent){
-            Entity attacker = ((EntityDamageByEntityEvent)event).getDamager();
-            if(attacker instanceof LivingEntity){
-                StatProvider provider = StatProvider.get((LivingEntity) attacker);
-                return new AttackData(new DamageData(event.getDamage(), types(event.getCause())), (LivingEntity) damaged, provider);
-            }
-            else if(attacker instanceof Projectile){
-                if(((Projectile)attacker).getShooter() == null) return null;
-                StatProvider provider = StatProvider.get((LivingEntity) ((Projectile)attacker).getShooter());
-                return new AttackData(new DamageData(event.getDamage(), types(event.getCause())), (LivingEntity) damaged, provider);
-            }
-        }
         return null;
     }
 
