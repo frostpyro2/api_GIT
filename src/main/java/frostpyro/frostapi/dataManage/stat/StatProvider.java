@@ -20,20 +20,6 @@ import java.util.UUID;
 public interface StatProvider {
     LivingEntity getEntity();
     double getStat(String stat);
-    static StatProvider get(LivingEntity livingEntity){
-        File playerFile = new File(FrostAPI.getPlugin().getDataFolder(), "player\\"+livingEntity.getName()+"_"+ livingEntity.getUniqueId().toString()+".yml");
-        FileConfiguration configuration = new YamlConfiguration();
-        try{
-            configuration.load(playerFile);
-        }
-        catch (IOException | InvalidConfigurationException e){
-            return null;
-        }
-        if(livingEntity instanceof Player){
-            return new PlayerDataTmp(livingEntity.getUniqueId(), livingEntity.getName(), configuration.getInt("skillID"), configuration.getInt("level"), configuration.getDouble("exp"), configuration.getDouble("money"));
-        }
-        return null;
-    }
 
     static StatProvider get(LivingEntity livingEntity, EquipmentSlot slot, boolean cache){
         final StatMap statMap = PlayerDataTmp.get((Player) livingEntity).statMap();
@@ -41,9 +27,9 @@ public interface StatProvider {
         return cache ? statMap.cache(slot) : statMap;
     }
 
-    static StatProvider get(UUID uuid){
+    static StatProvider get(UUID uuid, EquipmentSlot slot, boolean cache){
         Entity entity = Bukkit.getEntity(uuid);
         if(entity == null) return null;
-        return get((LivingEntity) entity);
+        return get((LivingEntity) entity, slot, cache);
     }
 }

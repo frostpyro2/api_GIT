@@ -48,25 +48,11 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void shift_twice(PlayerToggleSneakEvent event){
-        Player player = event.getPlayer();
-        PlayerDataTmp playerDataTmp = new PlayerDataTmp(player.getUniqueId(), player.getName(), 0, 0, 0, 0);
-        if(event.isSneaking()){
-            if(shiftPressTime.containsKey(playerDataTmp)){
-                long lastShift = shiftPressTime.get(playerDataTmp);
-                long time = System.currentTimeMillis();
-                if(time - lastShift < 200) {
-                    playerDataTmp.castSkill(TriggerType.SHIFT_SHIFT);
-                }
-            }
-            shiftPressTime.put(playerDataTmp, System.currentTimeMillis());
-        }
+
     }
 
     @EventHandler
     private void shift(PlayerToggleSneakEvent event) {
-        Player player = event.getPlayer();
-        PlayerDataTmp playerDataTmp = new PlayerDataTmp(player.getUniqueId(), player.getName(), 0, 0, 0, 0);
-        if (event.isSneaking())
-            playerDataTmp.castSkill(TriggerType.SHIFT);
+
     }
 }

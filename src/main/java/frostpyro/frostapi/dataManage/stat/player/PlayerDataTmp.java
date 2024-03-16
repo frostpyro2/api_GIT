@@ -20,11 +20,6 @@ public class PlayerDataTmp implements StatProvider {
         this.player = Bukkit.getPlayer(uuid);
     }
 
-
-    public PlayerDataTmp(UUID uuid, String name, int skillID, int level, double exp, double money){
-
-    }
-
     @Override
     public LivingEntity getEntity() {
         return player;
@@ -38,7 +33,7 @@ public class PlayerDataTmp implements StatProvider {
     public void castSkill(TriggerType type) {
 
     }
-    private static Map<UUID, PlayerDataTmp> player_DT = new WeakHashMap<>();
+    private static final Map<UUID, PlayerDataTmp> player_DT = new WeakHashMap<>();
     public static PlayerDataTmp get(Player player){
         return player_DT.get(player.getUniqueId());
     }
