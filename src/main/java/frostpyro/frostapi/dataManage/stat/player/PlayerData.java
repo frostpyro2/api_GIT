@@ -31,4 +31,8 @@ public class PlayerData implements StatProvider {
     public double getStat(String stat) {
         return playerDataTmp.getStat(stat);
     }
+
+    public PlayerDataTmp tmp(){
+        return playerDataTmp;
+    }
 }
