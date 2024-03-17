@@ -22,7 +22,7 @@ public interface StatProvider {
     double getStat(String stat);
 
     static StatProvider get(LivingEntity livingEntity, EquipmentSlot slot, boolean cache){
-        final StatMap statMap = PlayerDataTmp.get((Player) livingEntity).statMap();
+        final StatMap statMap = PlayerDataTmp.get(livingEntity.getUniqueId()).statMap();
 
         return cache ? statMap.cache(slot) : statMap;
     }

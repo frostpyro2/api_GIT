@@ -2,6 +2,7 @@ package frostpyro.frostapi.api.listeners.customEvents.attackEvents.player;
 
 import frostpyro.frostapi.api.damageManager.attackData.AttackData;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -11,11 +12,11 @@ import org.jetbrains.annotations.NotNull;
 public class PlayerAttackEvent extends AttackEvent {
     private static HandlerList handlerList = new HandlerList();
     private Player damager;
-    private PlayerDataTmp damagerData;
+    private PlayerData damagerData;
 
     public PlayerAttackEvent(EntityDamageEvent event, AttackData data) {
         super(event, data);
-        damagerData = (PlayerDataTmp) data.getAttacker();
+        damagerData = (PlayerData) data.getAttacker();
     }
 
     @Deprecated(forRemoval = true)
@@ -23,7 +24,7 @@ public class PlayerAttackEvent extends AttackEvent {
         return damager;
     }
 
-    public PlayerDataTmp getPlayerData(){
+    public PlayerData getPlayerData(){
         return damagerData;
     }
 

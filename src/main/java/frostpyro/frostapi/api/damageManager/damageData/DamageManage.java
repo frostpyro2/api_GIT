@@ -7,11 +7,24 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 public class DamageManage {
 
 
     public AttackData findAttack(EntityDamageEvent event){
+        Entity entity = event.getEntity();
+        if(event instanceof EntityDamageByEntityEvent){
+            Entity damager = ((EntityDamageByEntityEvent) event).getDamager();
+            if(damager instanceof LivingEntity){
+                final StatProvider provider = StatProvider.get((LivingEntity)damager, EquipmentSlot.HAND, true);
+                return new AttackData(new DamageData(event.getDamage(), types(event.getCause())), (LivingEntity) entity, provider);
+            }
+            else if(damager instanceof Projectile){
+                final StatProvider provider = StatProvider.get((LivingEntity) ((Projectile)damager).getShooter(), EquipmentSlot.HAND, false);
+                return new AttackData(new DamageData(event.getDamage(), types(event.getCause())), (LivingEntity) entity, provider);
+            }
+        }
         return null;
     }
 

@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,17 +26,25 @@ public class PlayerFile {
         if(!file.exists()){
             try{
                 file.createNewFile();
-                YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-
-                configuration.save(file);
             }
             catch (IOException e){
                 e.printStackTrace();
             }
         }
+        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+
+        try{
+            for(String string : StatFile.getStatType()){
+                if(configuration.contains(string)) continue;
+                configuration.set(string, 0);
+            }
+            configuration.save(file);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
-    public static FileConfiguration getFile(LivingEntity entity){
+    public static FileConfiguration getFile(@NotNull LivingEntity entity){
         String name = entity.getName();
         UUID uuid = entity.getUniqueId();
 

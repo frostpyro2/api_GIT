@@ -1,6 +1,11 @@
 package frostpyro.frostapi.api.listeners.customEventListener;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.api.damageManager.attackData.AttackData;
+import frostpyro.frostapi.api.damageManager.damageData.DamageManage;
+import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
+import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,11 +19,9 @@ public class AttackEventListener implements Listener {
     }
     @EventHandler
     private void attack(EntityDamageEvent event){
-
-    }
-
-    @EventHandler
-    private void projectileAttack(ProjectileHitEvent event){
-
+        AttackData data = FrostAPI.getPlugin().damage().findAttack(event);
+        if(data == null) return;
+        final AttackEvent attackEvent = data.getAttacker().getEntity() instanceof Player ? new PlayerAttackEvent(event, data) : new AttackEvent(event, data);
+        Bukkit.getPluginManager().callEvent(attackEvent);
     }
 }

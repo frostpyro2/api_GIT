@@ -36,15 +36,15 @@ public class PlayerDataTmp implements StatProvider {
 
     @Override
     public double getStat(String stat) {
-        return 0;
+        return statMap().getStat(stat);
     }
 
     public void castSkill(TriggerType type) {
 
     }
     private static final Map<UUID, PlayerDataTmp> player_DT = new WeakHashMap<>();
-    public static PlayerDataTmp get(Player player){
-        return player_DT.get(player.getUniqueId());
+    public static PlayerDataTmp get(UUID uuid){
+        return player_DT.get(uuid);
     }
 
     public static void upload(UUID uuid, PlayerDataTmp tmp){

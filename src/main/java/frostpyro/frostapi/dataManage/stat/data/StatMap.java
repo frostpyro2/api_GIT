@@ -36,7 +36,7 @@ public class StatMap implements StatProvider {
         return stats.values();
     }
 
-    public StatProvider cache(EquipmentSlot slot){
+    public PlayerData cache(EquipmentSlot slot){
         return new PlayerData(data, slot);
     }
 }

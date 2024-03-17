@@ -33,6 +33,7 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void playerHit(PlayerAttackEvent event){
+        event.getPlayerData().getEntity().sendMessage("trigger");
         event.getPlayerData().castSkill(TriggerType.ATTACK);
     }
 

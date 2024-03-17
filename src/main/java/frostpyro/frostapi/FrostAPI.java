@@ -24,6 +24,7 @@ import java.util.Set;
 public final class FrostAPI extends JavaPlugin {
     private static FrostAPI plugin;
     private DamageManage damage;
+    private final DamageManage damageManage = new DamageManage();
     @Override
     public void onEnable() {
         plugin = this;
@@ -76,9 +77,9 @@ public final class FrostAPI extends JavaPlugin {
         FOLDER.mkdirs();
     }
 
-    public FileConfiguration skill, build, sql;
+    public FileConfiguration skill, build, sql, stats;
     private void loadConfigs(){
-        File skill = new File(getDataFolder(), "skillName.yml"), build = new File(getDataFolder(), "skillBuildName.yml"), sql = new File(getDataFolder(), "SQLInform.yml");
+        File skill = new File(getDataFolder(), "skillName.yml"), build = new File(getDataFolder(), "skillBuildName.yml"), sql = new File(getDataFolder(), "SQLInform.yml"), stats = new File(getDataFolder(), "stats.yml");
         if(!skill.exists()){
             skill.getParentFile().mkdirs();
             saveResource("skillName.yml", false);
@@ -91,13 +92,19 @@ public final class FrostAPI extends JavaPlugin {
             sql.getParentFile().mkdirs();
             saveResource("SQLInform.yml", false);
         }
+        if(!stats.exists()){
+            stats.getParentFile().mkdirs();
+            saveResource("stats.yml", false);
+        }
         this.skill = new YamlConfiguration();
         this.build = new YamlConfiguration();
         this.sql = new YamlConfiguration();
+        this.stats = new YamlConfiguration();
         try{
             this.skill.load(skill);
             this.build.load(build);
             this.sql.load(sql);
+            this.stats.load(stats);
         }
         catch (IOException | InvalidConfigurationException e){
             e.printStackTrace();
@@ -123,4 +130,8 @@ public final class FrostAPI extends JavaPlugin {
     public NamespacedKey skillType = new NamespacedKey(this, "SKILL");
     public Set<PlayerDataTmp> playerSet = new HashSet<>();
     public Thread skillThread;
+
+    public DamageManage damage(){
+        return damageManage;
+    }
 }
