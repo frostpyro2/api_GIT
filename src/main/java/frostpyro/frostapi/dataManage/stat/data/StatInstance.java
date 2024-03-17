@@ -11,6 +11,6 @@ public class StatInstance {
     }
 
     public double getFinal(){
-        return Objects.requireNonNull(PlayerFile.getFile(map.getEntity())).getDouble(stat);
+        return PlayerFile.getFile(map.getEntity()).getDouble(stat);
     }
 }

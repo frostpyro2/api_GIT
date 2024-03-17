@@ -1,6 +1,7 @@
 package frostpyro.frostapi;
 
 import frostpyro.frostapi.api.damageManager.damageData.DamageManage;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
@@ -11,6 +12,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -35,11 +37,18 @@ public final class FrostAPI extends JavaPlugin {
         new AttackEventListener(this);
         new SkillTriggerListener(this);
 
+        for(Player player : Bukkit.getOnlinePlayers()){
+            PlayerDataTmp.upload(player.getUniqueId(), new PlayerDataTmp(player.getUniqueId()));
+        }
+
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }
 
     @Override
     public void onDisable() {
+        for(Player player : Bukkit.getOnlinePlayers()){
+            PlayerDataTmp.flush(player.getUniqueId());
+        }
         // Plugin shutdown logic
     }
     public static FrostAPI getPlugin(){
