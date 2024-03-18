@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class StatMap implements StatProvider {
-    private PlayerDataTmp data;
+    private final PlayerDataTmp data;
     private final Map<String, StatInstance> stats = new ConcurrentHashMap<>();
     public StatMap(PlayerDataTmp data){
         this.data = data;

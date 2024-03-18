@@ -42,6 +42,10 @@ public class PlayerDataTmp implements StatProvider {
     public void castSkill(TriggerType type) {
 
     }
+
+    public FileConfiguration getConfiguration(){
+        return configuration;
+    }
     private static final Map<UUID, PlayerDataTmp> player_DT = new WeakHashMap<>();
     public static PlayerDataTmp get(UUID uuid){
         return player_DT.get(uuid);
