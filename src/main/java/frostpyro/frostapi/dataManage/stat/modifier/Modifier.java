@@ -3,6 +3,7 @@ package frostpyro.frostapi.dataManage.stat.modifier;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.dataManage.stat.data.PlayerFile;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 

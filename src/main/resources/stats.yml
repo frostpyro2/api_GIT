@@ -1,7 +1,22 @@
 stats:
-  - DEF
-  - ATK
-  - HP
-  - SPD
-  - INT
-  - CRIT_CHANCE
+  DEF:
+    val: 0
+    attribute: GENERIC_ARMOR
+  ATK:
+    val: 0
+    attribute: GENERIC_ATTACK_DAMAGE
+  HP:
+    val: 0
+    attirbute: GENERIC_MAX_HEALTH
+  SPD:
+    val: 0
+    attribute: GENERIC_MOVEMENT_SPEED
+  INT:
+    val: 100
+    attrubute:
+  CRIT_CHANCE:
+    val: 10
+    attribute:
+  POINT:
+    val: 0
+    attribute:

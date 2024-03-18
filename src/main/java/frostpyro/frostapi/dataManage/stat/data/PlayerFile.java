@@ -36,7 +36,7 @@ public class PlayerFile {
         try{
             for(String string : StatFile.getStatType()){
                 if(configuration.contains(string)) continue;
-                configuration.set(string, 0);
+                configuration.set(string, FrostAPI.getPlugin().stats.getConfigurationSection(string).getDouble("val"));
             }
             configuration.save(file);
         }catch (IOException e){

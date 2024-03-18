@@ -21,7 +21,7 @@ public class AttackEventListener implements Listener {
     private void attack(EntityDamageEvent event){
         AttackData data = FrostAPI.getPlugin().damage().findAttack(event);
         if(data == null) return;
-        final AttackEvent attackEvent = data.getAttacker().getEntity() instanceof Player ? new PlayerAttackEvent(event, data) : new AttackEvent(event, data);
+        final AttackEvent attackEvent = data.isPlayer() ? new PlayerAttackEvent(event, data) : new AttackEvent(event, data);
         Bukkit.getPluginManager().callEvent(attackEvent);
     }
 }

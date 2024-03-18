@@ -2,7 +2,9 @@ package frostpyro.frostapi.api.damageManager.attackData;
 
 import frostpyro.frostapi.api.damageManager.damageData.DamageData;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 public class AttackData {
     private LivingEntity target;
@@ -28,5 +30,9 @@ public class AttackData {
 
     public boolean hasAttacker(){
         return damagee == null;
+    }
+
+    public boolean isPlayer(){
+        return damagee != null && damagee instanceof PlayerData;
     }
 }
