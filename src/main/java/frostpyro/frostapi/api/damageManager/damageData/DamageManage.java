@@ -25,7 +25,7 @@ public class DamageManage {
                 return new AttackData(new DamageData(event.getDamage(), types(event.getCause())), (LivingEntity) entity, provider);
             }
         }
-        return null;
+        return new AttackData(new DamageData(event.getDamage()), (LivingEntity) entity, null);
     }
 
     public DamageType[] types(EntityDamageEvent.DamageCause cause){

@@ -28,6 +28,7 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void hit(AttackEvent event){
+        if(event.getAttack().getAttacker() == null) return;
         event.getEntity().sendMessage("damaged!");
     }
 

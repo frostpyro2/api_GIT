@@ -4,3 +4,4 @@ stats:
   - HP
   - SPD
   - INT
+  - CRIT_CHANCE
