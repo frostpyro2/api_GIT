@@ -1,6 +1,7 @@
 package frostpyro.frostapi;
 
 import frostpyro.frostapi.api.damageManager.damageData.DamageManage;
+import frostpyro.frostapi.api.listeners.fake.FakeEventManager;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import frostpyro.frostapi.event.DataListener;
@@ -25,6 +26,7 @@ public final class FrostAPI extends JavaPlugin {
     private static FrostAPI plugin;
     private DamageManage damage;
     private final DamageManage damageManage = new DamageManage();
+    private final FakeEventManager fakeEventManager = new FakeEventManager();
     @Override
     public void onEnable() {
         plugin = this;
@@ -133,5 +135,9 @@ public final class FrostAPI extends JavaPlugin {
 
     public DamageManage damage(){
         return damageManage;
+    }
+
+    public FakeEventManager fakeEventManager(){
+        return fakeEventManager;
     }
 }

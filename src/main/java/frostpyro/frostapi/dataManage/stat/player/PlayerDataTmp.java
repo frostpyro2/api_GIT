@@ -3,6 +3,7 @@ package frostpyro.frostapi.dataManage.stat.player;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
 import frostpyro.frostapi.dataManage.stat.data.PlayerFile;
 import frostpyro.frostapi.dataManage.stat.data.StatMap;
+import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -40,6 +41,10 @@ public class PlayerDataTmp implements StatProvider {
     }
 
     public void castSkill(TriggerType type) {
+
+    }
+
+    public void castSkill(TriggerData data){
 
     }
 

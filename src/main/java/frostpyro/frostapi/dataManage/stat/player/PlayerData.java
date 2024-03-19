@@ -1,18 +1,16 @@
 package frostpyro.frostapi.dataManage.stat.player;
 
 import frostpyro.frostapi.dataManage.stat.StatProvider;
-import frostpyro.frostapi.dataManage.stat.data.StatMap;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
 
 public class PlayerData implements StatProvider {
     private PlayerDataTmp playerDataTmp;
-    private EquipmentSlot slot;
+    private EquipSlot slot;
 
     private Player player;
-    public PlayerData(PlayerDataTmp playerDataTmp, EquipmentSlot slot){
+    public PlayerData(PlayerDataTmp playerDataTmp, EquipSlot slot){
         player = (Player) playerDataTmp.getEntity();
         this.playerDataTmp = playerDataTmp;
         this.slot = slot;

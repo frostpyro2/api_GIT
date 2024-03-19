@@ -2,6 +2,7 @@ package frostpyro.frostapi.dataManage.stat;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.dataManage.stat.data.StatMap;
+import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import org.bukkit.Bukkit;
@@ -21,13 +22,13 @@ public interface StatProvider {
     LivingEntity getEntity();
     double getStat(String stat);
 
-    static StatProvider get(LivingEntity livingEntity, EquipmentSlot slot, boolean cache){
+    static StatProvider get(LivingEntity livingEntity, EquipSlot slot, boolean cache){
         final StatMap statMap = PlayerDataTmp.get(livingEntity.getUniqueId()).statMap();
 
         return cache ? statMap.cache(slot) : statMap;
     }
 
-    static StatProvider get(UUID uuid, EquipmentSlot slot, boolean cache){
+    static StatProvider get(UUID uuid, EquipSlot slot, boolean cache){
         Entity entity = Bukkit.getEntity(uuid);
         if(entity == null) return null;
         return get((LivingEntity) entity, slot, cache);

@@ -1,6 +1,7 @@
 package frostpyro.frostapi.dataManage.stat.data;
 
 import frostpyro.frostapi.dataManage.stat.StatProvider;
+import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import org.bukkit.entity.LivingEntity;
@@ -36,7 +37,7 @@ public class StatMap implements StatProvider {
         return stats.values();
     }
 
-    public PlayerData cache(EquipmentSlot slot){
+    public PlayerData cache(EquipSlot slot){
         return new PlayerData(data, slot);
     }
 }

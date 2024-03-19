@@ -2,6 +2,7 @@ package frostpyro.frostapi.api.damageManager.damageData;
 
 import frostpyro.frostapi.api.damageManager.attackData.AttackData;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
+import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
@@ -17,11 +18,13 @@ public class DamageManage {
         if(event instanceof EntityDamageByEntityEvent){
             Entity damager = ((EntityDamageByEntityEvent) event).getDamager();
             if(damager instanceof LivingEntity){
-                final StatProvider provider = StatProvider.get((LivingEntity)damager, EquipmentSlot.HAND, true);
+                final StatProvider provider = StatProvider.get((LivingEntity)damager, EquipSlot.MAIN_HAND, true);
                 return new AttackData(new DamageData(event.getDamage(), types(event.getCause())), (LivingEntity) entity, provider);
             }
             else if(damager instanceof Projectile){
-                final StatProvider provider = StatProvider.get((LivingEntity) ((Projectile)damager).getShooter(), EquipmentSlot.HAND, false);
+                final LivingEntity shooter = (LivingEntity) ((Projectile)damager).getShooter();
+                if(shooter == null) return new AttackData(new DamageData(event.getDamage()), (LivingEntity) entity, null);
+                final StatProvider provider = StatProvider.get(shooter, EquipSlot.MAIN_HAND, false);
                 return new AttackData(new DamageData(event.getDamage(), types(event.getCause())), (LivingEntity) entity, provider);
             }
         }
