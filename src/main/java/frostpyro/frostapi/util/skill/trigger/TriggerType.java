@@ -3,10 +3,7 @@ package frostpyro.frostapi.util.skill.trigger;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class TriggerType {
     /**
@@ -57,6 +54,10 @@ public class TriggerType {
     }
     public String getType(){
         return this.type;
+    }
+
+    public static Set<String> getKeys(){
+        return ID.keySet();
     }
 
     public static void register(@NotNull TriggerType type){
