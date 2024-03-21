@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -21,18 +22,20 @@ public class PlayerDataTmp implements StatProvider {
     private final Map<PlayerDataTmp, Long> coolDown = new HashMap<>();
 
     public PlayerDataTmp(Player player){
+        this.player = player;
         uuid = player.getUniqueId();
-        configuration = PlayerFile.getFile((LivingEntity) Bukkit.getEntity(uuid));
+        configuration = PlayerFile.getFile(Bukkit.getPlayer(uuid));
     }
 
     public PlayerDataTmp(UUID uuid){
         this.uuid = uuid;
-        configuration = PlayerFile.getFile((LivingEntity) Bukkit.getEntity(uuid));
+        configuration = PlayerFile.getFile(Bukkit.getPlayer(uuid));
+        player = Bukkit.getPlayer(uuid);
     }
 
     @Override
-    public LivingEntity getEntity() {
-        return (LivingEntity) Bukkit.getEntity(uuid);
+    public @NotNull LivingEntity getEntity() {
+        return player;
     }
 
     @Override

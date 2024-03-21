@@ -8,16 +8,20 @@ import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.EulerAngle;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 
@@ -50,7 +54,6 @@ public class SkillTriggerListener implements Listener {
     private void playerHit(PlayerAttackEvent event){
         event.getAttack().getAttacker().getEntity().sendMessage("trigger");
         event.getPlayerData().tmp().castSkill(TriggerType.ATTACK);
-        ((LivingEntity)event.getEntity()).damage(10, event.getPlayerData().getEntity());
     }
 
     @EventHandler
@@ -77,5 +80,26 @@ public class SkillTriggerListener implements Listener {
     @EventHandler
     private void shift(PlayerToggleSneakEvent event) {
 
+    }
+
+    @EventHandler
+    private void test(PlayerInteractEvent event){
+        if(event.getAction() != Action.LEFT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        Player player = event.getPlayer();
+        ArmorStand stand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
+        stand.setVisible(false);
+        stand.setGravity(false);
+        stand.setInvulnerable(true);
+        stand.getEquipment().setHelmet(new ItemStack(Material.PAPER));
+        stand.setMarker(true);
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                player.sendMessage("hello");
+            }
+        }.runTaskLater(FrostAPI.getPlugin(), 10);
+
+        player.sendMessage("world");
     }
 }

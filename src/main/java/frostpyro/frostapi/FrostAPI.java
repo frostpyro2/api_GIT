@@ -7,6 +7,7 @@ import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
+import frostpyro.frostapi.util.skill.skillItem.SkillItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -35,6 +36,8 @@ public final class FrostAPI extends JavaPlugin {
         generateSkillFolder();
         generateSkillBuildFolder();
         generatePlayerDataFolder();
+        generateItemFolder();
+        generateYmlSkillFolder();
 
         new DataListener(this);
         new AttackEventListener(this);
@@ -43,6 +46,8 @@ public final class FrostAPI extends JavaPlugin {
         for(Player player : Bukkit.getOnlinePlayers()){
             PlayerDataTmp.upload(player.getUniqueId(), new PlayerDataTmp(player.getUniqueId()));
         }
+
+        SkillItem.registerItem();
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }
@@ -75,6 +80,18 @@ public final class FrostAPI extends JavaPlugin {
 
     private void generatePlayerDataFolder(){
         File FOLDER = new File(getDataFolder(), "\\player");
+        if(FOLDER.exists()) return;
+        FOLDER.mkdirs();
+    }
+
+    private void generateItemFolder(){
+        File FOLDER = new File(getDataFolder(), "\\skill\\item");
+        if(FOLDER.exists()) return;
+        FOLDER.mkdirs();
+    }
+
+    private void generateYmlSkillFolder(){
+        File FOLDER = new File(getDataFolder(), "\\skill\\skills");
         if(FOLDER.exists()) return;
         FOLDER.mkdirs();
     }
@@ -113,19 +130,6 @@ public final class FrostAPI extends JavaPlugin {
             return;
         }
         getLogger().info("config enabled!");
-    }
-
-    public List<String> skillName(){
-        File file = new File(getDataFolder(), "skillName.yml");
-        FileConfiguration configuration = new YamlConfiguration();
-        try{
-            configuration.load(file);
-        }
-        catch (IOException|InvalidConfigurationException e){
-            e.printStackTrace();
-            return null;
-        }
-        return configuration.getStringList("skillNames");
     }
 
     public NamespacedKey exp = new NamespacedKey(this, "EXP");
