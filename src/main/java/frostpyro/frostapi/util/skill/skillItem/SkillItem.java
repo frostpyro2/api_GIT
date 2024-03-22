@@ -56,7 +56,7 @@ public class SkillItem extends SkillManager {
             try{
                 itemStack = new ItemStack(Material.getMaterial(configuration.getString("item")));
             }catch (Exception any){
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item type's name should be \"item\"\nERROR ON:" + file.getName());
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item type's name should be \"item\"\nERROR ON:" + ymlFile.getName());
                 continue;
             }
             ItemMeta meta = itemStack.getItemMeta();
@@ -64,7 +64,7 @@ public class SkillItem extends SkillManager {
             try{
                 meta.setCustomModelData(configuration.getInt("model"));
             }catch (Exception any){
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item model's name should be \"model\"\nERROR ON:" + file.getName());
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item model's name should be \"model\"\nERROR ON:" + ymlFile.getName());
                 continue;
             }
             try{
