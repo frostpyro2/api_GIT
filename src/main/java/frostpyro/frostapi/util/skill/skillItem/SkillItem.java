@@ -3,6 +3,7 @@ package frostpyro.frostapi.util.skill.skillItem;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.skillManager.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.ymlSkill.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,7 +37,8 @@ public class SkillItem extends SkillManager {
         Map<String, String> getSkill = skillActivate.get(player.getInventory().getItemInMainHand());
         String file = getSkill.computeIfAbsent(data.getType().getType(), abs->null);
         if(file == null) return;
-
+        Skill skill = new Skill(file);
+        skill.activateSkill();
     }
 
     public static void registerItem()  {

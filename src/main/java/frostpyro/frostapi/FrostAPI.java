@@ -8,6 +8,7 @@ import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
 import frostpyro.frostapi.util.skill.skillItem.SkillItem;
+import frostpyro.frostapi.util.skill.ymlSkill.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -48,6 +49,7 @@ public final class FrostAPI extends JavaPlugin {
         }
 
         SkillItem.registerItem();
+        Skill.registerSkill();
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }
