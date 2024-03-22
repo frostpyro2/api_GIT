@@ -56,7 +56,7 @@ public class SkillItem extends SkillManager {
             try{
                 itemStack = new ItemStack(Material.getMaterial(configuration.getString("item")));
             }catch (Exception any){
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item type's name should be \"item\"");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item type's name should be \"item\"\nERROR ON:" + file.getName());
                 continue;
             }
             ItemMeta meta = itemStack.getItemMeta();
@@ -64,7 +64,7 @@ public class SkillItem extends SkillManager {
             try{
                 meta.setCustomModelData(configuration.getInt("model"));
             }catch (Exception any){
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item model's name should be \"model\"");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item model's name should be \"model\"\nERROR ON:" + file.getName());
                 continue;
             }
             try{
@@ -89,13 +89,13 @@ public class SkillItem extends SkillManager {
                     meta.setDisplayName(string);
                 }
             }catch (Exception any){
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item name's name should be \"name\", or inner elemental should be LIST");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item name's name should be \"name\", or inner elemental should be LIST\nERROR ON:" + ymlFile.getName());
                 continue;
             }
             try{
                 meta.setLore(configuration.getStringList("lore"));
             }catch (Exception any){
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item lore's name should be \"lore\"");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item lore's name should be \"lore\"\nERROR ON:" + ymlFile.getName());
                 continue;
             }
             skillItems.add(itemStack);
