@@ -39,6 +39,10 @@ public class Skill {
         File file = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills");
         File[] skillFiles = file.listFiles();
         if(skillFiles == null) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + "skill file does not exist!");
+            return;
+        }
+        if(skillFiles.length == 0){
             Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + "skill file is empty!");
             return;
         }
