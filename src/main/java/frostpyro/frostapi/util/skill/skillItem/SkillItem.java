@@ -37,7 +37,7 @@ public class SkillItem extends SkillManager {
         Map<String, String> getSkill = skillActivate.get(player.getInventory().getItemInMainHand());
         String file = getSkill.computeIfAbsent(data.getType().getType(), abs->null);
         if(file == null) return;
-        Skill skill = new Skill(file);
+        Skill skill = new Skill(file, data);
         skill.activateSkill();
     }
 
@@ -82,20 +82,20 @@ public class SkillItem extends SkillManager {
                 if(!nameElemental.isEmpty()){
                     int index = 1;
 
-                    String string = "";
+                    StringBuilder string = new StringBuilder();
 
                     for(String name : nameElemental){
                         if(index % 2 == 0){
-                            string += name;
+                            string.append(name);
                         }
                         else{
                             if(ChatColor.valueOf(name).isColor()){
-                                string += ChatColor.valueOf(name);
+                                string.append(ChatColor.valueOf(name));
                             }
                         }
                         index ++;
                     }
-                    meta.setDisplayName(string);
+                    meta.setDisplayName(string.toString());
                 }
             }catch (Exception any){
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item name's name should be \"name\", or inner elemental should be LIST\nERROR ON:" + ymlFile.getName());
@@ -107,6 +107,7 @@ public class SkillItem extends SkillManager {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item lore's name should be \"lore\"\nERROR ON:" + ymlFile.getName());
                 continue;
             }
+            itemStack.setItemMeta(meta);
             skillItems.add(itemStack);
             ConfigurationSection skillSection = configuration.getConfigurationSection("skill");
             if(skillSection != null){

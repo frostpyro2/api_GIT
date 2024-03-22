@@ -1,6 +1,7 @@
 package frostpyro.frostapi.util.skill.ymlSkill;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,25 +16,29 @@ public class Skill {
     private static List<FileConfiguration> skillList = new ArrayList<>();
     private static List<String> skillFileNames = new ArrayList<>();
     private File file;
-    private FileConfiguration configuration;
+    private SkillConfig configuration;
+    private String fileName;
+    private TriggerData data;
 
-    public Skill(String fileName){
-        file = new File(FrostAPI.getPlugin().getDataFolder(), "skill//skills" + fileName + ".yml");
-        configuration = new YamlConfiguration();
+    public Skill(String fileName, TriggerData data){
+        this.fileName = fileName;
+        file = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills\\" + fileName + ".yml");
         try{
-            configuration.load(file);
+            configuration = new SkillConfig(file);
         }
         catch (Exception any){
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "failed to load skill file!");
         }
+        this.data = data;
     }
 
-    public Skill(FileConfiguration fileConfig){
+    public Skill(SkillConfig fileConfig, TriggerData data){
         this.configuration = fileConfig;
+        this.data = data;
     }
 
     public void activateSkill() {
-
+        data.getCast().getEntity().sendMessage(data.getType().getType() + "," + fileName);
     }
 
     public static void registerSkill(){

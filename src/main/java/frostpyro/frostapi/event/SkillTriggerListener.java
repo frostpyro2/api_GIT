@@ -4,6 +4,7 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
@@ -27,11 +28,9 @@ import java.util.*;
 
 
 public class SkillTriggerListener implements Listener {
-    private Set<String> uuidSet = new HashSet<>();
     public SkillTriggerListener(FrostAPI plugin){
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
-    private Map<PlayerDataTmp, Long> shiftPressTime = new HashMap<>();
     @EventHandler
     private void click(PlayerInteractEvent event){
         if(event.getHand() == null) return;
@@ -40,7 +39,7 @@ public class SkillTriggerListener implements Listener {
         final boolean isLeft = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
         final boolean isSneaking = event.getPlayer().isSneaking();
         final TriggerType type = isLeft ? (isSneaking ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.LEFT_CLICK) : (isSneaking ? TriggerType.SHIFT_RIGHT_CLICK : TriggerType.RIGHT_CLICK);
-        final TriggerData data = new TriggerData(caster, type, EquipSlot.fromBukkit(event.getHand()), null, null, null, null, null);
+        final TriggerData data = new TriggerData(caster, type, EquipSlot.fromBukkit(event.getHand()), null, null, null, null, new PlayerData(caster, EquipSlot.fromBukkit(event.getHand())));
         caster.castSkill(data);
     }
 
@@ -92,14 +91,5 @@ public class SkillTriggerListener implements Listener {
         stand.setInvulnerable(true);
         stand.getEquipment().setHelmet(new ItemStack(Material.PAPER));
         stand.setMarker(true);
-
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                player.sendMessage("hello");
-            }
-        }.runTaskLater(FrostAPI.getPlugin(), 10);
-
-        player.sendMessage("world");
     }
 }

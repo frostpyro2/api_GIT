@@ -59,6 +59,7 @@ public class TriggerData {
     }
 
     public PlayerData getCast() {
-        return cast;
+        if(cast != null) return cast;
+        return new PlayerData(tmp, EquipSlot.MAIN_HAND);
     }
 }
