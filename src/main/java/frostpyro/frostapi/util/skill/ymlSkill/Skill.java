@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Skill {
     private static List<FileConfiguration> skillList = new ArrayList<>();
+    private static List<String> skillFileNames = new ArrayList<>();
     private File file;
     private FileConfiguration configuration;
 
@@ -54,6 +55,7 @@ public class Skill {
             catch (Exception any){
                 continue;
             }
+            skillFileNames.add(skillFile.getName());
             skillList.add(skillConf);
         }
     }
