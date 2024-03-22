@@ -53,6 +53,7 @@ public class Skill {
                 skillConf.load(skillFile);
             }
             catch (Exception any){
+                Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "skillFile load failed" + file.getName());
                 continue;
             }
             skillFileNames.add(skillFile.getName());

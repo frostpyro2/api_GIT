@@ -44,7 +44,14 @@ public class SkillItem extends SkillManager {
     public static void registerItem()  {
         File file = new File(FrostAPI.getPlugin().getDataFolder(), "\\skill\\item");
         File[] ymlFiles = file.listFiles();
-        if(ymlFiles == null) return;
+        if(ymlFiles == null){
+            Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + "item file does not exist!");
+            return;
+        }
+        if(ymlFiles.length == 0){
+            Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + "item file is empty!");
+            return;
+        }
         for(File ymlFile : ymlFiles){
             FileConfiguration configuration = new YamlConfiguration();
             try {
