@@ -20,6 +20,10 @@ public class SkillConfig extends YamlConfiguration{
         this.load(file);
     }
 
+    public String getTest(){
+        return getString("announce");
+    }
+
     public double getDamage(){
         return getDouble("damage");
     }

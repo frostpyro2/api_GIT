@@ -1,8 +1,6 @@
 package frostpyro.frostapi.util.skill.armorStand;
 
 
-import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
@@ -19,9 +17,6 @@ public class ArmorStandItem {
 
     public ArmorStand stand(ItemStack itemStack, int model, boolean gravity, boolean invisible){
         ArmorStand stand = world.spawn(location, ArmorStand.class);
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setCustomModelData(model);
-        itemStack.setItemMeta(meta);
         stand.getEquipment().setHelmet(itemStack);
         stand.setGravity(gravity);
         stand.setMarker(true);
