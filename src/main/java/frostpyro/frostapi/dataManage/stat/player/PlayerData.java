@@ -1,6 +1,7 @@
 package frostpyro.frostapi.dataManage.stat.player;
 
 import frostpyro.frostapi.dataManage.stat.StatProvider;
+import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -21,8 +22,8 @@ public class PlayerData implements StatProvider {
         return player;
     }
 
-    public void castSkill(TriggerType type){
-        playerDataTmp.castSkill(type);
+    public void castSkill(TriggerData data){
+        playerDataTmp.castSkill(data);
     }
 
     @Override

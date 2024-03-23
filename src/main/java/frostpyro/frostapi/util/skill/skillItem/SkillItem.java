@@ -32,7 +32,7 @@ public class SkillItem extends SkillManager {
     @Override
     public void cast() {
         TriggerData data = data();
-        Player player = (Player) data.getCast().getEntity();
+        Player player = (Player) data.getTmp().getEntity();
         if(!skillItems.contains(player.getInventory().getItemInMainHand())) return;
         Map<String, String> getSkill = skillActivate.get(player.getInventory().getItemInMainHand());
         String file = getSkill.computeIfAbsent(data.getType().getType(), abs->null);

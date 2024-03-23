@@ -51,8 +51,8 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void playerHit(PlayerAttackEvent event){
-        event.getAttack().getAttacker().getEntity().sendMessage("trigger");
-        event.getPlayerData().tmp().castSkill(TriggerType.ATTACK);
+        TriggerData data = new TriggerData(event, TriggerType.ATTACK);
+        data.getCast().castSkill(data);
     }
 
     @EventHandler
