@@ -35,4 +35,8 @@ public class SkillConfig extends YamlConfiguration{
     public List<?> getSummon(){
         return getList("summon");
     }
+
+    public String getSound(){
+        return getString("sound");
+    }
 }

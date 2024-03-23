@@ -38,7 +38,7 @@ public class Skill {
     }
 
     public void activateSkill() {
-        data.getCast().getEntity().sendMessage(data.getType().getType() + "," + fileName);
+
     }
 
     public static void registerSkill(){
@@ -63,6 +63,9 @@ public class Skill {
             }
             skillFileNames.add(skillFile.getName());
             skillList.add(skillConf);
+            String[] strings = skillFile.getName().split("\\.");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_AQUA + "skill added:" + strings[0]);
         }
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "--------------------------------");
     }
 }

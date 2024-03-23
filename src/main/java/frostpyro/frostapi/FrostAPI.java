@@ -2,11 +2,11 @@ package frostpyro.frostapi;
 
 import frostpyro.frostapi.api.damageManager.damageData.DamageManage;
 import frostpyro.frostapi.api.listeners.fake.FakeEventManager;
-import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
+import frostpyro.frostapi.util.skill.skillItem.AnimatedItem;
 import frostpyro.frostapi.util.skill.skillItem.SkillItem;
 import frostpyro.frostapi.util.skill.ymlSkill.Skill;
 import org.bukkit.Bukkit;
@@ -21,7 +21,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public final class FrostAPI extends JavaPlugin {
@@ -34,11 +33,8 @@ public final class FrostAPI extends JavaPlugin {
         plugin = this;
         loadConfigs();
         // Plugin startup logic
-        generateSkillFolder();
-        generateSkillBuildFolder();
-        generatePlayerDataFolder();
-        generateItemFolder();
-        generateYmlSkillFolder();
+
+        generateFolders();
 
         new DataListener(this);
         new AttackEventListener(this);
@@ -50,6 +46,7 @@ public final class FrostAPI extends JavaPlugin {
 
         SkillItem.registerItem();
         Skill.registerSkill();
+        AnimatedItem.registerItemAnimation();
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }
@@ -96,6 +93,28 @@ public final class FrostAPI extends JavaPlugin {
         File FOLDER = new File(getDataFolder(), "\\skill\\skills");
         if(FOLDER.exists()) return;
         FOLDER.mkdirs();
+    }
+
+    private void generateArmorEntityFolder(){
+        File FOLDER = new File(getDataFolder(), "\\skill\\entity");
+        if(FOLDER.exists()) return;
+        FOLDER.mkdirs();
+    }
+
+    private void generateEffectItem(){
+        File FOLDER = new File(getDataFolder(), "\\skill\\effectItem");
+        if(FOLDER.exists()) return;
+        FOLDER.mkdirs();
+    }
+
+    private void generateFolders(){
+        generateSkillFolder();
+        generateSkillBuildFolder();
+        generatePlayerDataFolder();
+        generateItemFolder();
+        generateYmlSkillFolder();
+        generateArmorEntityFolder();
+        generateEffectItem();
     }
 
     public FileConfiguration skill, build, sql, stats;

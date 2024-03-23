@@ -117,7 +117,9 @@ public class SkillItem extends SkillManager {
                 }
                 skillActivate.put(itemStack, temp);
             }
-            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN + "item added! :" + itemStack.getType());
+            String[] strings = ymlFile.getName().split("\\.");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN + "item added:" + strings[0]);
         }
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "--------------------------------");
     }
 }
