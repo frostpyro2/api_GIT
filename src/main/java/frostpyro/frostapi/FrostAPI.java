@@ -6,8 +6,9 @@ import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
-import frostpyro.frostapi.util.skill.skillItem.AnimatedItem;
-import frostpyro.frostapi.util.skill.skillItem.SkillItem;
+import frostpyro.frostapi.util.skill.SkillManager;
+import frostpyro.frostapi.util.skill.customItem.AnimatedItem;
+import frostpyro.frostapi.util.skill.casting.SkillItem;
 import frostpyro.frostapi.util.skill.ymlSkill.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -44,9 +45,11 @@ public final class FrostAPI extends JavaPlugin {
             PlayerDataTmp.upload(player.getUniqueId(), new PlayerDataTmp(player.getUniqueId()));
         }
 
+
+        SkillManager.registerSkill();
         SkillItem.registerItem();
-        Skill.registerSkill();
         AnimatedItem.registerItemAnimation();
+        Skill.registerSkill();
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }

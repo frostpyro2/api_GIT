@@ -6,25 +6,16 @@ import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
+import frostpyro.frostapi.util.skill.casting.SkillItem;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.EulerAngle;
-import org.bukkit.util.Vector;
-
-import java.util.*;
 
 
 public class SkillTriggerListener implements Listener {
@@ -82,14 +73,8 @@ public class SkillTriggerListener implements Listener {
     }
 
     @EventHandler
-    private void test(PlayerInteractEvent event){
-        if(event.getAction() != Action.LEFT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_BLOCK) return;
-        Player player = event.getPlayer();
-        ArmorStand stand = player.getWorld().spawn(player.getLocation(), ArmorStand.class);
-        stand.setVisible(false);
-        stand.setGravity(false);
-        stand.setInvulnerable(true);
-        stand.getEquipment().setHelmet(new ItemStack(Material.PAPER));
-        stand.setMarker(true);
+    private void dropCancel(PlayerDropItemEvent event){
+        if(SkillItem.skillItemList().contains(event.getItemDrop().getItemStack()))
+            event.setCancelled(true);
     }
 }

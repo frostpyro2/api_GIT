@@ -1,4 +1,4 @@
-package frostpyro.frostapi.util.skill.skillItem;
+package frostpyro.frostapi.util.skill.customItem;
 
 import frostpyro.frostapi.FrostAPI;
 import org.bukkit.Bukkit;
@@ -6,7 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.entity.LingeringPotionSplashEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;

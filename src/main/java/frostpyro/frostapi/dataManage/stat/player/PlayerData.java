@@ -23,7 +23,10 @@ public class PlayerData implements StatProvider {
     }
 
     public void castSkill(TriggerData data){
-        playerDataTmp.castSkill(data);
+        if(slot == null)
+            playerDataTmp.castSkill(data);
+        else
+            playerDataTmp.castSkill(data, slot);
     }
 
     @Override

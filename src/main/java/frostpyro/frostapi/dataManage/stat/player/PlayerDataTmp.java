@@ -3,11 +3,11 @@ package frostpyro.frostapi.dataManage.stat.player;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
 import frostpyro.frostapi.dataManage.stat.data.PlayerFile;
 import frostpyro.frostapi.dataManage.stat.data.StatMap;
-import frostpyro.frostapi.util.skill.skillItem.SkillItem;
-import frostpyro.frostapi.util.skill.skillManager.SkillManager;
+import frostpyro.frostapi.util.skill.casting.AnotherTrigger;
+import frostpyro.frostapi.util.skill.casting.SkillItem;
+import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
-import frostpyro.frostapi.util.skill.ymlSkill.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LivingEntity;
@@ -50,8 +50,14 @@ public class PlayerDataTmp implements StatProvider {
 
     }
 
-    public void castSkill(TriggerData data){
+    public void castSkill(TriggerData data, EquipSlot slot){
+        if(slot != EquipSlot.MAIN_HAND) return;
         SkillManager manager = new SkillItem(data);
+        manager.cast();
+    }
+
+    public void castSkill(TriggerData data){
+        SkillManager manager = new AnotherTrigger(data);
         manager.cast();
     }
 

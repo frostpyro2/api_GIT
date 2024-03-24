@@ -1,7 +1,7 @@
-package frostpyro.frostapi.util.skill.skillItem;
+package frostpyro.frostapi.util.skill.casting;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.util.skill.skillManager.SkillManager;
+import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.Skill;
 import org.bukkit.Bukkit;
@@ -18,7 +18,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 public class SkillItem extends SkillManager {
 
@@ -35,7 +34,7 @@ public class SkillItem extends SkillManager {
         Player player = (Player) data.getTmp().getEntity();
         if(!skillItems.contains(player.getInventory().getItemInMainHand())) return;
         Map<String, String> getSkill = skillActivate.get(player.getInventory().getItemInMainHand());
-        String file = getSkill.computeIfAbsent(data.getType().getType(), abs->null);
+        String file = getSkill.computeIfAbsent(data.getType().getType(), NONE -> null);
         if(file == null) return;
         Skill skill = new Skill(file, data);
         skill.activateSkill();
@@ -113,6 +112,7 @@ public class SkillItem extends SkillManager {
             if(skillSection != null){
                 Map<String, String> temp = new HashMap<>();
                 for(String keys : skillSection.getKeys(false)){
+                    if(!getSkills().contains(skillSection.getString(keys))) break;
                     temp.put(keys, skillSection.getString(keys));
                 }
                 skillActivate.put(itemStack, temp);
@@ -121,5 +121,9 @@ public class SkillItem extends SkillManager {
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN + "item added:" + strings[0]);
         }
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "--------------------------------");
+    }
+
+    public static List<ItemStack> skillItemList(){
+        return skillItems;
     }
 }
