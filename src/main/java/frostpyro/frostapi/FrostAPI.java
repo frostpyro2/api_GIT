@@ -16,7 +16,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -25,6 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class FrostAPI extends JavaPlugin {
+    private final String skillDamageMetaStr = "damagedBySkill";
     private static FrostAPI plugin;
     private DamageManage damage;
     private final DamageManage damageManage = new DamageManage();
@@ -167,5 +170,17 @@ public final class FrostAPI extends JavaPlugin {
 
     public FakeEventManager fakeEventManager(){
         return fakeEventManager;
+    }
+
+    public void entityDamagedKey(Entity entity){
+        entity.setMetadata(skillDamageMetaStr, new FixedMetadataValue(this, true));
+    }
+
+    public void removeEntityDamageKey(Entity entity){
+        entity.removeMetadata(skillDamageMetaStr, this);
+    }
+
+    public boolean isDamagedBySkill(Entity entity){
+        return  entity.hasMetadata(skillDamageMetaStr);
     }
 }

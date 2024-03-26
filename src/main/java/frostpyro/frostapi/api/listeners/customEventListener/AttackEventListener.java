@@ -29,8 +29,8 @@ public class AttackEventListener implements Listener {
     private void attack(EntityDamageEvent event){
         if(Utility.isFake(event)||!(event.getEntity() instanceof LivingEntity)) return;
 
-        if(event.getEntity().hasMetadata("damagedBySkill")){
-            event.getEntity().removeMetadata("damagedBySkill", FrostAPI.getPlugin());
+        if(FrostAPI.getPlugin().isDamagedBySkill(event.getEntity())){
+            FrostAPI.getPlugin().removeEntityDamageKey(event.getEntity());
             return;
         }
 
