@@ -6,11 +6,13 @@ import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-public class DamageManage {
+public class DamageManage implements Listener {
 
 
     public AttackData findAttack(EntityDamageEvent event){

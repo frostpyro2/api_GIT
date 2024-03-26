@@ -28,6 +28,12 @@ public class AttackEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     private void attack(EntityDamageEvent event){
         if(Utility.isFake(event)||!(event.getEntity() instanceof LivingEntity)) return;
+
+        if(event.getEntity().hasMetadata("damagedBySkill")){
+            event.getEntity().removeMetadata("damagedBySkill", FrostAPI.getPlugin());
+            return;
+        }
+
         AttackData data = FrostAPI.getPlugin().damage().findAttack(event);
         if(data.isPlayer() && ((Player)data.getAttacker().getEntity()).getGameMode() == GameMode.SPECTATOR) return;
         final AttackEvent attackEvent = data.isPlayer() ? new PlayerAttackEvent(event, data) : new AttackEvent(event, data);
