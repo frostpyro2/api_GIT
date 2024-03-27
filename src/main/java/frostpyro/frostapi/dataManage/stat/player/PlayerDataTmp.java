@@ -1,5 +1,6 @@
 package frostpyro.frostapi.dataManage.stat.player;
 
+import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
 import frostpyro.frostapi.dataManage.stat.data.PlayerFile;
 import frostpyro.frostapi.dataManage.stat.data.StatMap;
@@ -10,10 +11,12 @@ import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.FileReader;
 import java.util.*;
 
 public class PlayerDataTmp implements StatProvider {
@@ -54,6 +57,21 @@ public class PlayerDataTmp implements StatProvider {
         if(slot != EquipSlot.MAIN_HAND) return;
         SkillManager manager = new SkillItem(data);
         manager.cast();
+        for(Entity entity : player.getNearbyEntities(5,5,5)){
+            if(!(entity instanceof LivingEntity living)) continue;
+            damage(living);
+        }
+    }
+
+    private void damage(LivingEntity entity){
+        if(FrostAPI.getPlugin().isDamagedBySkill(entity)){
+            player.sendMessage("test");
+            FrostAPI.getPlugin().removeEntityDamageKey(entity);
+            return;
+        }
+
+        FrostAPI.getPlugin().entityDamagedKey(entity);
+        entity.damage(5, player);
     }
 
     public void castSkill(TriggerData data){
