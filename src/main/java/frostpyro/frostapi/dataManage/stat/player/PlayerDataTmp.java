@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
@@ -54,6 +55,12 @@ public class PlayerDataTmp implements StatProvider {
     }
 
     public void castSkill(TriggerData data, EquipSlot slot){
+        if(data.getData() != null){
+            if(FrostAPI.getPlugin().isDamagedBySkill(data.getData().getTarget())){
+                FrostAPI.getPlugin().removeEntityDamageKey(data.getData().getTarget());
+                return;
+            }
+        }
         if(slot != EquipSlot.MAIN_HAND) return;
         SkillManager manager = new SkillItem(data);
         manager.cast();
@@ -64,12 +71,6 @@ public class PlayerDataTmp implements StatProvider {
     }
 
     private void damage(LivingEntity entity){
-        if(FrostAPI.getPlugin().isDamagedBySkill(entity)){
-            player.sendMessage("test");
-            FrostAPI.getPlugin().removeEntityDamageKey(entity);
-            return;
-        }
-
         FrostAPI.getPlugin().entityDamagedKey(entity);
         entity.damage(5, player);
     }
@@ -77,6 +78,7 @@ public class PlayerDataTmp implements StatProvider {
     public void castSkill(TriggerData data){
         SkillManager manager = new AnotherTrigger(data);
         manager.cast();
+        data.getCast().getEntity().sendMessage("no");
     }
 
     public FileConfiguration getConfiguration(){

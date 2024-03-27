@@ -32,7 +32,7 @@ public class SkillTriggerListener implements Listener {
         final boolean isSneaking = event.getPlayer().isSneaking();
         final TriggerType type = isLeft ? (isSneaking ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.LEFT_CLICK) : (isSneaking ? TriggerType.SHIFT_RIGHT_CLICK : TriggerType.RIGHT_CLICK);
         final TriggerData data = new TriggerData(caster, type, EquipSlot.fromBukkit(event.getHand()), null, null, null, null, new PlayerData(caster, EquipSlot.fromBukkit(event.getHand())));
-        caster.castSkill(data);
+        caster.castSkill(data, data.getSlot());
     }
 
     @EventHandler
