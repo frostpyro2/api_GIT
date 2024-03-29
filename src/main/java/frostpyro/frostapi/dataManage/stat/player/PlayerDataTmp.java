@@ -64,10 +64,6 @@ public class PlayerDataTmp implements StatProvider {
         if(slot != EquipSlot.MAIN_HAND) return;
         SkillManager manager = new SkillItem(data);
         manager.cast();
-        for(Entity entity : player.getNearbyEntities(5,5,5)){
-            if(!(entity instanceof LivingEntity living)) continue;
-            damage(living);
-        }
     }
 
     private void damage(LivingEntity entity){
@@ -76,9 +72,12 @@ public class PlayerDataTmp implements StatProvider {
     }
 
     public void castSkill(TriggerData data){
-        SkillManager manager = new AnotherTrigger(data);
-        manager.cast();
-        data.getCast().getEntity().sendMessage("no");
+        if(data.getSlot() == null){
+            SkillManager manager = new AnotherTrigger(data);
+            manager.cast();
+            return;
+        }
+        castSkill(data, data.getSlot());
     }
 
     public FileConfiguration getConfiguration(){
