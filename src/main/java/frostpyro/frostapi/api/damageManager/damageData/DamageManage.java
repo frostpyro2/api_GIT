@@ -21,6 +21,7 @@ public class DamageManage implements Listener {
             Entity damager = ((EntityDamageByEntityEvent) event).getDamager();
             if(damager instanceof LivingEntity){
                 final StatProvider provider = StatProvider.get((LivingEntity)damager, EquipSlot.MAIN_HAND, true);
+                if(provider == null) return new AttackData(new DamageData(event.getDamage()), (LivingEntity) entity, null);
                 return new AttackData(new DamageData(event.getDamage(), types(event.getCause())), (LivingEntity) entity, provider);
             }
             else if(damager instanceof Projectile){

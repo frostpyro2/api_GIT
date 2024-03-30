@@ -2,3 +2,7 @@ name: frostAPI
 version: '${version}'
 main: frostpyro.frostapi.FrostAPI
 api-version: '1.20'
+commands:
+  giveCommand:
+    description: "gives skill item"
+    usage: /skillGive

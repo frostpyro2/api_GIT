@@ -1,5 +1,6 @@
 package frostpyro.frostapi;
 
+import frostpyro.frostapi.api.command.Command;
 import frostpyro.frostapi.api.damageManager.damageData.DamageManage;
 import frostpyro.frostapi.api.listeners.fake.FakeEventManager;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
@@ -53,6 +54,8 @@ public final class FrostAPI extends JavaPlugin {
         SkillItem.registerItem();
         AnimatedItem.registerItemAnimation();
         Skill.registerSkill();
+
+        this.getCommand("giveCommand").setExecutor(new Command());
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }

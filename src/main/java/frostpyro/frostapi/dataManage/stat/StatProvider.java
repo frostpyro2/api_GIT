@@ -23,6 +23,7 @@ public interface StatProvider {
     double getStat(String stat);
 
     static StatProvider get(LivingEntity livingEntity, EquipSlot slot, boolean cache){
+        if(PlayerDataTmp.get(livingEntity.getUniqueId()) == null) return null;
         final StatMap statMap = PlayerDataTmp.get(livingEntity.getUniqueId()).statMap();
 
         return cache ? statMap.cache(slot) : statMap;

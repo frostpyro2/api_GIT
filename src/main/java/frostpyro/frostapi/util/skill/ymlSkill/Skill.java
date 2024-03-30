@@ -5,27 +5,26 @@ import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Skill {
-    private static List<FileConfiguration> skillList = new ArrayList<>();
+    private static Map<String,FileConfiguration> skillMap = new HashMap<>();
     private File file;
-    private SkillConfig configuration;
-    private String fileName;
+    private FileConfiguration configuration;
     private TriggerData data;
 
     public Skill(@NotNull String fileName, TriggerData data){
-        this.fileName = fileName;
-        file = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills\\" + fileName + ".yml");
         try{
-            configuration = new SkillConfig(file);
+            configuration = skillMap.computeIfAbsent(fileName, NONE -> null);
         }
         catch (Exception any){
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "failed to load skill file!");
@@ -39,7 +38,9 @@ public class Skill {
     }
 
     public void activateSkill() {
-
+        if(configuration == null) return;
+        SkillAction action = new SkillAction(configuration, data);
+        action.actionSection();
     }
 
     public static void registerSkill(){
@@ -53,7 +54,7 @@ public class Skill {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "failed to load:" + fileName);
                 continue;
             }
-            skillList.add(fileConfig);
+            skillMap.put(fileName, fileConfig);
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "skill yml successfully added:" + file.getName());
         }
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "--------------------------------");

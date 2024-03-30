@@ -107,6 +107,12 @@ public class SkillItem extends SkillManager {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item lore's name should be \"lore\"\nERROR ON:" + ymlFile.getName());
                 continue;
             }
+            try{
+                meta.setUnbreakable(configuration.getBoolean("unbreakable"));
+            }catch (Exception any){
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "item durable's name should be \"unbreakable\"\nERROR ON:" + ymlFile.getName());
+                continue;
+            }
             itemStack.setItemMeta(meta);
             skillItems.add(itemStack);
             ConfigurationSection skillSection = configuration.getConfigurationSection("skill");
