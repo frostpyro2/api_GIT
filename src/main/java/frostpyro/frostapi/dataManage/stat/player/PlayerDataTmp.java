@@ -55,20 +55,9 @@ public class PlayerDataTmp implements StatProvider {
     }
 
     public void castSkill(TriggerData data, EquipSlot slot){
-        if(data.getData() != null){
-            if(FrostAPI.getPlugin().isDamagedBySkill(data.getData().getTarget())){
-                FrostAPI.getPlugin().removeEntityDamageKey(data.getData().getTarget());
-                return;
-            }
-        }
         if(slot != EquipSlot.MAIN_HAND) return;
         SkillManager manager = new SkillItem(data);
         manager.cast();
-    }
-
-    private void damage(LivingEntity entity){
-        FrostAPI.getPlugin().entityDamagedKey(entity);
-        entity.damage(5, player);
     }
 
     public void castSkill(TriggerData data){

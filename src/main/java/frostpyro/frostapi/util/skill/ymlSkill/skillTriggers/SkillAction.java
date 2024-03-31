@@ -1,9 +1,11 @@
-package frostpyro.frostapi.util.skill.ymlSkill;
+package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.RadiusInterpret;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.Configuration;
@@ -42,6 +44,10 @@ public class SkillAction {
 
         @Override
         public void run() {
+            if(act == null){
+                this.cancel();
+                return;
+            }
             if(delay > 0){
                 delay--;
                 return;
@@ -86,9 +92,15 @@ public class SkillAction {
 
             Location center = data.getCast().getEntity().getLocation();
 
+            double finalAmount = amount;
+
+            if(damageInfo.get("radius.dist") != null){
+                center = center.add(center.getDirection().normalize().multiply((double) damageInfo.get("radius.dist")));
+            }
+
             if(center.getWorld() == null) return;
 
-            double finalAmount = amount;
+
             center.getWorld().getNearbyEntities(center, interpret.getX(), interpret.getY(), interpret.getZ()).forEach(entity -> {
                 if(entity instanceof LivingEntity living){
                     if(living != data.getCast().getEntity()){

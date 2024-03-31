@@ -8,7 +8,6 @@ import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
 import frostpyro.frostapi.util.skill.SkillManager;
-import frostpyro.frostapi.util.skill.customItem.AnimatedItem;
 import frostpyro.frostapi.util.skill.casting.SkillItem;
 import frostpyro.frostapi.util.skill.ymlSkill.Skill;
 import org.bukkit.Bukkit;
@@ -52,7 +51,6 @@ public final class FrostAPI extends JavaPlugin {
 
         SkillManager.registerSkill();
         SkillItem.registerItem();
-        AnimatedItem.registerItemAnimation();
         Skill.registerSkill();
 
         this.getCommand("giveCommand").setExecutor(new Command());

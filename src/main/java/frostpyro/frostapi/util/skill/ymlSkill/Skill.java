@@ -3,17 +3,17 @@ package frostpyro.frostapi.util.skill.ymlSkill;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillAction;
+import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillEffect;
+import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillSound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Skill {
@@ -38,9 +38,16 @@ public class Skill {
     }
 
     public void activateSkill() {
+        if(data.getData() != null){
+            if(FrostAPI.getPlugin().isDamagedBySkill(data.getData().getTarget())){
+                FrostAPI.getPlugin().removeEntityDamageKey(data.getData().getTarget());
+                return;
+            }
+        }
         if(configuration == null) return;
-        SkillAction action = new SkillAction(configuration, data);
-        action.actionSection();
+        new SkillAction(configuration, data).actionSection();
+        new SkillSound(configuration, data).soundSection();
+        new SkillEffect(configuration, data).effectSection();
     }
 
     public static void registerSkill(){
