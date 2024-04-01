@@ -21,7 +21,7 @@ public class TriggerData {
     }
 
     public TriggerData(PlayerData data, TriggerType type, LivingEntity target, AttackData atkData){
-        this(data.tmp(), type, EquipSlot.MAIN_HAND, null, null, target, atkData, data);
+        this(data.tmp(), type, EquipSlot.MAIN_HAND, data.getEntity().getLocation(), target.getLocation(), target, atkData, data);
     }
 
     public TriggerData(PlayerDataTmp playerData, TriggerType type, EquipSlot slot, Location source, Location targetLoc, LivingEntity target,AttackData data, PlayerData cast){

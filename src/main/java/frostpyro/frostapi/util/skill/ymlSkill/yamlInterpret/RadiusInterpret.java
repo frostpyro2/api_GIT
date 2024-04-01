@@ -1,5 +1,6 @@
 package frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
@@ -11,14 +12,14 @@ public class RadiusInterpret {
     private List<Double> information = new ArrayList<>(Arrays.asList(null, null, null, null, null));
     public RadiusInterpret(Map<?, ?> radInfo){
         try{
-            information.set(0, (double)radInfo.get("x"));
-            information.set(1, (double)radInfo.get("y"));
-            information.set(2, (double)radInfo.get("z"));
-            information.set(3, (double)radInfo.get("angle"));
-            information.set(4, (double)radInfo.get("distance"));
+            information.set(0, (Double) radInfo.get("x"));
+            information.set(1, (Double) radInfo.get("y"));
+            information.set(2, (Double) radInfo.get("z"));
+            information.set(3, (Double) radInfo.get("angle"));
+            information.set(4, (Double) radInfo.get("distance"));
         }
         catch (Exception any){
-
+            Bukkit.getConsoleSender().sendMessage("pause");
         }
     }
 
