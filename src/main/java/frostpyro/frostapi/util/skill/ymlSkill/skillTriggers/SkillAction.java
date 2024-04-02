@@ -28,14 +28,13 @@ public class SkillAction {
     }
 
     public void actionSection(){
-        new Action(data, configuration.getMapList("skill.action")).runTaskTimer(FrostAPI.getPlugin(), 0, 1);
+        new Action(data, configuration.getMapList("skill.action")).run();
     }
 
     private static class Action extends BukkitRunnable{
-        private int delay = 0;
-        private int index = 0;
         private TriggerData data;
         private List<Map<?, ?>> act;
+        private int delay = 0;
         Action(TriggerData data, List<Map<?, ?>> act){
             this.data = data;
             this.act = act;
@@ -48,28 +47,30 @@ public class SkillAction {
                 this.cancel();
                 return;
             }
-            if(delay > 0){
-                delay--;
-                return;
-            }
 
-            if(index >= act.size()){
-                this.cancel();
-                return;
-            }
 
-            Map<?, ?> action = act.get(index++);
-
-            if(action.containsKey("damage")){
-                Map<?, ?> damageInfo = (Map<?, ?>) action.get("damage");
-                damage(damageInfo);
-            }
-            else if(action.containsKey("heal")){
-                Map<?, ?> healInfo = (Map<?, ?>) action.get("heal");
-                heal(healInfo);
-            }
-            else if(action.containsKey("delay")){
-                delay = (Integer) action.get("delay");
+            for(Map<?, ?> action : act){
+                if(action.containsKey("damage")){
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            Map<?, ?> damageInfo = (Map<?, ?>) action.get("damage");
+                            damage(damageInfo);
+                        }
+                    }.runTaskLater(FrostAPI.getPlugin(), delay);
+                }
+                else if(action.containsKey("heal")){
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            Map<?, ?> healInfo = (Map<?, ?>) action.get("heal");
+                            heal(healInfo);
+                        }
+                    }.runTaskLater(FrostAPI.getPlugin(), delay);
+                }
+                else if(action.containsKey("delay")){
+                    delay = (int) action.get("delay");
+                }
             }
         }
 

@@ -22,14 +22,13 @@ public class SkillSound {
     }
 
     public void soundSection(){
-        new SkillSound.Skill(data, configuration.getMapList("skill.sound")).runTaskTimer(FrostAPI.getPlugin(), 0, 1);
+        new SkillSound.Skill(data, configuration.getMapList("skill.sound")).runTask(FrostAPI.getPlugin());
     }
 
     private static class Skill extends BukkitRunnable{
-        private int delay = 0;
-        private int index = 0;
         private TriggerData data;
         private  List<Map<?, ?>> act;
+        private int delay = 0;
         Skill(TriggerData data, List<Map<?, ?>> act){
             this.data = data;
             this.act = act;
@@ -40,24 +39,19 @@ public class SkillSound {
                 this.cancel();
                 return;
             }
-            if(delay > 0){
-                delay--;
-                return;
-            }
 
-            if(index >= act.size()){
-                this.cancel();
-                return;
-            }
-
-            Map<?, ?> action = act.get(index++);
-
-            if(action.containsKey("sound")){
-                Map<?, ?> sound = (Map<?, ?>) action.get("sound");
-                sound(sound);
-            }
-            else if(action.containsKey("delay")){
-                delay = (int) action.get("delay");
+            for(Map<?, ?> soundMap : act){
+                if(soundMap.containsKey("sound")){
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            sound(soundMap);
+                        }
+                    }.runTaskLater(FrostAPI.getPlugin(), delay);
+                }
+                else if(soundMap.containsKey("delay")){
+                    delay = (int) soundMap.get("delay");
+                }
             }
         }
 

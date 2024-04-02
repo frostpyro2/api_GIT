@@ -22,13 +22,12 @@ public class SkillEffect {
     }
 
     public void effectSection(){
-        new Effect(data, configuration.getList("skill.effect")).runTaskTimer(FrostAPI.getPlugin(), 0, 1);
+        new Effect(data, configuration.getList("skill.effect")).runTask(FrostAPI.getPlugin());
     }
 
     private static class Effect extends BukkitRunnable{
-        private int delay = 0;
         private int index = 0;
-
+        private int delay = 0;
         private TriggerData data;
         private List<?> act;
         Effect(TriggerData data, List<?> act){
@@ -37,33 +36,34 @@ public class SkillEffect {
         }
         @Override
         public void run() {
-            if(act == null){
-                this.cancel();
-                return;
-            }
-            if(delay > 0){
-                delay--;
-                return;
-            }
-
-            if(index >= act.size()){
+            if(act == null || index >= act.size()){
                 this.cancel();
                 return;
             }
 
-            Object effect = act.get(index++);
-
-            if(effect instanceof Map<?,?> effectMap){
-                if(effectMap.containsKey("effect")){
-                    Map<?, ?> particleMap = (Map<?, ?>) effectMap.get("effect");
-                    effect(particleMap);
-                }
-                else if(effectMap.containsKey("definedEffect")){
-                    Map<?, ?> definedMap = (Map<?, ?>) effectMap.get("definedEffect");
-                    definedEffect(definedMap);
-                }
-                else if(effectMap.containsKey("delay")){
-                    delay = (int) effectMap.get("delay");
+            for(Object effect : act){
+                if(effect instanceof Map<?,?> effectMap){
+                    if(effectMap.containsKey("effect")){
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                Map<?, ?> particleMap = (Map<?, ?>) effectMap.get("effect");
+                                effect(particleMap);
+                            }
+                        }.runTaskLater(FrostAPI.getPlugin(), delay);
+                    }
+                    else if(effectMap.containsKey("definedEffect")){
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                Map<?, ?> particleMap = (Map<?, ?>) effectMap.get("definedEffect");
+                                definedEffect(particleMap);
+                            }
+                        }.runTaskLater(FrostAPI.getPlugin(), delay);
+                    }
+                    else if(effectMap.containsKey("delay")){
+                        delay = (int) effectMap.get("delay");
+                    }
                 }
             }
         }
