@@ -6,6 +6,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class SkillArmorStand {
@@ -17,10 +18,9 @@ public class SkillArmorStand {
     }
 
     public void skillArmorSection(){
-        new ArmorStand(configuration.getList("skill.armorStand"), data).runTaskTimer(FrostAPI.getPlugin(), 0, 1);
+        new ArmorStand(configuration.getList("skill.armorStand"), data).runTask(FrostAPI.getPlugin());
     }
     private static class ArmorStand extends BukkitRunnable{
-        private int index = 0;
         private int delay = 0;
         private List<?> act;
         private TriggerData data;
@@ -34,17 +34,13 @@ public class SkillArmorStand {
                 this.cancel();
                 return;
             }
-            if(delay > 0){
-                delay--;
-                return;
+            for(Object obj : act){
+                if(obj instanceof Map<?,?> standData){
+                    if(standData.containsKey("delay")){
+                        delay = (int) standData.get("delay");
+                    }
+                }
             }
-
-            if(index >= act.size()){
-                this.cancel();
-                return;
-            }
-
-            Object obj = act.get(index++);
         }
     }
 }
