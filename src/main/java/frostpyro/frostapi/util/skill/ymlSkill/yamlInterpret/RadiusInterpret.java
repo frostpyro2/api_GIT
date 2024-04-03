@@ -19,7 +19,7 @@ public class RadiusInterpret {
             information.set(4, (Double) radInfo.get("distance"));
         }
         catch (Exception any){
-            Bukkit.getConsoleSender().sendMessage("pause");
+            //do nothing
         }
     }
 

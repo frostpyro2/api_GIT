@@ -4,6 +4,7 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillAction;
+import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillArmorStand;
 import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillEffect;
 import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillSound;
 import org.bukkit.Bukkit;
@@ -48,6 +49,7 @@ public class Skill {
         new SkillAction(configuration, data).actionSection();
         new SkillSound(configuration, data).soundSection();
         new SkillEffect(configuration, data).effectSection();
+        new SkillArmorStand(configuration, data).skillArmorSection();
     }
 
     public static void registerSkill(){
