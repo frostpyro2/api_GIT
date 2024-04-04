@@ -8,9 +8,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Fireball;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.Map;
@@ -48,15 +52,16 @@ public class SkillArmorStand {
                     else if(standData.containsKey("stand")){
                         scheduledTask(()->{
                             org.bukkit.entity.ArmorStand stand = baseStand();
-                            standSummon((List<?>) standData.get("stand"), stand);
+                            standSummon((List<?>) standData.get("stand"), stand, stand.getLocation());
                         }, actionDelay);
                     }
                 }
             }
         }
 
-        private void standSummon(List<?> objList, org.bukkit.entity.ArmorStand stand){
+        private void standSummon(List<?> objList, org.bukkit.entity.ArmorStand stand, Location standLoc){
             int standDelay = 0;
+            double speed = 0.0;
             if(objList == null) return;
             for(Object standSetting : objList){
                 if(standSetting instanceof Map<?, ?> valueSetting){
@@ -64,14 +69,19 @@ public class SkillArmorStand {
                         SettingInterpret inter = new SettingInterpret((Map<?, ?>) valueSetting.get("setting"));
                         stand.setInvisible(inter.isInvisible());
                         stand.setGravity(inter.isGravity());
-                        Location location = stand.getLocation();
 
-                        location.setYaw((float) inter.getAngle() + data.getCast().getEntity().getLocation().getYaw());
+                        standLoc.setYaw((float) inter.getAngle() + data.getCast().getEntity().getLocation().getYaw());
+                        Vector vector = standLoc.getDirection();
+                        vector.setY(0);
                         if(inter.isVector()){
-                            location.setPitch(data.getCast().getEntity().getLocation().getPitch());
+                            standLoc.setPitch(data.getCast().getEntity().getLocation().getPitch());
+                            vector.setY(standLoc.getDirection().getY());
                         }
-                        stand.teleport(location);
-                        stand.setVelocity(stand.getLocation().getDirection().normalize().multiply(inter.getVelocity()));
+                        stand.teleport(standLoc);
+                        if(inter.getVelocity() != 0){
+                            stand.setMarker(false);
+                            stand.setVelocity(vector.normalize().multiply(inter.getVelocity()));
+                        }
                     }
 
                     else if(valueSetting.containsKey("delay")){
@@ -99,7 +109,6 @@ public class SkillArmorStand {
 
                             ItemMeta itemMeta = armorItem.getItemMeta();
                             itemMeta.setCustomModelData((int) valueSetting.get("setHeadModel"));
-
                             armorItem.setItemMeta(itemMeta);
                             stand.getEquipment().setHelmet(armorItem);
                         }, standDelay);
@@ -111,6 +120,7 @@ public class SkillArmorStand {
                             stand.remove();
                         }
                     }, standDelay);
+                    return;
                 }
             }
         }
@@ -118,6 +128,7 @@ public class SkillArmorStand {
         private org.bukkit.entity.ArmorStand baseStand(){
             org.bukkit.entity.ArmorStand stand = data.getCast().getEntity().getWorld().spawn(data.getCast().getEntity().getLocation(), org.bukkit.entity.ArmorStand.class);
             stand.setMarker(true);
+            stand.setInvulnerable(true);
             return stand;
         }
 
