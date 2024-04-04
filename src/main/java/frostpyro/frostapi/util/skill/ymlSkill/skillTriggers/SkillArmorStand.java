@@ -60,17 +60,21 @@ public class SkillArmorStand {
             if(objList == null) return;
             for(Object standSetting : objList){
                 if(standSetting instanceof Map<?, ?> valueSetting){
-                    SettingInterpret inter = new SettingInterpret((Map<?, ?>) valueSetting.get("setting"));
-                    stand.setInvisible(inter.isInvisible());
-                    stand.setGravity(inter.isGravity());
-                    Location location = stand.getLocation();
+                    if(valueSetting.containsKey("setting")){
+                        SettingInterpret inter = new SettingInterpret((Map<?, ?>) valueSetting.get("setting"));
+                        stand.setInvisible(inter.isInvisible());
+                        stand.setGravity(inter.isGravity());
+                        Location location = stand.getLocation();
 
-                    location.setYaw((float) inter.getAngle() + data.getCast().getEntity().getLocation().getYaw());
+                        location.setYaw((float) inter.getAngle() + data.getCast().getEntity().getLocation().getYaw());
+                        if(inter.isVector()){
+                            location.setPitch(data.getCast().getEntity().getLocation().getPitch());
+                        }
+                        stand.teleport(location);
+                        stand.setVelocity(stand.getLocation().getDirection().normalize().multiply(inter.getVelocity()));
+                    }
 
-                    stand.teleport(location);
-                    stand.setVelocity(stand.getLocation().getDirection().normalize().multiply(inter.getVelocity()));
-
-                    if(valueSetting.containsKey("delay")){
+                    else if(valueSetting.containsKey("delay")){
                         standDelay = (int) valueSetting.get("delay");
                     }
 

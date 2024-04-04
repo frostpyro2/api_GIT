@@ -1,12 +1,14 @@
 package frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret;
 
+import org.bukkit.Bukkit;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class SettingInterpret {
-    private List<Object> settings = new ArrayList<>(Arrays.asList(null, null, null, null));
+    private List<Object> settings = new ArrayList<>(Arrays.asList(null, null, null, null, null));
 
     public SettingInterpret(Map<?, ?> setting){
         try{
@@ -14,9 +16,11 @@ public class SettingInterpret {
             settings.set(1, setting.get("gravity"));
             settings.set(2, setting.get("velocity"));
             settings.set(3, setting.get("angle"));
+            settings.set(4, setting.get("isVector"));
         }
         catch (Exception any){
             //do nothing
+            Bukkit.getConsoleSender().sendMessage("exception");
         }
     }
 
@@ -38,5 +42,10 @@ public class SettingInterpret {
     public double getAngle(){
         if(settings.get(3) == null || !(settings.get(3) instanceof Double)) return 0;
         return (double) settings.get(3);
+    }
+
+    public boolean isVector(){
+        if(settings.get(4) == null || !(settings.get(4) instanceof Boolean)) return false;
+        return (boolean) settings.get(4);
     }
 }
