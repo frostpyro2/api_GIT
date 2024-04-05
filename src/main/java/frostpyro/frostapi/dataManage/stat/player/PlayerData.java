@@ -34,11 +34,15 @@ public class PlayerData implements StatProvider {
         return playerDataTmp.getStat(stat);
     }
 
+    public void removeCoolDown(Configuration config){
+        playerDataTmp.removeCoolDown(config);
+    }
+
     public PlayerDataTmp tmp(){
         return playerDataTmp;
     }
 
-    public void setCoolDown(Configuration config, int sec){
+    public void setCoolDown(Configuration config, double sec){
         playerDataTmp.setCoolDown(config, sec);
     }
 

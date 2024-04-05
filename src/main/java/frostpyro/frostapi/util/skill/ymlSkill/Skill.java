@@ -1,6 +1,7 @@
 package frostpyro.frostapi.util.skill.ymlSkill;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillAction;
@@ -11,13 +12,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Skill {
+public class Skill implements Listener{
     private static Map<String,FileConfiguration> skillMap = new HashMap<>();
     private File file;
     private FileConfiguration configuration;
@@ -47,14 +52,18 @@ public class Skill {
         }
         if(configuration == null) return;
         if(data.getCast().isCoolDown(configuration)) return;
-        int coolDown = 0;
+
+        data.getCast().removeCoolDown(configuration);
+
+        double coolDown = 0;
 
         try{
-            coolDown = configuration.getInt("skill.coolDown");
+            coolDown = configuration.getDouble("skill.coolDown");
         }
         catch (Exception any){
             //do nothing
         }
+
         data.getCast().setCoolDown(configuration, coolDown);
 
         new SkillAction(configuration, data).actionSection();

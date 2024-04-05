@@ -67,12 +67,18 @@ public class PlayerDataTmp implements StatProvider {
         castSkill(data, data.getSlot());
     }
 
-    public void setCoolDown(Configuration config, int sec){
-        coolDown.put(config, System.currentTimeMillis() + sec * 1000L);
+    public void setCoolDown(Configuration config, double sec){
+        coolDown.put(config, (long) (System.currentTimeMillis() + sec * 1000L));
     }
 
     public boolean isCoolDown(Configuration skill){
-        return coolDown.get(skill) <= System.currentTimeMillis();
+        if(coolDown.get(skill) == null) return false;
+        return coolDown.get(skill) >= System.currentTimeMillis();
+    }
+
+    public void removeCoolDown(Configuration config){
+        if(coolDown.get(config) == null) return;
+        coolDown.remove(config);
     }
 
     public FileConfiguration getConfiguration(){
