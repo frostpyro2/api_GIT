@@ -68,7 +68,7 @@ public class PlayerDataTmp implements StatProvider {
     }
 
     public void setCoolDown(Configuration config, int sec){
-        coolDown.put(config, System.currentTimeMillis() + sec);
+        coolDown.put(config, System.currentTimeMillis() + sec * 1000L);
     }
 
     public boolean isCoolDown(Configuration skill){
