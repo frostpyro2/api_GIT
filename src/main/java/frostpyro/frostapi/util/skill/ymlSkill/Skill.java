@@ -46,6 +46,17 @@ public class Skill {
             }
         }
         if(configuration == null) return;
+        if(data.getCast().isCoolDown(configuration)) return;
+        int coolDown = 0;
+
+        try{
+            coolDown = configuration.getInt("skill.coolDown");
+        }
+        catch (Exception any){
+            //do nothing
+        }
+        data.getCast().setCoolDown(configuration, coolDown);
+
         new SkillAction(configuration, data).actionSection();
         new SkillSound(configuration, data).soundSection();
         new SkillEffect(configuration, data).effectSection();

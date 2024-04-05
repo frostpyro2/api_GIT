@@ -2,7 +2,7 @@ package frostpyro.frostapi.dataManage.stat.player;
 
 import frostpyro.frostapi.dataManage.stat.StatProvider;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
-import frostpyro.frostapi.util.skill.trigger.TriggerType;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -36,5 +36,13 @@ public class PlayerData implements StatProvider {
 
     public PlayerDataTmp tmp(){
         return playerDataTmp;
+    }
+
+    public void setCoolDown(Configuration config, int sec){
+        playerDataTmp.setCoolDown(config, sec);
+    }
+
+    public boolean isCoolDown(Configuration config){
+        return playerDataTmp.isCoolDown(config);
     }
 }
