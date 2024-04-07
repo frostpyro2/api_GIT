@@ -38,11 +38,6 @@ public class Skill implements Listener{
         this.data = data;
     }
 
-    public Skill(SkillConfig fileConfig, TriggerData data){
-        this.configuration = fileConfig;
-        this.data = data;
-    }
-
     public void activateSkill() {
         if(data.getData() != null){
             if(FrostAPI.getPlugin().isDamagedBySkill(data.getData().getTarget())){

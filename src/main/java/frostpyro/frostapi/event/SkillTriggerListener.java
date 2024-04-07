@@ -72,10 +72,4 @@ public class SkillTriggerListener implements Listener {
     private void shift(PlayerToggleSneakEvent event) {
 
     }
-
-    @EventHandler
-    private void dropCancel(PlayerDropItemEvent event){
-        if(SkillItem.skillItemList().contains(event.getItemDrop().getItemStack()))
-            event.setCancelled(true);
-    }
 }
