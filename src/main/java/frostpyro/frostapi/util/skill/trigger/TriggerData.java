@@ -1,6 +1,7 @@
 package frostpyro.frostapi.util.skill.trigger;
 
 import frostpyro.frostapi.api.damageManager.attackData.AttackData;
+import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.player.PlayerAttackEvent;
 import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
@@ -16,8 +17,10 @@ public class TriggerData {
     private final Location targetLoc;
     private final AttackData data;
     private final PlayerData cast;
+    private PlayerAttackEvent event;
     public TriggerData(PlayerAttackEvent attackEvent, TriggerType type){
         this(attackEvent.getPlayerData(), type, attackEvent.getAttack().getTarget(), attackEvent.getAttack());
+        this.event = attackEvent;
     }
 
     public TriggerData(PlayerData data, TriggerType type, LivingEntity target, AttackData atkData){
@@ -48,6 +51,10 @@ public class TriggerData {
 
     public Location getSource() {
         return source;
+    }
+
+    public PlayerAttackEvent getEvent(){
+        return event;
     }
 
     public Location getTargetLoc() {

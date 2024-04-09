@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class Skill implements Listener{
     private static Map<String,FileConfiguration> skillMap = new HashMap<>();
@@ -46,7 +47,15 @@ public class Skill implements Listener{
             }
         }
         if(configuration == null) return;
-        if(data.getCast().isCoolDown(configuration)) return;
+        if(data.getCast().isCoolDown(configuration)) {
+            try{
+                data.getEvent().setCancelled(true);
+            }
+            catch (Exception any){
+                //none
+            }
+            return;
+        }
 
         data.getCast().removeCoolDown(configuration);
 
