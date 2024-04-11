@@ -4,10 +4,12 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -17,14 +19,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Skill implements Listener{
     private static Map<String,FileConfiguration> skillMap = new HashMap<>();
     private File file;
     private FileConfiguration configuration;
+    private final Map<FileConfiguration, Map<String, FileConfiguration>> toggle = new HashMap<>();
     private TriggerData data;
 
     public Skill(@NotNull String fileName, TriggerData data){
@@ -50,6 +52,22 @@ public class Skill implements Listener{
 
     private void skillMechanism(){
         toggleSkill();
+
+        if(!data.getCast().getToggleMap().isEmpty()){
+            Bukkit.getConsoleSender().sendMessage(data.getType().getType());
+            Map<String, FileConfiguration> toggleCheck = data.getCast().getToggleMap().get(data.getCast().getToggle());
+            if(toggleCheck == null){
+                Bukkit.getConsoleSender().sendMessage("toggleCheck is NULL");
+                return;
+            }
+            for(String str : toggleCheck.keySet()){
+                Bukkit.getConsoleSender().sendMessage(str);
+            }
+            if(toggleCheck.containsKey(data.getType().getType())){
+                configuration = toggleCheck.get(data.getType().getType());
+            }
+        }
+
         if(data.getCast().isCoolDown(configuration)) {
             try{
                 data.getEvent().setCancelled(true);
@@ -59,6 +77,8 @@ public class Skill implements Listener{
             }
             return;
         }
+
+
 
         data.getCast().removeCoolDown(configuration);
 
@@ -81,32 +101,59 @@ public class Skill implements Listener{
     }
 
     private void toggleSkill(){
-        FileConfiguration anotherConfig;
+        boolean isToggle;
+
         try{
-            File anotherFile = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills\\" + configuration.getString("skill." + data.getType().getType()) + ".yml");
-            anotherConfig = YamlConfiguration.loadConfiguration(anotherFile);
+            isToggle = configuration.getBoolean("skill.isToggle");
         }
-        catch (Exception e){
+        catch (Exception any){
             return;
         }
 
-        if(data.getCast().notDuration(configuration)){
-            if(data.getCast().isCoolDown(configuration)){
-                data.getCast().removeDuration(configuration);
-                return;
-            }
-            double duration;
-            try{
-                duration = configuration.getDouble("duration");
-            }
-            catch (Exception e){
-                duration = 0;
-            }
-
-            data.getCast().setDuration(configuration, duration);
+        if(!isToggle) {
+            Bukkit.getConsoleSender().sendMessage("is not toggle");
+            return;
         }
 
-        configuration = anotherConfig;
+        if(data.getCast().getToggle() != null){
+            if(data.getCast().notDuration(data.getCast().getToggle())){
+                data.getCast().removeDuration(data.getCast().getToggle());
+                data.getCast().setToggle(null);
+                data.getCast().removeToggle(data.getCast().getToggle());
+            }
+            return;
+        }
+
+        Bukkit.getConsoleSender().sendMessage("toggleTrigger is null");
+
+        Map<String, FileConfiguration> tmp = new HashMap<>();
+
+        for(String skillTrigger: TriggerType.getKeys()){
+            FileConfiguration skillConfig;
+            String skill;
+            try{
+                skill = configuration.getString("skill."+skillTrigger);
+                if(skill == null) continue;
+                File skillFileTmp = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills" + skill + ".yml");
+                skillConfig = YamlConfiguration.loadConfiguration(skillFileTmp);
+                tmp.put(skillTrigger, skillConfig);
+            }
+            catch (Exception e){
+                Bukkit.getConsoleSender().sendMessage(skillTrigger);
+            }
+        }
+
+        double duration;
+
+        try{
+            duration = configuration.getDouble("skill.duration");
+        }
+        catch (Exception e){
+            duration = 0;
+        }
+        data.getCast().setToggle(configuration);
+        data.getCast().setDuration(configuration, duration);
+        data.getCast().registerToggle(configuration, tmp);
     }
 
     public static void registerSkill(){

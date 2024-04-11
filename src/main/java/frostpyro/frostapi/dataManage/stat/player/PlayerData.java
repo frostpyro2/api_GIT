@@ -4,8 +4,11 @@ import frostpyro.frostapi.dataManage.stat.StatProvider;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+
+import java.util.Map;
 
 public class PlayerData implements StatProvider {
     private PlayerDataTmp playerDataTmp;
@@ -51,16 +54,24 @@ public class PlayerData implements StatProvider {
         return playerDataTmp.isCoolDown(config);
     }
 
-    public void setToggle(TriggerType type){
-        playerDataTmp.setToggle(type);
+    public void setToggle(FileConfiguration configuration){
+        playerDataTmp.setToggle(configuration);
     }
 
-    public void removeToggle(TriggerType type){
-        playerDataTmp.removeToggle(type);
+    public FileConfiguration getToggle(){
+        return playerDataTmp.getToggle();
     }
 
-    public boolean isToggled(TriggerType type){
-        return playerDataTmp.isToggled(type);
+    public void registerToggle(FileConfiguration configuration, Map<String, FileConfiguration> tmp){
+        playerDataTmp.registerToggle(configuration, tmp);
+    }
+
+    public Map<FileConfiguration, Map<String, FileConfiguration>> getToggleMap(){
+        return playerDataTmp.getToggleMap();
+    }
+
+    public void removeToggle(FileConfiguration configuration){
+        playerDataTmp.removeToggle(configuration);
     }
 
     public boolean notDuration(Configuration configuration){

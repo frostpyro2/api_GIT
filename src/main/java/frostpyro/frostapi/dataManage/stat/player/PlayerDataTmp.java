@@ -13,8 +13,10 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.map.MapPalette;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.ObjectInputFilter;
 import java.util.*;
 
@@ -23,10 +25,11 @@ public class PlayerDataTmp implements StatProvider {
     private final UUID uuid;
 
     private final FileConfiguration configuration;
-
+    private FileConfiguration trigger;
     private final Map<Configuration, Long> coolDown = new HashMap<>();
-    private final Set<TriggerType> toggle = new HashSet<>();
     private final Map<Configuration, Long> duration = new HashMap<>();
+    private final Map<FileConfiguration, Map<String, FileConfiguration>> toggle = new HashMap<>();
+    private Map<String, FileConfiguration> tmp = new HashMap<>();
     public PlayerDataTmp(Player player){
         this.player = player;
         uuid = player.getUniqueId();
@@ -71,16 +74,6 @@ public class PlayerDataTmp implements StatProvider {
     public void setCoolDown(Configuration config, double sec){
         coolDown.put(config, (long) (System.currentTimeMillis() + sec * 1000L));
     }
-
-    public void setToggle(TriggerType type){
-        toggle.add(type);
-    }
-
-    public void removeToggle(TriggerType type){
-        if(!toggle.contains(type)) return;
-        toggle.remove(type);
-    }
-
     public boolean isCoolDown(Configuration skill){
         if(coolDown.get(skill) == null) return false;
         return coolDown.get(skill) >= System.currentTimeMillis();
@@ -91,12 +84,27 @@ public class PlayerDataTmp implements StatProvider {
         coolDown.remove(config);
     }
 
-    public boolean isToggled(TriggerType type){
-        return toggle.contains(type);
-    }
-
     public boolean notDuration(Configuration configuration){
         return this.duration.get(configuration) <= System.currentTimeMillis();
+    }
+
+    public void setToggle(FileConfiguration configuration){
+        this.trigger = configuration;
+    }
+
+    public void registerToggle(FileConfiguration configuration, Map<String, FileConfiguration> tmp){
+        toggle.put(configuration, tmp);
+    }
+
+    public Map<FileConfiguration, Map<String, FileConfiguration>> getToggleMap(){
+        return toggle;
+    }
+    public void removeToggle(FileConfiguration configuration){
+        toggle.remove(configuration);
+    }
+
+    public FileConfiguration getToggle(){
+        return trigger;
     }
 
     public void setDuration(Configuration configuration, double duration){
