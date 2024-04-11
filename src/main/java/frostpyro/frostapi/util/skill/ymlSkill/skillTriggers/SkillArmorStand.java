@@ -19,7 +19,7 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.Map;
 
-public class SkillArmorStand {
+public class SkillArmorStand implements Action{
     private Configuration configuration;
     private TriggerData data;
     public SkillArmorStand(Configuration configuration, TriggerData data){
@@ -27,7 +27,7 @@ public class SkillArmorStand {
         this.data = data;
     }
 
-    public void skillArmorSection(){
+    public void section(){
         new ArmorStandSummon(configuration.getList("skill.armorStand"), data).runTask(FrostAPI.getPlugin());
     }
     private static class ArmorStandSummon extends BukkitRunnable{

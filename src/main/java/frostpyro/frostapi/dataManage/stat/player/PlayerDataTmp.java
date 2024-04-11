@@ -25,7 +25,8 @@ public class PlayerDataTmp implements StatProvider {
     private final FileConfiguration configuration;
 
     private final Map<Configuration, Long> coolDown = new HashMap<>();
-
+    private final Set<TriggerType> toggle = new HashSet<>();
+    private final Map<Configuration, Long> duration = new HashMap<>();
     public PlayerDataTmp(Player player){
         this.player = player;
         uuid = player.getUniqueId();
@@ -71,6 +72,15 @@ public class PlayerDataTmp implements StatProvider {
         coolDown.put(config, (long) (System.currentTimeMillis() + sec * 1000L));
     }
 
+    public void setToggle(TriggerType type){
+        toggle.add(type);
+    }
+
+    public void removeToggle(TriggerType type){
+        if(!toggle.contains(type)) return;
+        toggle.remove(type);
+    }
+
     public boolean isCoolDown(Configuration skill){
         if(coolDown.get(skill) == null) return false;
         return coolDown.get(skill) >= System.currentTimeMillis();
@@ -81,6 +91,22 @@ public class PlayerDataTmp implements StatProvider {
         coolDown.remove(config);
     }
 
+    public boolean isToggled(TriggerType type){
+        return toggle.contains(type);
+    }
+
+    public boolean notDuration(Configuration configuration){
+        return this.duration.get(configuration) <= System.currentTimeMillis();
+    }
+
+    public void setDuration(Configuration configuration, double duration){
+        this.duration.put(configuration, (long) (System.currentTimeMillis() + duration * 1000) );
+    }
+
+    public void removeDuration(Configuration configuration){
+        if(configuration == null) return;
+        this.duration.remove(configuration);
+    }
     public FileConfiguration getConfiguration(){
         return configuration;
     }

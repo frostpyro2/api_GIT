@@ -4,12 +4,10 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
-import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillAction;
-import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillArmorStand;
-import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillEffect;
-import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.SkillSound;
+import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -47,6 +45,11 @@ public class Skill implements Listener{
             }
         }
         if(configuration == null) return;
+        skillMechanism();
+    }
+
+    private void skillMechanism(){
+        toggleSkill();
         if(data.getCast().isCoolDown(configuration)) {
             try{
                 data.getEvent().setCancelled(true);
@@ -70,10 +73,40 @@ public class Skill implements Listener{
 
         data.getCast().setCoolDown(configuration, coolDown);
 
-        new SkillAction(configuration, data).actionSection();
-        new SkillSound(configuration, data).soundSection();
-        new SkillEffect(configuration, data).effectSection();
-        new SkillArmorStand(configuration, data).skillArmorSection();
+        Activation activation = new Activation(configuration, data);
+        for(Action skillAct : activation.actions()){
+            if(skillAct == null) continue;
+            skillAct.section();
+        }
+    }
+
+    private void toggleSkill(){
+        FileConfiguration anotherConfig;
+        try{
+            File anotherFile = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills\\" + configuration.getString("skill." + data.getType().getType()));
+            anotherConfig = YamlConfiguration.loadConfiguration(anotherFile);
+        }
+        catch (Exception e){
+            return;
+        }
+
+        if(data.getCast().notDuration(configuration)){
+            if(data.getCast().isCoolDown(configuration)){
+                data.getCast().removeDuration(configuration);
+                return;
+            }
+            double duration;
+            try{
+                duration = configuration.getDouble("duration");
+            }
+            catch (Exception e){
+                duration = 0;
+            }
+
+            data.getCast().setDuration(configuration, duration);
+        }
+
+        configuration = anotherConfig;
     }
 
     public static void registerSkill(){

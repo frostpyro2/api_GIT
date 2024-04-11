@@ -13,7 +13,7 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.Map;
 
-public class SkillEffect {
+public class SkillEffect implements Action{
     private TriggerData data;
     private Configuration configuration;
     public SkillEffect(Configuration configuration, TriggerData data){
@@ -21,7 +21,7 @@ public class SkillEffect {
         this.configuration = configuration;
     }
 
-    public void effectSection(){
+    public void section(){
         new Effect(data, configuration.getList("skill.effect")).runTask(FrostAPI.getPlugin());
     }
 

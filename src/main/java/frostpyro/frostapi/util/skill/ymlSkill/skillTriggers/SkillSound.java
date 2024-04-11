@@ -13,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 import java.util.Map;
 
-public class SkillSound {
+public class SkillSound implements Action{
     private TriggerData data;
     private Configuration configuration;
     public SkillSound(Configuration configuration, TriggerData data){
@@ -21,7 +21,7 @@ public class SkillSound {
         this.configuration = configuration;
     }
 
-    public void soundSection(){
+    public void section(){
         new SkillSound.Skill(data, configuration.getMapList("skill.sound")).runTask(FrostAPI.getPlugin());
     }
 

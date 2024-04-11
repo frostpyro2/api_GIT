@@ -44,7 +44,7 @@ public class PlayerFile {
         }
     }
 
-    public static FileConfiguration getFile(@NotNull LivingEntity entity){
+    public static FileConfiguration getFile(LivingEntity entity){
         String name = entity.getName();
         UUID uuid = entity.getUniqueId();
 

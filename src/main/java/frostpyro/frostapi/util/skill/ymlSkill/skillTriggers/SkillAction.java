@@ -19,7 +19,7 @@ import org.w3c.dom.Attr;
 import java.util.List;
 import java.util.Map;
 
-public class SkillAction {
+public class SkillAction implements Action{
     private FileConfiguration configuration;
     private TriggerData data;
     public SkillAction(FileConfiguration configuration, TriggerData data){
@@ -27,7 +27,7 @@ public class SkillAction {
         this.data = data;
     }
 
-    public void actionSection(){
+    public void section(){
         new Action(data, configuration.getMapList("skill.action")).run();
     }
 
