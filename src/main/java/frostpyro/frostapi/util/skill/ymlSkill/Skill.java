@@ -83,7 +83,7 @@ public class Skill implements Listener{
     private void toggleSkill(){
         FileConfiguration anotherConfig;
         try{
-            File anotherFile = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills\\" + configuration.getString("skill." + data.getType().getType()));
+            File anotherFile = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills\\" + configuration.getString("skill." + data.getType().getType()) + ".yml");
             anotherConfig = YamlConfiguration.loadConfiguration(anotherFile);
         }
         catch (Exception e){
