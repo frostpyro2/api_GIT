@@ -82,6 +82,10 @@ public class PlayerData implements StatProvider {
         playerDataTmp.setDuration(configuration, duration);
     }
 
+    public void clearToggleCache(){
+        playerDataTmp.clearToggleCache();
+    }
+
     public void removeDuration(Configuration configuration){
         playerDataTmp.removeDuration(configuration);
     }

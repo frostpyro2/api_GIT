@@ -57,11 +57,7 @@ public class Skill implements Listener{
             Bukkit.getConsoleSender().sendMessage(data.getType().getType());
             Map<String, FileConfiguration> toggleCheck = data.getCast().getToggleMap().get(data.getCast().getToggle());
             if(toggleCheck == null){
-                Bukkit.getConsoleSender().sendMessage("toggleCheck is NULL");
                 return;
-            }
-            for(String str : toggleCheck.keySet()){
-                Bukkit.getConsoleSender().sendMessage(str);
             }
             if(toggleCheck.containsKey(data.getType().getType())){
                 configuration = toggleCheck.get(data.getType().getType());
@@ -106,7 +102,7 @@ public class Skill implements Listener{
             if(data.getCast().notDuration(data.getCast().getToggle())){
                 data.getCast().removeDuration(data.getCast().getToggle());
                 data.getCast().setToggle(null);
-                data.getCast().removeToggle(data.getCast().getToggle());
+                data.getCast().clearToggleCache();
             }
             return;
         }
@@ -120,11 +116,8 @@ public class Skill implements Listener{
         }
 
         if(!isToggle) {
-            Bukkit.getConsoleSender().sendMessage("is not toggle");
             return;
         }
-
-        Bukkit.getConsoleSender().sendMessage("toggleTrigger is null");
 
         Map<String, FileConfiguration> tmp = new HashMap<>();
 
@@ -150,6 +143,9 @@ public class Skill implements Listener{
         }
         catch (Exception e){
             duration = 0;
+        }
+        if(data.getCast().getToggle() != null){
+            data.getCast().removeToggle(data.getCast().getToggle());
         }
         data.getCast().setToggle(configuration);
         data.getCast().setDuration(configuration, duration);

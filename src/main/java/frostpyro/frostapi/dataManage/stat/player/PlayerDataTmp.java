@@ -74,6 +74,10 @@ public class PlayerDataTmp implements StatProvider {
     public void setCoolDown(Configuration config, double sec){
         coolDown.put(config, (long) (System.currentTimeMillis() + sec * 1000L));
     }
+
+    public void clearToggleCache(){
+        toggle.clear();
+    }
     public boolean isCoolDown(Configuration skill){
         if(coolDown.get(skill) == null) return false;
         return coolDown.get(skill) >= System.currentTimeMillis();
