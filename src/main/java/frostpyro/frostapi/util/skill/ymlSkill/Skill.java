@@ -101,19 +101,6 @@ public class Skill implements Listener{
     }
 
     private void toggleSkill(){
-        boolean isToggle;
-
-        try{
-            isToggle = configuration.getBoolean("skill.isToggle");
-        }
-        catch (Exception any){
-            return;
-        }
-
-        if(!isToggle) {
-            Bukkit.getConsoleSender().sendMessage("is not toggle");
-            return;
-        }
 
         if(data.getCast().getToggle() != null){
             if(data.getCast().notDuration(data.getCast().getToggle())){
