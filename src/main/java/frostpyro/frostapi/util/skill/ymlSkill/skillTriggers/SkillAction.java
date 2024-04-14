@@ -68,6 +68,22 @@ public class SkillAction implements Action{
                         }
                     }.runTaskLater(FrostAPI.getPlugin(), delay);
                 }
+                else if(action.containsKey("chat")){
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+                            data.getCast().getEntity().sendMessage((String) action.get("chat"));
+                        }
+                    }.runTaskLater(FrostAPI.getPlugin(), delay);
+                }
+                else if(action.containsKey("projectile")){
+                    new BukkitRunnable(){
+                        @Override
+                        public void run() {
+
+                        }
+                    }.runTaskLater(FrostAPI.getPlugin(), delay);
+                }
                 else if(action.containsKey("delay")){
                     delay = (int) action.get("delay");
                 }
@@ -81,7 +97,7 @@ public class SkillAction implements Action{
                 amount = (Double) damageInfo.get("amount");
             }
             catch (Exception any){
-                amount = .01;
+                amount = 0;
             }
             if(damageInfo.get("target") == null) return;
             if("self".equals(damageInfo.get("target"))){
@@ -114,17 +130,33 @@ public class SkillAction implements Action{
 
         private void heal(Map<?, ?> healInfo){
             double amount;
+            boolean condition;
 
             try{
                 amount = (Double) healInfo.get("amount");
             }
             catch (Exception any){
-                amount = .01;
+                amount = 0;
             }
 
             if(healInfo.get("target") == null){
                 return;
             }
+
+            try{
+                condition = (Boolean) healInfo.get("onDamage");
+            }
+            catch (Exception any){
+                condition = true;
+            }
+
+            boolean damage = true;
+
+            if(condition){
+                damage = data.getEvent() == null;
+            }
+
+            if(!damage) return;
 
             if("self".equals(healInfo.get("target"))){
                 AttributeInstance healthAtb = data.getCast().getEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH);
