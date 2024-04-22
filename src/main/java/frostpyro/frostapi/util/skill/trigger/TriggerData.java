@@ -9,7 +9,11 @@ import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class TriggerData {
+    private Set<TriggerData> suppressSkill = new HashSet<>();
     private final PlayerDataTmp tmp;
     private final TriggerType type;
     private final EquipSlot slot;

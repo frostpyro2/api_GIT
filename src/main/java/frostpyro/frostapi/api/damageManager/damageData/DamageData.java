@@ -1,12 +1,13 @@
 package frostpyro.frostapi.api.damageManager.damageData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DamageData {
     private List<DamagePacket> packets = new ArrayList<>();
 
-
+    private DamageType[] types;
     private DamagePacket init;
 
     public DamageData(){
@@ -14,6 +15,7 @@ public class DamageData {
     }
 
     public DamageData(double damage, DamageType...types){
+        this.types = types;
         init = new DamagePacket(damage, types);
         packets.add(init);
     }
@@ -32,5 +34,13 @@ public class DamageData {
 
     public double getDamage(double damage){
         return Math.max(MIN, damage);
+    }
+
+    public void setDamageType(DamageType...types){
+        this.types = types;
+    }
+
+    public List<DamageType> getDamageType(){
+        return new ArrayList<>(Arrays.asList(types));
     }
 }

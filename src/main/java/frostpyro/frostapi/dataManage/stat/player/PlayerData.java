@@ -89,4 +89,16 @@ public class PlayerData implements StatProvider {
     public void removeDuration(Configuration configuration){
         playerDataTmp.removeDuration(configuration);
     }
+
+    public void addSuppress(FileConfiguration data){
+        playerDataTmp.addSuppress(data);
+    }
+
+    public void removeSuppress(FileConfiguration data){
+        playerDataTmp.removeSuppress(data);
+    }
+
+    public boolean isSuppressed(FileConfiguration data){
+        return playerDataTmp.isSuppressed(data);
+    }
 }

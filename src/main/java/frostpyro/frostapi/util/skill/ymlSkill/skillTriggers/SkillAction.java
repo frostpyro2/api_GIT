@@ -13,9 +13,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.w3c.dom.Attr;
 
+import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 
@@ -50,37 +52,23 @@ public class SkillAction implements Action{
 
 
             for(Map<?, ?> action : act){
-                if(action.containsKey("damage")){
-                    new BukkitRunnable(){
-                        @Override
-                        public void run() {
-                            Map<?, ?> damageInfo = (Map<?, ?>) action.get("damage");
-                            damage(damageInfo);
-                        }
-                    }.runTaskLater(FrostAPI.getPlugin(), delay);
-                }
-                else if(action.containsKey("heal")){
-                    new BukkitRunnable(){
-                        @Override
-                        public void run() {
-                            Map<?, ?> healInfo = (Map<?, ?>) action.get("heal");
-                            heal(healInfo);
-                        }
-                    }.runTaskLater(FrostAPI.getPlugin(), delay);
-                }
-                else if(action.containsKey("chat")){
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        damage(action);
+                    }
+                }.runTaskLater(FrostAPI.getPlugin(), delay);
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        heal(action);
+                    }
+                }.runTaskLater(FrostAPI.getPlugin(), delay);
+                if(action.containsKey("chat")){
                     new BukkitRunnable(){
                         @Override
                         public void run() {
                             data.getCast().getEntity().sendMessage((String) action.get("chat"));
-                        }
-                    }.runTaskLater(FrostAPI.getPlugin(), delay);
-                }
-                else if(action.containsKey("projectile")){
-                    new BukkitRunnable(){
-                        @Override
-                        public void run() {
-
                         }
                     }.runTaskLater(FrostAPI.getPlugin(), delay);
                 }
@@ -90,7 +78,10 @@ public class SkillAction implements Action{
             }
         }
 
-        private void damage(Map<?, ?> damageInfo){
+        private void damage(Map<?, ?> action){
+            if(!action.containsKey("damage")) return;
+            Map<?, ?> damageInfo = (Map<?, ?>) action.get("damage");
+            if(damageInfo == null) return;
             double amount;
 
             try{
@@ -117,18 +108,22 @@ public class SkillAction implements Action{
 
             if(center.getWorld() == null) return;
 
-
-            center.getWorld().getNearbyEntities(center, interpret.getX(), interpret.getY(), interpret.getZ()).forEach(entity -> {
-                if(entity instanceof LivingEntity living){
-                    if(living != data.getCast().getEntity()){
-                           FrostAPI.getPlugin().entityDamagedKey(living);
-                           living.damage(finalAmount, data.getCast().getEntity());
-                    }
+            for(Entity entity : center.getWorld().getNearbyEntities(center, interpret.getX(), interpret.getY(), interpret.getZ())){
+                if(!(entity instanceof LivingEntity)){
+                    continue;
                 }
-            });
+                LivingEntity living = (LivingEntity) entity;
+                if(living == data.getCast().getEntity()){
+                    continue;
+                }
+                FrostAPI.getPlugin().addEntity(living.getUniqueId());
+                living.damage(finalAmount, data.getCast().getEntity());
+            }
         }
 
-        private void heal(Map<?, ?> healInfo){
+        private void heal(Map<?, ?> action){
+            if(!action.containsKey("heal")) return;
+            Map<?, ?> healInfo = (Map<?, ?>) action.get("heal");
             double amount;
             boolean condition;
 
@@ -147,7 +142,7 @@ public class SkillAction implements Action{
                 condition = (Boolean) healInfo.get("onDamage");
             }
             catch (Exception any){
-                condition = true;
+                condition = false;
             }
 
             boolean damage = true;

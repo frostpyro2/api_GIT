@@ -1,5 +1,6 @@
 package frostpyro.frostapi.dataManage.stat.player;
 
+import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
 import frostpyro.frostapi.dataManage.stat.data.PlayerFile;
 import frostpyro.frostapi.dataManage.stat.data.StatMap;
@@ -29,6 +30,7 @@ public class PlayerDataTmp implements StatProvider {
     private final Map<Configuration, Long> coolDown = new HashMap<>();
     private final Map<Configuration, Long> duration = new HashMap<>();
     private final Map<FileConfiguration, Map<String, FileConfiguration>> toggle = new HashMap<>();
+    private final Set<FileConfiguration> suppressSkill = new HashSet<>();
     private Map<String, FileConfiguration> tmp = new HashMap<>();
     public PlayerDataTmp(Player player){
         this.player = player;
@@ -109,6 +111,17 @@ public class PlayerDataTmp implements StatProvider {
 
     public FileConfiguration getToggle(){
         return trigger;
+    }
+    public void addSuppress(FileConfiguration data){
+        suppressSkill.add(data);
+    }
+
+    public void removeSuppress(FileConfiguration data){
+        suppressSkill.remove(data);
+    }
+
+    public boolean isSuppressed(FileConfiguration data){
+        return suppressSkill.contains(data);
     }
 
     public void setDuration(Configuration configuration, double duration){

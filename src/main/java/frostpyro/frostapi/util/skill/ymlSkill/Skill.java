@@ -1,8 +1,10 @@
 package frostpyro.frostapi.util.skill.ymlSkill;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.api.damageManager.damageData.DamageType;
 import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.util.skill.SkillManager;
+import frostpyro.frostapi.util.skill.casting.AnotherTrigger;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.*;
@@ -16,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -24,6 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Skill implements Listener{
     private static Map<String,FileConfiguration> skillMap = new HashMap<>();
+    private Set<TriggerData> suppressTrigger = new HashSet<>();
     private File file;
     private FileConfiguration configuration;
     private final Map<FileConfiguration, Map<String, FileConfiguration>> toggle = new HashMap<>();
@@ -40,21 +44,32 @@ public class Skill implements Listener{
     }
 
     public void activateSkill() {
-        if(data.getData() != null){
-            if(FrostAPI.getPlugin().isDamagedBySkill(data.getData().getTarget())){
-                FrostAPI.getPlugin().removeEntityDamageKey(data.getData().getTarget());
-                return;
-            }
-        }
         if(configuration == null) return;
         skillMechanism();
     }
 
     private void skillMechanism(){
+        if(data.getEvent() != null){
+            if(FrostAPI.getPlugin().damagedEntity(data.getEvent().getEntity().getUniqueId())){
+                FrostAPI.getPlugin().removeEntity(data.getEvent().getEntity().getUniqueId());
+                data.getEvent().getAttack().getDamage().setDamageType(DamageType.MELEESKILL);
+            }
+        }
+
+        if(data.getCast().isCoolDown(configuration)) {
+            try{
+                if(!data.getEvent().getAttack().getDamage().getDamageType().contains(DamageType.PHYSICAL)) return;
+                data.getEvent().setCancelled(true);
+            }
+            catch (Exception e){
+                //
+            }
+            return;
+        }
+
         toggleSkill();
 
         if(!data.getCast().getToggleMap().isEmpty()){
-            Bukkit.getConsoleSender().sendMessage(data.getType().getType());
             Map<String, FileConfiguration> toggleCheck = data.getCast().getToggleMap().get(data.getCast().getToggle());
             if(toggleCheck == null){
                 return;
@@ -64,36 +79,27 @@ public class Skill implements Listener{
             }
         }
 
-        if(data.getCast().isCoolDown(configuration)) {
-            try{
-                data.getEvent().setCancelled(true);
-            }
-            catch (Exception any){
-                //none
-            }
-            return;
-        }
-
 
 
         data.getCast().removeCoolDown(configuration);
 
-        double coolDown = 0;
+        double coolDown ;
 
         try{
             coolDown = configuration.getDouble("skill.coolDown");
         }
         catch (Exception any){
-            //do nothing
+            coolDown = .01;
         }
 
-        data.getCast().setCoolDown(configuration, coolDown);
-
         Activation activation = new Activation(configuration, data);
+
         for(Action skillAct : activation.actions()){
             if(skillAct == null) continue;
             skillAct.section();
         }
+
+        data.getCast().setCoolDown(configuration, coolDown);
     }
 
     private void toggleSkill(){

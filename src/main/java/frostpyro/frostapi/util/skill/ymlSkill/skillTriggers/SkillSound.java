@@ -3,6 +3,7 @@ package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.RadiusInterpret;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -41,21 +42,18 @@ public class SkillSound implements Action{
             }
 
             for(Map<?, ?> soundMap : act){
-                if(soundMap.containsKey("sound")){
-                    new BukkitRunnable(){
-                        @Override
-                        public void run() {
-                            sound(soundMap);
-                        }
-                    }.runTaskLater(FrostAPI.getPlugin(), delay);
-                }
-                else if(soundMap.containsKey("delay")){
-                    delay = (int) soundMap.get("delay");
-                }
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {
+                        sound(soundMap);
+                    }
+                }.runTaskLater(FrostAPI.getPlugin(), delay);
+                delay(soundMap);
             }
         }
 
         private void sound(Map<?, ?> sound){
+            if(!sound.containsKey("sound")) return;
             float volume;
             float pitch;
             try{
@@ -97,6 +95,11 @@ public class SkillSound implements Action{
                     }
                 }
             });
+        }
+
+        private void delay(Map<?, ?> soundMap){
+            if(!soundMap.containsKey("delay")) return;
+            delay = (int) soundMap.get("delay");
         }
     }
 }

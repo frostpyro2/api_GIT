@@ -25,9 +25,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public final class FrostAPI extends JavaPlugin {
     private final String skillDamageMetaStr = "damagedBySkill";
+    private Set<UUID> damagedEntitySet = new HashSet<>();
     private static FrostAPI plugin;
     private DamageManage damage;
     private final DamageManage damageManage = new DamageManage();
@@ -173,15 +175,15 @@ public final class FrostAPI extends JavaPlugin {
         return fakeEventManager;
     }
 
-    public void entityDamagedKey(Entity entity){
-        entity.setMetadata(skillDamageMetaStr, new FixedMetadataValue(this, true));
+    public void addEntity(UUID entity){
+        damagedEntitySet.add(entity);
     }
 
-    public void removeEntityDamageKey(Entity entity){
-        entity.removeMetadata(skillDamageMetaStr, this);
+    public void removeEntity(UUID entity){
+        damagedEntitySet.remove(entity);
     }
 
-    public boolean isDamagedBySkill(Entity entity){
-        return  entity.hasMetadata(skillDamageMetaStr);
+    public boolean damagedEntity(UUID entity){
+        return damagedEntitySet.contains(entity);
     }
 }

@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.ItemDisplay;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.ietf.jgss.GSSName;
 
 import java.util.List;
 import java.util.Map;
@@ -46,73 +48,39 @@ public class SkillArmorStand implements Action{
             }
             for(Object obj : act){
                 if(obj instanceof Map<?,?> standData){
-                    if(standData.containsKey("delay")){
-                        actionDelay = (int) standData.get("delay");
-                    }
-                    else if(standData.containsKey("stand")){
-                        scheduledTask(()->{
-                            org.bukkit.entity.ArmorStand stand = baseStand();
-                            standSummon((List<?>) standData.get("stand"), stand, stand.getLocation());
-                        }, actionDelay);
-                    }
+                    delay(standData);
+                    scheduledTask(()->{
+                        org.bukkit.entity.ArmorStand stand = baseStand();
+                        standSummon(standData, stand, stand.getLocation());
+                    }, actionDelay);
                 }
             }
         }
 
-        private void standSummon(List<?> objList, org.bukkit.entity.ArmorStand stand, Location standLoc){
+        private void delay(Map<?, ?> standData){
+            if(!standData.containsKey("dealy")) return;
+            actionDelay = (int) standData.get("delay");
+        }
+
+        private void standSummon(Map<?, ?> standData, org.bukkit.entity.ArmorStand stand, Location standLoc){
+            if(!standData.containsKey("stand")) return;;
+            List<?> objList = (List<?>) standData.get("stand");
             int standDelay = 0;
             double speed = 0.0;
             if(objList == null) return;
             for(Object standSetting : objList){
                 if(standSetting instanceof Map<?, ?> valueSetting){
-                    if(valueSetting.containsKey("setting")){
-                        SettingInterpret inter = new SettingInterpret((Map<?, ?>) valueSetting.get("setting"));
-                        stand.setInvisible(inter.isInvisible());
-                        stand.setGravity(inter.isGravity());
 
-                        standLoc.setYaw((float) inter.getAngle() + data.getCast().getEntity().getLocation().getYaw());
-                        Vector vector = standLoc.getDirection();
-                        vector.setY(0);
-                        if(inter.isVector()){
-                            standLoc.setPitch(data.getCast().getEntity().getLocation().getPitch());
-                            vector.setY(standLoc.getDirection().getY());
-                        }
-                        stand.teleport(standLoc);
-                        if(inter.getVelocity() != 0){
-                            stand.setMarker(false);
-                            stand.setVelocity(vector.normalize().multiply(inter.getVelocity()));
-                        }
-                    }
 
-                    else if(valueSetting.containsKey("delay")){
+                    if(valueSetting.containsKey("delay")){
                         standDelay = (int) valueSetting.get("delay");
                     }
 
-                    else if(valueSetting.containsKey("setHeadItem")){
-                        scheduledTask(()->{
-                            ItemStack armorItem;
-                            try{
-                                armorItem = new ItemStack(Material.getMaterial((String) valueSetting.get("setHeadItem")));
-                            }
-                            catch (Exception any){
-                                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "error while placing item on head of armor stand! perhaps wrote wrong material?");
-                                return;
-                            }
-                            stand.getEquipment().setHelmet(armorItem);
-                        }, standDelay);
-                    }
+                    setting(valueSetting, stand, standLoc);
 
-                    else if(valueSetting.containsKey("setHeadModel")) {
-                        scheduledTask(()->{
-                            ItemStack armorItem = stand.getEquipment().getHelmet();
-                            if (armorItem == null) return;
+                    scheduledTask(()-> setHeadItem(valueSetting, stand), standDelay);
 
-                            ItemMeta itemMeta = armorItem.getItemMeta();
-                            itemMeta.setCustomModelData((int) valueSetting.get("setHeadModel"));
-                            armorItem.setItemMeta(itemMeta);
-                            stand.getEquipment().setHelmet(armorItem);
-                        }, standDelay);
-                    }
+                    scheduledTask(()->headModel(valueSetting, stand), standDelay);
                 }
                 else if(standSetting instanceof String actSetting){
                     scheduledTask(()->{
@@ -123,6 +91,49 @@ public class SkillArmorStand implements Action{
                     return;
                 }
             }
+        }
+        private void setting(Map<?, ?> valueSetting, ArmorStand stand, Location standLoc){
+            if(!valueSetting.containsKey("setting")) return;
+            SettingInterpret inter = new SettingInterpret((Map<?, ?>) valueSetting.get("setting"));
+            stand.setInvisible(inter.isInvisible());
+            stand.setGravity(inter.isGravity());
+
+            standLoc.setYaw((float) inter.getAngle() + data.getCast().getEntity().getLocation().getYaw());
+            Vector vector = standLoc.getDirection();
+            vector.setY(0);
+            if(inter.isVector()){
+                standLoc.setPitch(data.getCast().getEntity().getLocation().getPitch());
+                vector.setY(standLoc.getDirection().getY());
+            }
+            stand.teleport(standLoc);
+            if(inter.getVelocity() != 0){
+                stand.setMarker(false);
+                stand.setVelocity(vector.normalize().multiply(inter.getVelocity()));
+            }
+        }
+
+        private void setHeadItem(Map<?, ?> valueSetting, ArmorStand stand){
+            if(!valueSetting.containsKey("setHeadItem")) return;
+            ItemStack armorItem;
+            try{
+                armorItem = new ItemStack(Material.getMaterial((String) valueSetting.get("setHeadItem")));
+            }
+            catch (Exception any){
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "error while placing item on head of armor stand! perhaps wrote wrong material?");
+                return;
+            }
+            stand.getEquipment().setHelmet(armorItem);
+        }
+
+        private void headModel(Map<?, ?> valueSetting, ArmorStand stand){
+            if(!valueSetting.containsKey("setHeadModel")) return;
+            ItemStack armorItem = stand.getEquipment().getHelmet();
+            if (armorItem == null) return;
+
+            ItemMeta itemMeta = armorItem.getItemMeta();
+            itemMeta.setCustomModelData((int) valueSetting.get("setHeadModel"));
+            armorItem.setItemMeta(itemMeta);
+            stand.getEquipment().setHelmet(armorItem);
         }
 
         private org.bukkit.entity.ArmorStand baseStand(){
