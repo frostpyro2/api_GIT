@@ -69,6 +69,34 @@ public class Skill implements Listener{
 
         toggleSkill();
 
+        triggerSkill();
+    }
+
+    private void toggleSkill(){
+
+        if(data.getCast().getToggle() != null){
+            if(data.getCast().notDuration(data.getCast().getToggle())){
+                data.getCast().removeDuration(data.getCast().getToggle());
+                data.getCast().setToggle(null);
+                data.getCast().clearToggleCache();
+            }
+            return;
+        }
+        boolean isToggle;
+
+        try{
+            isToggle = configuration.getBoolean("skill.isToggle");
+        }
+        catch (Exception any){
+            return;
+        }
+
+        if(!isToggle) {
+            return;
+        }
+        toggleSet();
+    }
+    private void triggerSkill(){
         if(!data.getCast().getToggleMap().isEmpty()){
             Map<String, FileConfiguration> toggleCheck = data.getCast().getToggleMap().get(data.getCast().getToggle());
             if(toggleCheck == null){
@@ -102,29 +130,7 @@ public class Skill implements Listener{
         data.getCast().setCoolDown(configuration, coolDown);
     }
 
-    private void toggleSkill(){
-
-        if(data.getCast().getToggle() != null){
-            if(data.getCast().notDuration(data.getCast().getToggle())){
-                data.getCast().removeDuration(data.getCast().getToggle());
-                data.getCast().setToggle(null);
-                data.getCast().clearToggleCache();
-            }
-            return;
-        }
-        boolean isToggle;
-
-        try{
-            isToggle = configuration.getBoolean("skill.isToggle");
-        }
-        catch (Exception any){
-            return;
-        }
-
-        if(!isToggle) {
-            return;
-        }
-
+    private void toggleSet(){
         Map<String, FileConfiguration> tmp = new HashMap<>();
 
         for(String skillTrigger: TriggerType.getKeys()){
