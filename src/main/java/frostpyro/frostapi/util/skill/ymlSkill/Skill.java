@@ -50,8 +50,8 @@ public class Skill implements Listener{
 
     private void skillMechanism(){
         if(data.getEvent() != null){
-            if(FrostAPI.getPlugin().damagedEntity(data.getEvent().getEntity().getUniqueId())){
-                FrostAPI.getPlugin().removeEntity(data.getEvent().getEntity().getUniqueId());
+            if(data.getCast().isDamaged(data.getEvent().getEntity())){
+                data.getCast().removeDamage(data.getEvent().getEntity());
                 data.getEvent().getAttack().getDamage().setDamageType(DamageType.MELEESKILL);
             }
         }

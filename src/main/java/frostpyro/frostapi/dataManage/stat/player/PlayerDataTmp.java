@@ -12,6 +12,7 @@ import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapPalette;
@@ -32,6 +33,7 @@ public class PlayerDataTmp implements StatProvider {
     private final Map<FileConfiguration, Map<String, FileConfiguration>> toggle = new HashMap<>();
     private final Set<FileConfiguration> suppressSkill = new HashSet<>();
     private Map<String, FileConfiguration> tmp = new HashMap<>();
+    private Set<Entity> skillDamagedEntity = new HashSet<>();
     public PlayerDataTmp(Player player){
         this.player = player;
         uuid = player.getUniqueId();
@@ -126,6 +128,18 @@ public class PlayerDataTmp implements StatProvider {
 
     public void setDuration(Configuration configuration, double duration){
         this.duration.put(configuration, (long) (System.currentTimeMillis() + duration * 1000) );
+    }
+
+    public void addDamage(Entity entity){
+        skillDamagedEntity.add(entity);
+    }
+
+    public void removeDamage(Entity entity){
+        skillDamagedEntity.remove(entity);
+    }
+
+    public boolean isDamaged(Entity entity){
+        return skillDamagedEntity.contains(entity);
     }
 
     public void removeDuration(Configuration configuration){

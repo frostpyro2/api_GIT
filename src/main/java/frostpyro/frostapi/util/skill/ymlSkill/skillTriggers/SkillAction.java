@@ -109,14 +109,13 @@ public class SkillAction implements Action{
             if(center.getWorld() == null) return;
 
             for(Entity entity : center.getWorld().getNearbyEntities(center, interpret.getX(), interpret.getY(), interpret.getZ())){
-                if(!(entity instanceof LivingEntity)){
+                if(!(entity instanceof LivingEntity living)){
                     continue;
                 }
-                LivingEntity living = (LivingEntity) entity;
                 if(living == data.getCast().getEntity()){
                     continue;
                 }
-                FrostAPI.getPlugin().addEntity(living.getUniqueId());
+                data.getCast().addDamage(living);
                 living.damage(finalAmount, data.getCast().getEntity());
             }
         }
