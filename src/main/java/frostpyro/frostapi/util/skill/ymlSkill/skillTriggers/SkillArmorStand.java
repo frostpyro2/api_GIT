@@ -58,7 +58,7 @@ public class SkillArmorStand implements Action{
         }
 
         private void delay(Map<?, ?> standData){
-            if(!standData.containsKey("dealy")) return;
+            if(!standData.containsKey("delay")) return;
             actionDelay = (int) standData.get("delay");
         }
 
