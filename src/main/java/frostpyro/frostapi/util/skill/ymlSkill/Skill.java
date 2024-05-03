@@ -2,36 +2,24 @@ package frostpyro.frostapi.util.skill.ymlSkill;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.damageManager.damageData.DamageType;
-import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.util.skill.SkillManager;
-import frostpyro.frostapi.util.skill.casting.AnotherTrigger;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 public class Skill implements Listener{
-    private static Map<String,FileConfiguration> skillMap = new HashMap<>();
-    private Set<TriggerData> suppressTrigger = new HashSet<>();
-    private File file;
+    private static final Map<String,FileConfiguration> skillMap = new HashMap<>();
     private FileConfiguration configuration;
-    private final Map<FileConfiguration, Map<String, FileConfiguration>> toggle = new HashMap<>();
-    private TriggerData data;
+    private final TriggerData data;
 
     public Skill(@NotNull String fileName, TriggerData data){
         try{

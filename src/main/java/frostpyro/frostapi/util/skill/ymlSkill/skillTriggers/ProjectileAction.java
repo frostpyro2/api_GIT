@@ -2,10 +2,15 @@ package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Snowball;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
+import java.util.Map;
 
 public class ProjectileAction implements Action{
     private FileConfiguration configuration;
@@ -31,6 +36,35 @@ public class ProjectileAction implements Action{
         @Override
         public void run() {
             if(skillAct == null) return;
+
+            for(Object obj : skillAct){
+                if(obj instanceof Map<?, ?> setting){
+                    delay(setting);
+                    skillRun(()->projectileSet(setting), delay);
+                }
+            }
+        }
+        private void delay(Map<?, ?> setting){
+            if(!setting.containsKey("delay")) return;
+            try{
+                delay = (Integer)setting.get("delay");
+            }
+            catch (Exception any){
+                delay = 0;
+            }
+        }
+        private void projectileSet(Map<?, ?> setting){
+            if(!setting.containsKey("projectile")) return;
+            
+        }
+
+        private void skillRun(Runnable runnable, int delay){
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    runnable.run();
+                }
+            }.runTaskLater(FrostAPI.getPlugin(), delay);
         }
     }
 

@@ -15,6 +15,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 import org.ietf.jgss.GSSName;
 
@@ -102,8 +103,8 @@ public class SkillArmorStand implements Action{
             Vector vector = standLoc.getDirection();
             vector.setY(0);
             if(inter.isVector()){
-                standLoc.setPitch(data.getCast().getEntity().getLocation().getPitch());
-                vector.setY(standLoc.getDirection().getY());
+                EulerAngle angle = new EulerAngle(Math.toRadians(data.getCast().getEntity().getLocation().getPitch()), 0, 0);
+                stand.setHeadPose(angle);
             }
             stand.teleport(standLoc);
             if(inter.getVelocity() != 0){
