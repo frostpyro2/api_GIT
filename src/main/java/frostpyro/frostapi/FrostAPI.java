@@ -16,9 +16,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -28,11 +26,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class FrostAPI extends JavaPlugin {
-    private final String skillDamageMetaStr = "damagedBySkill";
-    private Set<UUID> damagedEntitySet = new HashSet<>();
     private static FrostAPI plugin;
-    private DamageManage damage;
-    private final DamageManage damageManage = new DamageManage();
+    private DamageManage damageManage;
     private final FakeEventManager fakeEventManager = new FakeEventManager();
     @Override
     public void onEnable() {
@@ -50,7 +45,7 @@ public final class FrostAPI extends JavaPlugin {
             PlayerDataTmp.upload(player.getUniqueId(), new PlayerDataTmp(player.getUniqueId()));
         }
 
-
+        damageManage = new DamageManage();
         SkillManager.registerSkill();
         SkillItem.registerItem();
         Skill.registerSkill();
@@ -69,10 +64,6 @@ public final class FrostAPI extends JavaPlugin {
     }
     public static FrostAPI getPlugin(){
         return plugin;
-    }
-
-    public DamageManage getDamage(){
-        return damage;
     }
     private void generateSkillFolder(){
         File FOLDER = new File(getDataFolder(), "\\skill");
@@ -163,9 +154,6 @@ public final class FrostAPI extends JavaPlugin {
     }
 
     public NamespacedKey exp = new NamespacedKey(this, "EXP");
-    public NamespacedKey skillType = new NamespacedKey(this, "SKILL");
-    public Set<PlayerDataTmp> playerSet = new HashSet<>();
-    public Thread skillThread;
 
     public DamageManage damage(){
         return damageManage;
@@ -173,17 +161,5 @@ public final class FrostAPI extends JavaPlugin {
 
     public FakeEventManager fakeEventManager(){
         return fakeEventManager;
-    }
-
-    public void addEntity(UUID entity){
-        damagedEntitySet.add(entity);
-    }
-
-    public void removeEntity(UUID entity){
-        damagedEntitySet.remove(entity);
-    }
-
-    public boolean damagedEntity(UUID entity){
-        return damagedEntitySet.contains(entity);
     }
 }
