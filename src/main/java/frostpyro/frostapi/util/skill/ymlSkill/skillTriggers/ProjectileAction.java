@@ -15,9 +15,11 @@ import java.util.Map;
 public class ProjectileAction implements Action{
     private FileConfiguration configuration;
     private TriggerData data;
+    private String path;
     public ProjectileAction(FileConfiguration configuration, TriggerData data){
         this.configuration = configuration;
         this.data = data;
+        path = "skill.projectile";
     }
     @Override
     public void section() {

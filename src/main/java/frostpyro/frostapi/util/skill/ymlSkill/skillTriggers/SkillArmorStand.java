@@ -25,13 +25,21 @@ import java.util.Map;
 public class SkillArmorStand implements Action{
     private Configuration configuration;
     private TriggerData data;
+    private String path;
     public SkillArmorStand(Configuration configuration, TriggerData data){
         this.configuration = configuration;
         this.data = data;
+        this.path = "skill.armorStand";
+    }
+
+    public SkillArmorStand(Configuration configuration, TriggerData data, String path){
+        this.configuration = configuration;
+        this.data = data;
+        this.path = path;
     }
 
     public void section(){
-        new ArmorStandSummon(configuration.getList("skill.armorStand"), data).runTask(FrostAPI.getPlugin());
+        new ArmorStandSummon(configuration.getList(path), data).runTask(FrostAPI.getPlugin());
     }
     private static class ArmorStandSummon extends BukkitRunnable{
         private int actionDelay = 0;
