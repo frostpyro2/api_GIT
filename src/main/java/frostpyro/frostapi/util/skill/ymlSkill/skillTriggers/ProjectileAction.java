@@ -19,7 +19,13 @@ public class ProjectileAction implements Action{
     public ProjectileAction(FileConfiguration configuration, TriggerData data){
         this.configuration = configuration;
         this.data = data;
-        path = "skill.projectile";
+        path = PathName.PROJECTILE.getActualPath();
+    }
+
+    public ProjectileAction(FileConfiguration configuration, TriggerData data, String path){
+        this.configuration = configuration;
+        this.data = data;
+        this.path = path;
     }
     @Override
     public void section() {
