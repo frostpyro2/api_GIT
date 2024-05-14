@@ -5,7 +5,12 @@ public enum PathName {
     ACTION("skill.action"),
     ARMOR_STAND("skill.armorStand"),
     EFFECT("skill.effect"),
-    SOUND("skill.sound")
+    SOUND("skill.sound"),
+    ACTION_SETTING("action"),
+    ARMOR_STAND_SETTING("armorStand"),
+    EFFECT_SETTING("effect"),
+    SOUND_SETTING("sound"),
+    PROJECTILE_SETTING("projectile")
     ;
     private String actualPath;
     PathName(String actualPath){

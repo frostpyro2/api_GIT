@@ -1,6 +1,7 @@
 package frostpyro.frostapi.api.command;
 
 import frostpyro.frostapi.util.skill.casting.SkillItem;
+import frostpyro.frostapi.util.skill.container.SkillItemContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
@@ -18,11 +19,27 @@ public class Command implements CommandExecutor {
         }
 
         if(args.length > 0){
-            player.sendMessage(ChatColor.GREEN + "item summoned!");
             try{
-                Player getter = Bukkit.getPlayer(args[1]);
-                if(getter == null) return false;
-                getter.getInventory().addItem(SkillItem.skillItemList().get(0));
+                Player getter = Bukkit.getPlayer(args[0]);
+                if(getter == null){
+                    player.sendMessage(ChatColor.RED + "player does not exist!");
+                    return false;
+                }
+                int id;
+                try{
+                    id = Integer.parseInt(args[1]);
+                }
+                catch (Exception any){
+                    player.sendMessage(ChatColor.RED + "id is not available!");
+                    return false;
+                }
+                try{
+                    getter.getInventory().addItem(SkillItemContainer.getItemContainer(id).getStack());
+                }
+                catch (Exception any){
+                    player.sendMessage(ChatColor.RED + "no item has this id!");
+                }
+                player.sendMessage(ChatColor.GREEN + "item summoned!");
             }
             catch (Exception any){
                 //

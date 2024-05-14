@@ -2,6 +2,7 @@ package frostpyro.frostapi.util.skill.casting;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.SkillManager;
+import frostpyro.frostapi.util.skill.container.SkillItemContainer;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.Skill;
 import org.bukkit.Bukkit;
@@ -26,6 +27,7 @@ public class SkillItem extends SkillManager {
 
     private static final List<ItemStack> skillItems = new ArrayList<>();
     private static final Map<ItemStack, Map<String, List<String>>> skillActivate = new HashMap<>();
+    private static final Map<Integer, SkillItemContainer> skillItem = new HashMap<>();
 
     public SkillItem(TriggerData data) {
         super(data);
@@ -123,15 +125,15 @@ public class SkillItem extends SkillManager {
             if(skillSection != null){
                 Map<String, List<String>> temp = new HashMap<>();
                 for(String keys : skillSection.getKeys(false)){
-                    List<String> skillList = new ArrayList<>();
-
-                    for(String eachSkill : skillSection.getStringList(keys)){
-                        if(!getSkills().contains(eachSkill)) continue;
-                        skillList.add(eachSkill);
-                    }
-                    temp.put(keys, skillList);
+                    temp.put(keys, skillSection.getStringList(keys));
                 }
                 skillActivate.put(itemStack, temp);
+                try{
+                    if(configuration.getInt("id") < 0) throw new Exception();
+                    SkillItemContainer.register(configuration.getInt("id"), new SkillItemContainer(itemStack));
+                }catch (Exception e){
+                    SkillItemContainer.register(-1, new SkillItemContainer(itemStack));
+                }
             }
             String[] strings = ymlFile.getName().split("\\.");
             Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_GREEN + "item added:" + strings[0]);
