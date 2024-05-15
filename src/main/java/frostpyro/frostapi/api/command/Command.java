@@ -35,11 +35,11 @@ public class Command implements CommandExecutor {
                 }
                 try{
                     getter.getInventory().addItem(SkillItemContainer.getItemContainer(id).getStack());
+                    player.sendMessage(ChatColor.GREEN + "item summoned!");
                 }
                 catch (Exception any){
                     player.sendMessage(ChatColor.RED + "no item has this id!");
                 }
-                player.sendMessage(ChatColor.GREEN + "item summoned!");
             }
             catch (Exception any){
                 //

@@ -50,7 +50,12 @@ public final class FrostAPI extends JavaPlugin {
         SkillItem.registerItem();
         Skill.registerSkill();
 
-        this.getCommand("giveCommand").setExecutor(new Command());
+        try{
+            this.getCommand("skill").setExecutor(new Command());
+        }
+        catch (Exception any){
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "command threw NPE!");
+        }
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "PLUGIN ACTIVATED SUCCESSFULLY: "+getDescription().getName());
     }

@@ -12,6 +12,7 @@ import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,9 @@ public class SkillSound implements Action{
     }
 
     public void section(){
-        new SkillSound.Skill(data, configuration.getMapList("skill.sound")).runTask(FrostAPI.getPlugin());
+        WeakReference<SkillSound.Skill> skillSound = new WeakReference<>(new SkillSound.Skill(data, configuration.getMapList("skill.sound")));
+        if(skillSound.get() == null) return;
+        skillSound.get().runTask(FrostAPI.getPlugin());
     }
 
     private static class Skill extends BukkitRunnable{

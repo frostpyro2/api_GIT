@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.w3c.dom.Attr;
 
+import java.lang.ref.WeakReference;
 import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,9 @@ public class SkillAction implements Action{
     }
 
     public void section(){
-        new Action(data, configuration.getMapList("skill.action")).run();
+        WeakReference<Action> skillAction = new WeakReference<>(new Action(data, configuration.getMapList("skill.action")));
+        if(skillAction.get() == null) return;
+        skillAction.get().runTask(FrostAPI.getPlugin());
     }
 
     private static class Action extends BukkitRunnable{

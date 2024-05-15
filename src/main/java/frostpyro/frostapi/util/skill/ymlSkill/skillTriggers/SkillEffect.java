@@ -4,6 +4,7 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.RadiusInterpret;
+import jdk.jfr.Frequency;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -11,6 +12,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +25,9 @@ public class SkillEffect implements Action{
     }
 
     public void section(){
-        new Effect(data, configuration.getList("skill.effect")).runTask(FrostAPI.getPlugin());
+        WeakReference<Effect> skillEffect = new WeakReference<>(new Effect(data, configuration.getList("skill.effect")));
+        if(skillEffect.get() == null) return;
+        skillEffect.get().runTask(FrostAPI.getPlugin());
     }
 
     private static class Effect extends BukkitRunnable{

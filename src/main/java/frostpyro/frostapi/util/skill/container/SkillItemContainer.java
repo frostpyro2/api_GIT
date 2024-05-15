@@ -3,12 +3,13 @@ package frostpyro.frostapi.util.skill.container;
 import frostpyro.frostapi.util.skill.casting.SkillItem;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
 public class SkillItemContainer {
-    private static Map<Integer, SkillItemContainer> idContainer = new WeakHashMap<>();
+    private static Map<Integer, SkillItemContainer> idContainer = new HashMap<>();
     private ItemStack stack;
 
     public SkillItemContainer(ItemStack stack){

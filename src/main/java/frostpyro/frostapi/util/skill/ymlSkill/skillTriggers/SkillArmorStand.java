@@ -1,5 +1,6 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
+import com.google.j2objc.annotations.Weak;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.SettingInterpret;
@@ -19,6 +20,7 @@ import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 import org.ietf.jgss.GSSName;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,9 @@ public class SkillArmorStand implements Action{
     }
 
     public void section(){
-        new ArmorStandSummon(configuration.getList(path), data).runTask(FrostAPI.getPlugin());
+        WeakReference<SkillArmorStand.ArmorStandSummon> skillArmorStand = new WeakReference<>(new ArmorStandSummon(configuration.getList(path), data));
+        if(skillArmorStand.get() == null) return;
+        skillArmorStand.get().runTask(FrostAPI.getPlugin());
     }
     private static class ArmorStandSummon extends BukkitRunnable{
         private int actionDelay = 0;
@@ -72,7 +76,7 @@ public class SkillArmorStand implements Action{
         }
 
         private void standSummon(Map<?, ?> standData, org.bukkit.entity.ArmorStand stand, Location standLoc){
-            if(!standData.containsKey("stand")) return;;
+            if(!standData.containsKey("stand")) return;
             List<?> objList = (List<?>) standData.get("stand");
             int standDelay = 0;
             double speed = 0.0;
@@ -111,8 +115,10 @@ public class SkillArmorStand implements Action{
             Vector vector = standLoc.getDirection();
             vector.setY(0);
             if(inter.isVector()){
-                EulerAngle angle = new EulerAngle(Math.toRadians(data.getCast().getEntity().getLocation().getPitch()), 0, 0);
-                stand.setHeadPose(angle);
+                WeakReference<EulerAngle> weakRefAngle = new WeakReference<>(new EulerAngle(Math.toRadians(data.getCast().getEntity().getLocation().getPitch()), 0, 0));
+                EulerAngle angle = weakRefAngle.get();
+                if(angle != null)
+                    stand.setHeadPose(angle);
             }
             stand.teleport(standLoc);
             if(inter.getVelocity() != 0){
@@ -124,8 +130,10 @@ public class SkillArmorStand implements Action{
         private void setHeadItem(Map<?, ?> valueSetting, ArmorStand stand){
             if(!valueSetting.containsKey("setHeadItem")) return;
             ItemStack armorItem;
+            WeakReference<ItemStack> weakRefItem;
             try{
-                armorItem = new ItemStack(Material.getMaterial((String) valueSetting.get("setHeadItem")));
+                weakRefItem = new WeakReference<>(new ItemStack(Material.getMaterial((String) valueSetting.get("setHeadItem"))));
+                armorItem = weakRefItem.get();
             }
             catch (Exception any){
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "error while placing item on head of armor stand! perhaps wrote wrong material?");
