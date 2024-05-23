@@ -20,4 +20,11 @@ public enum PathName {
     public String getActualPath(){
         return actualPath;
     }
+
+    public String add(PathName another){
+        if(another.actualPath.split("\\.")[0].equals("skill") || this.actualPath.split("\\.")[0].equals("skill")){
+            throw new IllegalArgumentException();
+        }
+        return actualPath + "." + another.getActualPath();
+    }
 }
