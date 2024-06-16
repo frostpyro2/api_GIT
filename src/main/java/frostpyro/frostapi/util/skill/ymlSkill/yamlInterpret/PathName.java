@@ -1,4 +1,4 @@
-package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
+package frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret;
 
 public enum PathName {
     PROJECTILE("skill.projectile"),
@@ -25,6 +25,6 @@ public enum PathName {
         if(another.actualPath.split("\\.")[0].equals("skill") || this.actualPath.split("\\.")[0].equals("skill")){
             throw new IllegalArgumentException();
         }
-        return actualPath + "." + another.getActualPath();
+        return actualPath + "." + another.actualPath;
     }
 }

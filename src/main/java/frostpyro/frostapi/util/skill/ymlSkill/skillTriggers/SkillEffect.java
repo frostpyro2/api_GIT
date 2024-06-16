@@ -1,11 +1,9 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.PathName;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.RadiusInterpret;
-import jdk.jfr.Frequency;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.configuration.Configuration;
@@ -19,13 +17,21 @@ import java.util.Map;
 public class SkillEffect implements Action{
     private TriggerData data;
     private Configuration configuration;
+    private String path;
     public SkillEffect(Configuration configuration, TriggerData data){
         this.data = data;
         this.configuration = configuration;
+        this.path = PathName.EFFECT.getActualPath();
+    }
+
+    public SkillEffect(Configuration configuration, TriggerData data, String path){
+        this.configuration = configuration;
+        this.data = data;
+        this.path = path;
     }
 
     public void section(){
-        WeakReference<Effect> skillEffect = new WeakReference<>(new Effect(data, configuration.getList("skill.effect")));
+        WeakReference<Effect> skillEffect = new WeakReference<>(new Effect(data, configuration.getList(path)));
         if(skillEffect.get() == null) return;
         skillEffect.get().runTask(FrostAPI.getPlugin());
     }

@@ -2,36 +2,38 @@ package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.PathName;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.RadiusInterpret;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.w3c.dom.Attr;
 
 import java.lang.ref.WeakReference;
-import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 
 public class SkillAction implements Action{
     private FileConfiguration configuration;
     private TriggerData data;
+    private String path;
     public SkillAction(FileConfiguration configuration, TriggerData data){
         this.configuration = configuration;
         this.data = data;
+        path = PathName.ACTION.getActualPath();
+    }
+
+    public SkillAction(FileConfiguration configuration, TriggerData data, String path){
+        this.configuration = configuration;
+        this.data = data;
+        this.path = path;
     }
 
     public void section(){
-        WeakReference<Action> skillAction = new WeakReference<>(new Action(data, configuration.getMapList("skill.action")));
+        WeakReference<Action> skillAction = new WeakReference<>(new Action(data, configuration.getMapList(path)));
         if(skillAction.get() == null) return;
         skillAction.get().runTask(FrostAPI.getPlugin());
     }

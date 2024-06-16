@@ -5,7 +5,6 @@ import frostpyro.frostapi.api.damageManager.damageData.DamageType;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
-import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -108,12 +107,7 @@ public class Skill implements Listener{
             coolDown = .01;
         }
 
-        Activation activation = new Activation(configuration, data);
 
-        for(Action skillAct : activation.actions()){
-            if(skillAct == null) continue;
-            skillAct.section();
-        }
 
         data.getCast().setCoolDown(configuration, coolDown);
     }

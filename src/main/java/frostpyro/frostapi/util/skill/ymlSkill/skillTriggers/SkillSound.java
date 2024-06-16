@@ -19,6 +19,7 @@ import java.util.Map;
 public class SkillSound implements Action{
     private TriggerData data;
     private Configuration configuration;
+    private String path;
     public SkillSound(Configuration configuration, TriggerData data){
         this.data = data;
         this.configuration = configuration;
