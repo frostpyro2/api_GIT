@@ -24,6 +24,10 @@ public class Damaging {
 
     public void damage(){
         Collection<Entity> entities = damageLoc.getWorld().getNearbyEntities(damageLoc, distance[0], distance[1], distance[2]);
+        entityDamage(entities);
+    }
+
+    private void entityDamage(Collection<Entity> entities){
         for(Entity entity : entities){
             if(!(entity instanceof LivingEntity living)) continue;
             data.getCast().addDamage(living);
