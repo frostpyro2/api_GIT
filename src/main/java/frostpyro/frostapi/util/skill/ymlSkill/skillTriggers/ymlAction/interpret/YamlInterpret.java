@@ -31,6 +31,10 @@ public class YamlInterpret {
             this.objects = objects;
         }
 
+        public void runningEngine(){
+
+        }
+
         private void delay(Map<?, ?> delayMap){
             try{
                 delay += (int)delayMap.get("addDelay");
