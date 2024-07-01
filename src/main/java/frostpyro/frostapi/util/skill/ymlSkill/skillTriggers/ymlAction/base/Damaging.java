@@ -38,4 +38,12 @@ public class Damaging {
     public void setDamageLoc(Location damageLoc){
         this.damageLoc = damageLoc;
     }
+
+    public enum Target{
+        NEARBY,
+        SELF,
+        TARGET,
+        ALL,
+        CLOSEST
+    }
 }
