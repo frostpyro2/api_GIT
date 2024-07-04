@@ -40,10 +40,16 @@ public class Damaging {
     }
 
     public enum Target{
-        NEARBY,
-        SELF,
-        TARGET,
-        ALL,
-        CLOSEST
+        NEARBY("@nearby"),
+        SELF("@self"),
+        TARGET("@target"),
+        ALL("@all"),
+        CLOSEST("@closest");
+        private String target;
+        Target(String target){
+            this.target = target;
+        }
+
+
     }
 }
