@@ -6,7 +6,7 @@ import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
@@ -29,7 +29,7 @@ public class SkillTriggerListener implements Listener {
         final boolean isLeft = event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK;
         final boolean isSneaking = event.getPlayer().isSneaking();
         final TriggerType type = isLeft ? (isSneaking ? TriggerType.SHIFT_LEFT_CLICK : TriggerType.LEFT_CLICK) : (isSneaking ? TriggerType.SHIFT_RIGHT_CLICK : TriggerType.RIGHT_CLICK);
-        final TriggerData data = new TriggerData(caster, type, EquipSlot.fromBukkit(event.getHand()), event.getPlayer().getLocation(), null, null, null, new PlayerData(caster, EquipSlot.fromBukkit(event.getHand())));
+        final PlayerTriggerData data = new PlayerTriggerData(caster, type, EquipSlot.fromBukkit(event.getHand()), event.getPlayer().getLocation(), null, null, null, new PlayerData(caster, EquipSlot.fromBukkit(event.getHand())));
         caster.castSkill(data);
     }
 
@@ -41,7 +41,7 @@ public class SkillTriggerListener implements Listener {
 
     @EventHandler
     private void playerHit(PlayerAttackEvent event){
-        TriggerData data = new TriggerData(event, TriggerType.ATTACK);
+        PlayerTriggerData data = new PlayerTriggerData(event, TriggerType.ATTACK);
         data.getCast().castSkill(data);
     }
 

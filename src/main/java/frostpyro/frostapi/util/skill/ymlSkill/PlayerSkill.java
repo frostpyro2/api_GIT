@@ -3,7 +3,7 @@ package frostpyro.frostapi.util.skill.ymlSkill;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.damageManager.damageData.DamageType;
 import frostpyro.frostapi.util.skill.SkillManager;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,12 +15,12 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.*;
 
-public class Skill implements Listener{
+public class PlayerSkill implements Listener{
     private static final Map<String,FileConfiguration> skillMap = new HashMap<>();
     private FileConfiguration configuration;
-    private final TriggerData data;
+    private final PlayerTriggerData data;
 
-    public Skill(@NotNull String fileName, TriggerData data){
+    public PlayerSkill(@NotNull String fileName, PlayerTriggerData data){
         try{
             configuration = skillMap.computeIfAbsent(fileName, NONE -> null);
         }

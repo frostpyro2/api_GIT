@@ -1,13 +1,12 @@
 package frostpyro.frostapi.dataManage.stat.player;
 
-import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.dataManage.stat.StatProvider;
 import frostpyro.frostapi.dataManage.stat.data.PlayerFile;
 import frostpyro.frostapi.dataManage.stat.data.StatMap;
 import frostpyro.frostapi.util.skill.casting.AnotherTrigger;
 import frostpyro.frostapi.util.skill.casting.SkillItem;
 import frostpyro.frostapi.util.skill.SkillManager;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
@@ -15,11 +14,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.map.MapPalette;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.ObjectInputFilter;
 import java.util.*;
 
 public class PlayerDataTmp implements StatProvider {
@@ -60,13 +56,13 @@ public class PlayerDataTmp implements StatProvider {
 
     }
 
-    public void castSkill(TriggerData data, EquipSlot slot){
+    public void castSkill(PlayerTriggerData data, EquipSlot slot){
         if(slot != EquipSlot.MAIN_HAND) return;
         SkillManager manager = new SkillItem(data);
         manager.cast();
     }
 
-    public void castSkill(TriggerData data){
+    public void castSkill(PlayerTriggerData data){
         if(data.getSlot() == null){
             SkillManager manager = new AnotherTrigger(data);
             manager.cast();

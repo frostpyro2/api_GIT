@@ -9,7 +9,7 @@ import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.casting.SkillItem;
-import frostpyro.frostapi.util.skill.ymlSkill.Skill;
+import frostpyro.frostapi.util.skill.ymlSkill.PlayerSkill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -21,9 +21,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 public final class FrostAPI extends JavaPlugin {
     private static FrostAPI plugin;
@@ -48,7 +45,7 @@ public final class FrostAPI extends JavaPlugin {
         damageManage = new DamageManage();
         SkillManager.registerSkill();
         SkillItem.registerItem();
-        Skill.registerSkill();
+        PlayerSkill.registerSkill();
 
         try{
             this.getCommand("skill").setExecutor(new Command());

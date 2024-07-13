@@ -1,11 +1,9 @@
 package frostpyro.frostapi.util.skill;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
-import frostpyro.frostapi.util.skill.trigger.TriggerType;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Particle;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,15 +12,15 @@ import java.util.List;
 public abstract class SkillManager{
     private static List<String> skills = new ArrayList<>();
 
-    private TriggerData data;
+    private PlayerTriggerData data;
 
-    public SkillManager(TriggerData data){
+    public SkillManager(PlayerTriggerData data){
         this.data = data;
     }
 
     public abstract void cast();
 
-    public TriggerData data(){
+    public PlayerTriggerData data(){
         return data;
     }
 

@@ -1,7 +1,7 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.PathName;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -11,15 +11,15 @@ import java.util.Map;
 
 public class ProjectileAction implements Action{
     private FileConfiguration configuration;
-    private TriggerData data;
+    private PlayerTriggerData data;
     private String path;
-    public ProjectileAction(FileConfiguration configuration, TriggerData data){
+    public ProjectileAction(FileConfiguration configuration, PlayerTriggerData data){
         this.configuration = configuration;
         this.data = data;
         path = PathName.PROJECTILE.getActualPath();
     }
 
-    public ProjectileAction(FileConfiguration configuration, TriggerData data, String path){
+    public ProjectileAction(FileConfiguration configuration, PlayerTriggerData data, String path){
         this.configuration = configuration;
         this.data = data;
         this.path = path;
@@ -32,9 +32,9 @@ public class ProjectileAction implements Action{
     //TODO: 투사체 완성시키기
 
     private static class Projectile extends BukkitRunnable {
-        private TriggerData data;
+        private PlayerTriggerData data;
         private List<?> skillAct;
-        Projectile(TriggerData data, List<?> skillAct){
+        Projectile(PlayerTriggerData data, List<?> skillAct){
             this.data = data;
             this.skillAct = skillAct;
         }

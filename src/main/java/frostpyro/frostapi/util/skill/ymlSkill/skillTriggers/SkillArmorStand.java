@@ -1,8 +1,7 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
-import com.google.j2objc.annotations.Weak;
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.SettingInterpret;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,15 +9,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
-import org.ietf.jgss.GSSName;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -26,15 +21,15 @@ import java.util.Map;
 
 public class SkillArmorStand implements Action{
     private Configuration configuration;
-    private TriggerData data;
+    private PlayerTriggerData data;
     private String path;
-    public SkillArmorStand(Configuration configuration, TriggerData data){
+    public SkillArmorStand(Configuration configuration, PlayerTriggerData data){
         this.configuration = configuration;
         this.data = data;
         this.path = "skill.armorStand";
     }
 
-    public SkillArmorStand(Configuration configuration, TriggerData data, String path){
+    public SkillArmorStand(Configuration configuration, PlayerTriggerData data, String path){
         this.configuration = configuration;
         this.data = data;
         this.path = path;
@@ -48,8 +43,8 @@ public class SkillArmorStand implements Action{
     private static class ArmorStandSummon extends BukkitRunnable{
         private int actionDelay = 0;
         private List<?> act;
-        private TriggerData data;
-        ArmorStandSummon(List<?> act, TriggerData data){
+        private PlayerTriggerData data;
+        ArmorStandSummon(List<?> act, PlayerTriggerData data){
             this.act = act;
             this.data = data;
         }

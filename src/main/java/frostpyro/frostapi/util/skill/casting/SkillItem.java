@@ -3,13 +3,11 @@ package frostpyro.frostapi.util.skill.casting;
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.container.SkillItemContainer;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
-import frostpyro.frostapi.util.skill.ymlSkill.Skill;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
+import frostpyro.frostapi.util.skill.ymlSkill.PlayerSkill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,7 +15,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.w3c.dom.Attr;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,21 +26,21 @@ public class SkillItem extends SkillManager {
     private static final Map<ItemStack, Map<String, List<String>>> skillActivate = new HashMap<>();
     private static final Map<Integer, SkillItemContainer> skillItem = new HashMap<>();
 
-    public SkillItem(TriggerData data) {
+    public SkillItem(PlayerTriggerData data) {
         super(data);
     }
 
     @Override
     public void cast() {
-        TriggerData data = data();
+        PlayerTriggerData data = data();
         Player player = (Player) data.getTmp().getEntity();
         if(!skillItems.contains(player.getInventory().getItemInMainHand())) return;
         Map<String, List<String>> getSkill = skillActivate.get(player.getInventory().getItemInMainHand());
         List<String> files = getSkill.computeIfAbsent(data.getType().getType(), NONE -> null);
         if(files == null) return;
         for(String file: files){
-            Skill skill = new Skill(file, data);
-            skill.activateSkill();
+            PlayerSkill playerSkill = new PlayerSkill(file, data);
+            playerSkill.activateSkill();
         }
     }
 

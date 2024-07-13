@@ -1,14 +1,11 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.RadiusInterpret;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -17,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 public class SkillSound implements Action{
-    private TriggerData data;
+    private PlayerTriggerData data;
     private Configuration configuration;
     private String path;
-    public SkillSound(Configuration configuration, TriggerData data){
+    public SkillSound(Configuration configuration, PlayerTriggerData data){
         this.data = data;
         this.configuration = configuration;
     }
@@ -32,10 +29,10 @@ public class SkillSound implements Action{
     }
 
     private static class Skill extends BukkitRunnable{
-        private TriggerData data;
+        private PlayerTriggerData data;
         private  List<Map<?, ?>> act;
         private int delay = 0;
-        Skill(TriggerData data, List<Map<?, ?>> act){
+        Skill(PlayerTriggerData data, List<Map<?, ?>> act){
             this.data = data;
             this.act = act;
         }

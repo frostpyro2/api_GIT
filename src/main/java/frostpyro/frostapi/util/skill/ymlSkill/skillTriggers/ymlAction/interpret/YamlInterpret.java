@@ -1,7 +1,7 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.interpret;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class YamlInterpret {
     Configuration config;
-     TriggerData data;
+     PlayerTriggerData data;
      String path;
      int delay;
 
-    public YamlInterpret(Configuration config, TriggerData data, String path){
+    public YamlInterpret(Configuration config, PlayerTriggerData data, String path){
         this.config = config;
         this.data = data;
         this.path = path;
@@ -27,7 +27,7 @@ public class YamlInterpret {
     private static class InterpretEngine{
         List<?> objects;
         int delay = 0;
-        public InterpretEngine(List<?> objects, TriggerData data){
+        public InterpretEngine(List<?> objects, PlayerTriggerData data){
             this.objects = objects;
         }
 

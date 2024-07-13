@@ -1,18 +1,26 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.base;
 
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.EulerAngle;
 
-import java.util.Locale;
+import java.util.Collection;
+import java.util.List;
 
 public class ArmorStandDisplay {
     private ArmorStand stand;
+    private PlayerTriggerData data;
 
-    public ArmorStandDisplay(ArmorStand stand){
+    public ArmorStandDisplay(ArmorStand stand, PlayerTriggerData data){
         this.stand = stand;
+        this.data = data;
+    }
+
+    public ArmorStand getStand(){
+        return stand;
     }
 
     public void setItem(ItemLocation location, ItemStack stack) {
@@ -90,6 +98,7 @@ public class ArmorStandDisplay {
     private void right_leg(EulerAngle angle){
         stand.setRightLegPose(angle);
     }
+
 
     public enum ItemLocation{
         HEAD,

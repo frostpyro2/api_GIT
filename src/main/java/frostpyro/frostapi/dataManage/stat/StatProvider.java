@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public interface StatProvider {
-    LivingEntity getEntity();
+    Entity getEntity();
     double getStat(String stat);
 
     static StatProvider get(LivingEntity livingEntity, EquipSlot slot, boolean cache){

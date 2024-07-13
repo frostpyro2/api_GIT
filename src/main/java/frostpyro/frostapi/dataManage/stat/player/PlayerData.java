@@ -1,8 +1,7 @@
 package frostpyro.frostapi.dataManage.stat.player;
 
 import frostpyro.frostapi.dataManage.stat.StatProvider;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
-import frostpyro.frostapi.util.skill.trigger.TriggerType;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
@@ -27,7 +26,7 @@ public class PlayerData implements StatProvider {
         return player;
     }
 
-    public void castSkill(TriggerData data){
+    public void castSkill(PlayerTriggerData data){
         if(slot == null)
             playerDataTmp.castSkill(data);
         else

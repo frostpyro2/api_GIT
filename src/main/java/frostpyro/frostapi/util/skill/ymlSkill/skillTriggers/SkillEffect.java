@@ -1,7 +1,7 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers;
 
 import frostpyro.frostapi.FrostAPI;
-import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.PathName;
 import frostpyro.frostapi.util.skill.ymlSkill.yamlInterpret.RadiusInterpret;
 import org.bukkit.Location;
@@ -15,16 +15,16 @@ import java.util.List;
 import java.util.Map;
 
 public class SkillEffect implements Action{
-    private TriggerData data;
+    private PlayerTriggerData data;
     private Configuration configuration;
     private String path;
-    public SkillEffect(Configuration configuration, TriggerData data){
+    public SkillEffect(Configuration configuration, PlayerTriggerData data){
         this.data = data;
         this.configuration = configuration;
         this.path = PathName.EFFECT.getActualPath();
     }
 
-    public SkillEffect(Configuration configuration, TriggerData data, String path){
+    public SkillEffect(Configuration configuration, PlayerTriggerData data, String path){
         this.configuration = configuration;
         this.data = data;
         this.path = path;
@@ -39,9 +39,9 @@ public class SkillEffect implements Action{
     private static class Effect extends BukkitRunnable{
         private int index = 0;
         private int delay = 0;
-        private TriggerData data;
+        private PlayerTriggerData data;
         private List<?> act;
-        Effect(TriggerData data, List<?> act){
+        Effect(PlayerTriggerData data, List<?> act){
             this.data = data;
             this.act = act;
         }
