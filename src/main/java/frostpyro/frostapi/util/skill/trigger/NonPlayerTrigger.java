@@ -15,7 +15,7 @@ public class NonPlayerTrigger implements TriggerData{
     }
 
     @Override
-    public StatProvider getCast() {
+    public EntityDataTmp getCast() {
         return tmp;
     }
 

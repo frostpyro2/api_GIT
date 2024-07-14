@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.*;
 
-public class PlayerSkill implements Listener{
+public class PlayerSkill {
     private static final Map<String,FileConfiguration> skillMap = new HashMap<>();
     private FileConfiguration configuration;
     private final PlayerTriggerData data;

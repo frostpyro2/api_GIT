@@ -1,6 +1,7 @@
 package frostpyro.frostapi.dataManage.stat.nonPlayer;
 
 import frostpyro.frostapi.dataManage.stat.StatProvider;
+import frostpyro.frostapi.util.skill.trigger.TriggerData;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -38,8 +39,13 @@ public class EntityDataTmp implements StatProvider {
         return 0;
     }
 
-    public void triggerSkill(){
+    public void triggerSkill(TriggerData data){
 
+    }
+
+    public boolean isCoolDown(Configuration configuration){
+        if(coolDown.get(configuration) == null) return false;
+        return coolDown.get(configuration) >= System.currentTimeMillis();
     }
 
     private static Map<UUID, EntityDataTmp> entity_DT = new WeakHashMap<>();

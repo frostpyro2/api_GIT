@@ -2,16 +2,12 @@ package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.base;
 
 import org.bukkit.Location;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-public class CordinateBase {
+public class CoordinateBase {
     private Location location;
-    public CordinateBase(){
+    public CoordinateBase(){
 
     }
-    public CordinateBase(Location location){
+    public CoordinateBase(Location location){
         this.location = location;
     }
     public Location getCordinate(){

@@ -28,11 +28,11 @@ public class Targeting {
         }
     }
 
-    public Collection<Entity> nearby(CordinateBase base, ThreeDimension dimension){
+    public Collection<Entity> nearby(CoordinateBase base, ThreeDimension dimension){
         return base.getCordinate().getWorld().getNearbyEntities(base.getCordinate(), dimension.getX(), dimension.getY(), dimension.getZ());
     }
 
-    public Entity closest(CordinateBase base, ThreeDimension dimension){
+    public Entity closest(CoordinateBase base, ThreeDimension dimension){
         double minDist = Math.sqrt(Math.pow(dimension.getX(), dimension.getX()) + Math.pow(dimension.getY(), dimension.getY()) + Math.pow(dimension.getZ(), dimension.getZ()));
         Entity closest = null;
         for(Entity entity : base.getCordinate().getWorld().getNearbyEntities(base.getCordinate(), dimension.getX(), dimension.getY(), dimension.getZ())){
