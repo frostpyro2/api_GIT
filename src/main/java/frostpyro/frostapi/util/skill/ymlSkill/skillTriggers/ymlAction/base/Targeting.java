@@ -8,16 +8,32 @@ import java.util.List;
 
 public class Targeting {
     private TriggerData data;
+    private Entity trigger;
     public Targeting(TriggerData data){
         this.data = data;
+        trigger = data.getCast().getEntity();
+    }
+
+    public Targeting(Entity trigger){
+        this.trigger = trigger;
     }
 
     public Entity self(){
-        return data.getCast().getEntity();
+        try{
+            return data.getCast().getEntity();
+        }
+        catch (Exception any){
+            return trigger;
+        }
     }
 
     public List<Entity> all(){
-        return data.getSource().getWorld().getEntities();
+        try{
+            return data.getSource().getWorld().getEntities();
+        }
+        catch (Exception any){
+            return trigger.getWorld().getEntities();
+        }
     }
     public Entity target(){
         try{

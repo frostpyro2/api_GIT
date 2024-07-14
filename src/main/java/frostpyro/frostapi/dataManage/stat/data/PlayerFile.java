@@ -38,8 +38,8 @@ public class PlayerFile {
                 if(configuration.contains(string)) continue;
                 configuration.set("stats."+string, FrostAPI.getPlugin().stats.getConfigurationSection(string).getDouble("val"));
             }
-            if(!configuration.contains("SKILL")){
-                configuration.set("SKILL", null);
+            if(!configuration.contains("skill")){
+                configuration.set("skill", null);
             }
             configuration.save(file);
         }catch (IOException e){

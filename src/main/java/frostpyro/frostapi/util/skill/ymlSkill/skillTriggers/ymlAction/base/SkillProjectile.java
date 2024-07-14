@@ -24,6 +24,10 @@ public class SkillProjectile {
         projectileTmp.setVelocity(projectileTmp.getVelocity().multiply(velocity));
     }
 
+    public PlayerTriggerData dependency(){
+        return this.data;
+    }
+
     public void setVelocity(Vector velocity){
         projectileTmp.setVelocity(velocity);
     }

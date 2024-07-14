@@ -4,7 +4,7 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.container.SkillItemContainer;
 import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
-import frostpyro.frostapi.util.skill.ymlSkill.PlayerSkill;
+import frostpyro.frostapi.util.skill.ymlSkill.run.PlayerSkill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

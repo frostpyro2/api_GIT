@@ -1,4 +1,4 @@
-package frostpyro.frostapi.util.skill.ymlSkill;
+package frostpyro.frostapi.util.skill.ymlSkill.run;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.damageManager.damageData.DamageType;
@@ -9,20 +9,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.*;
 
-public class PlayerSkill {
-    private static final Map<String,FileConfiguration> skillMap = new HashMap<>();
+public class PlayerSkill implements Skill{
+
     private FileConfiguration configuration;
     private final PlayerTriggerData data;
 
     public PlayerSkill(@NotNull String fileName, PlayerTriggerData data){
         try{
-            configuration = skillMap.computeIfAbsent(fileName, NONE -> null);
+            configuration = skillMapCache.computeIfAbsent(fileName, NONE -> null);
         }
         catch (Exception any){
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "failed to load skill file!");
@@ -157,7 +156,7 @@ public class PlayerSkill {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "failed to load:" + fileName);
                 continue;
             }
-            skillMap.put(fileName, fileConfig);
+            skillMapCache.put(fileName, fileConfig);
             Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "skill yml successfully added:" + file.getName());
         }
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "--------------------------------");

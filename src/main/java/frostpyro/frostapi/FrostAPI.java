@@ -9,7 +9,7 @@ import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.casting.SkillItem;
-import frostpyro.frostapi.util.skill.ymlSkill.PlayerSkill;
+import frostpyro.frostapi.util.skill.ymlSkill.run.PlayerSkill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;

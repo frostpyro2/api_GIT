@@ -52,14 +52,14 @@ public class PlayerDataTmp implements StatProvider {
         return statMap().getStat(stat);
     }
 
-    public void castSkill(TriggerType type) {
-
-    }
-
     public void castSkill(PlayerTriggerData data, EquipSlot slot){
         if(slot != EquipSlot.MAIN_HAND) return;
-        SkillManager manager = new SkillItem(data);
-        manager.cast();
+        SkillManager skillManager;
+        if(data.getCast().getEntity().getItemInUse() == null)
+            skillManager = new AnotherTrigger(data);
+        else
+            skillManager  = new SkillItem(data);
+        skillManager.cast();
     }
 
     public void castSkill(PlayerTriggerData data){

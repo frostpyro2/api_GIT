@@ -23,6 +23,10 @@ public class ArmorStandDisplay {
         return stand;
     }
 
+    public PlayerTriggerData dependency(){
+        return this.data;
+    }
+
     public void setItem(ItemLocation location, ItemStack stack) {
         switch (location) {
             case HEAD -> head(stack);
