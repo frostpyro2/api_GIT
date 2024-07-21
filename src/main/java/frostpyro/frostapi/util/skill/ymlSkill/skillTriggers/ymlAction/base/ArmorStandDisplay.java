@@ -13,16 +13,20 @@ import java.util.List;
 public class ArmorStandDisplay {
     private ArmorStand stand;
     private PlayerTriggerData data;
-
-    public ArmorStandDisplay(ArmorStand stand, PlayerTriggerData data){
-        this.stand = stand;
+    public ArmorStandDisplay(PlayerTriggerData data){
         this.data = data;
     }
 
+    public void spawnStand(){
+        stand = data.getCast().getEntity().getWorld().spawn(data.getSource(), ArmorStand.class);
+    }
     public ArmorStand getStand(){
         return stand;
     }
-
+    public void setStand(Entity entity){
+        if(!(entity instanceof ArmorStand std)) return;
+        this.stand = std;
+    }
     public PlayerTriggerData dependency(){
         return this.data;
     }
@@ -128,23 +132,38 @@ public class ArmorStandDisplay {
             this.stand = stand;
         }
 
-        public void isGravity(boolean isGravity){
+        public void isGravity(Boolean isGravity){
+            if(isGravity == null){
+                return;
+            }
             stand.setGravity(isGravity);
         }
 
-        public void isMarker(boolean isMarker){
+        public void isMarker(Boolean isMarker){
+            if(isMarker == null){
+                return;
+            }
             stand.setMarker(isMarker);
         }
 
-        public void isInvisible(boolean isInvisible){
+        public void isInvisible(Boolean isInvisible){
+            if(isInvisible == null){
+                return;
+            }
             stand.setInvisible(isInvisible);
         }
 
-        public void isSmall(boolean isSmall){
+        public void isSmall(Boolean isSmall){
+            if(isSmall == null){
+                return;
+            }
             stand.setSmall(isSmall);
         }
 
-        public void hasPlate(boolean hasPlate){
+        public void hasPlate(Boolean hasPlate){
+            if(hasPlate == null){
+                return;
+            }
             stand.setBasePlate(hasPlate);
         }
 

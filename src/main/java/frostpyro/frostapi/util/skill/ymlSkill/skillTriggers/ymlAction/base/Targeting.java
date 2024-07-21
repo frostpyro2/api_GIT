@@ -48,16 +48,33 @@ public class Targeting {
         return base.getCordinate().getWorld().getNearbyEntities(base.getCordinate(), dimension.getX(), dimension.getY(), dimension.getZ());
     }
 
-    public Entity closest(CoordinateBase base, ThreeDimension dimension){
-        double minDist = Math.sqrt(Math.pow(dimension.getX(), dimension.getX()) + Math.pow(dimension.getY(), dimension.getY()) + Math.pow(dimension.getZ(), dimension.getZ()));
-        Entity closest = null;
-        for(Entity entity : base.getCordinate().getWorld().getNearbyEntities(base.getCordinate(), dimension.getX(), dimension.getY(), dimension.getZ())){
-            if(minDist >= entity.getLocation().distance(base.getCordinate())){
-                minDist = entity.getLocation().distance(base.getCordinate());
-                closest = entity;
+    public Entity closest(boolean same){
+        Entity returned = trigger;
+        List<Entity> entityCollection = trigger.getWorld().getEntities();
+        if(same){
+             for(int i = 0; i < entityCollection.size(); i++){
+                 double smallest = trigger.getLocation().distance(entityCollection.get(i).getLocation());
+                 for(int j = i; j < entityCollection.size(); j++){
+                     if(smallest > entityCollection.get(j).getLocation().distance(trigger.getLocation())){
+                         if(returned.getType() != trigger.getType()) continue;
+                         smallest = entityCollection.get(j).getLocation().distance(trigger.getLocation());
+                         returned = entityCollection.get(j);
+                     }
+                 }
+                 return returned;
+             }
+             return returned;
+        }
+
+        double smallest = trigger.getLocation().distance(entityCollection.get(0).getLocation());
+        for (Entity entity : entityCollection) {
+            if (smallest > entity.getLocation().distance(trigger.getLocation())) {
+                smallest = entity.getLocation().distance(trigger.getLocation());
+                returned = entity;
             }
         }
-        return closest;
+        return returned;
+
     }
 
     public enum Target{
