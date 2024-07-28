@@ -28,7 +28,6 @@ public class PlayerDataTmp implements StatProvider {
     private final Map<Configuration, Long> duration = new HashMap<>();
     private final Map<FileConfiguration, Map<String, FileConfiguration>> toggle = new HashMap<>();
     private final Set<FileConfiguration> suppressSkill = new HashSet<>();
-    private Map<String, FileConfiguration> tmp = new HashMap<>();
     private Set<Entity> skillDamagedEntity = new HashSet<>();
     public PlayerDataTmp(Player player){
         this.player = player;

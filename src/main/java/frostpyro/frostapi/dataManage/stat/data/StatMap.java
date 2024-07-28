@@ -1,9 +1,12 @@
 package frostpyro.frostapi.dataManage.stat.data;
 
 import frostpyro.frostapi.dataManage.stat.StatProvider;
+import frostpyro.frostapi.dataManage.stat.nonPlayer.EntityData;
+import frostpyro.frostapi.dataManage.stat.nonPlayer.EntityDataTmp;
 import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EquipmentSlot;
 import org.jetbrains.annotations.NotNull;
@@ -13,9 +16,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class StatMap implements StatProvider {
-    private final PlayerDataTmp data;
+    private final StatProvider data;
     private final Map<String, StatInstance> stats = new ConcurrentHashMap<>();
-    public StatMap(PlayerDataTmp data){
+    public StatMap(StatProvider data){
         this.data = data;
     }
     @Override
@@ -38,6 +41,10 @@ public class StatMap implements StatProvider {
     }
 
     public PlayerData cache(EquipSlot slot){
-        return new PlayerData(data, slot);
+        return new PlayerData((PlayerDataTmp) data, slot);
+    }
+
+    public EntityData cache(frostpyro.frostapi.dataManage.stat.nonPlayer.EquipSlot slot){
+        return new EntityData((EntityDataTmp) data, slot);
     }
 }

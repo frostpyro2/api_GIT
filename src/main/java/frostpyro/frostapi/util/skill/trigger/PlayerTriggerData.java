@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PlayerTriggerData implements TriggerData{
-    private Set<PlayerTriggerData> suppressSkill = new HashSet<>();
     private final PlayerDataTmp tmp;
     private final TriggerType type;
     private final EquipSlot slot;

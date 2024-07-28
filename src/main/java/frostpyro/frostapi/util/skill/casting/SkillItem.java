@@ -4,7 +4,6 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.container.SkillItemContainer;
 import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
-import frostpyro.frostapi.util.skill.ymlSkill.run.PlayerSkill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -39,8 +38,7 @@ public class SkillItem extends SkillManager {
         List<String> files = getSkill.computeIfAbsent(data.getType().getType(), NONE -> null);
         if(files == null) return;
         for(String file: files){
-            PlayerSkill playerSkill = new PlayerSkill(file, data);
-            playerSkill.activateSkill();
+
         }
     }
 

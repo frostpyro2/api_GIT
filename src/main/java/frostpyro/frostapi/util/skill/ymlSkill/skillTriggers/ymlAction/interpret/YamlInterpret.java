@@ -2,8 +2,6 @@ package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.interpret
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
-import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.base.ArmorStandDisplay;
-import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.interpret.components.ArmorStandYml;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -29,7 +27,6 @@ public class YamlInterpret {
     private static class InterpretEngine{
         List<?> objects;
         int delay = 0;
-        private ArmorStandYml armorYml;
         public InterpretEngine(List<?> objects, PlayerTriggerData data){
             this.objects = objects;
         }

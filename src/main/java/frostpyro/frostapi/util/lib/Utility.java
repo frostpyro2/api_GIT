@@ -1,6 +1,13 @@
 package frostpyro.frostapi.util.lib;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.dataManage.stat.StatProvider;
+import frostpyro.frostapi.dataManage.stat.nonPlayer.EntityData;
+import frostpyro.frostapi.dataManage.stat.player.PlayerData;
+import frostpyro.frostapi.util.skill.trigger.NonPlayerTrigger;
+import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
+import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,5 +25,14 @@ public class Utility {
                 function.run();
             }
         }.runTaskLater(FrostAPI.getPlugin(), delay);
+    }
+
+    public static void runSKill(TriggerData provider, ConfigurationSection section){
+        if(provider instanceof PlayerTriggerData dt){
+
+        }
+        else if(provider instanceof NonPlayerTrigger dt){
+
+        }
     }
 }

@@ -2,6 +2,7 @@ package frostpyro.frostapi.dataManage.stat;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.dataManage.stat.data.StatMap;
+import frostpyro.frostapi.dataManage.stat.nonPlayer.EntityDataTmp;
 import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public interface StatProvider {
-    Entity getEntity();
+    LivingEntity getEntity();
     double getStat(String stat);
 
     static StatProvider get(LivingEntity livingEntity, EquipSlot slot, boolean cache){
@@ -33,5 +34,9 @@ public interface StatProvider {
         Entity entity = Bukkit.getEntity(uuid);
         if(entity == null) return null;
         return get((LivingEntity) entity, slot, cache);
+    }
+
+    static StatProvider getNonPlayer(String dataKey, frostpyro.frostapi.dataManage.stat.nonPlayer.EquipSlot slot, boolean cache){
+         return null;
     }
 }

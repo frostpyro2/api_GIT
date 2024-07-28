@@ -6,6 +6,7 @@ import frostpyro.frostapi.api.listeners.customEvents.attackEvents.AttackEvent;
 import frostpyro.frostapi.dataManage.stat.player.EquipSlot;
 import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
+import frostpyro.frostapi.util.skill.trigger.NonPlayerTrigger;
 import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerType;
 import org.bukkit.Bukkit;
@@ -34,12 +35,14 @@ public class SkillTriggerListener implements Listener {
     }
 
     @EventHandler
+    //Non-player-entity attack trigger
     private void hit(AttackEvent event){
-        if(event.getAttack().getAttacker() == null) return;
-        event.getEntity().sendMessage("damaged!");
+        NonPlayerTrigger data = new NonPlayerTrigger(event, TriggerType.ATTACK);
+        data.getCast().triggerSkill(data);
     }
 
     @EventHandler
+    //player-entity attack trigger
     private void playerHit(PlayerAttackEvent event){
         PlayerTriggerData data = new PlayerTriggerData(event, TriggerType.ATTACK);
         data.getCast().castSkill(data);

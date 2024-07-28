@@ -6,6 +6,5 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface Skill {
-    Map<String, FileConfiguration> skillMapCache = new HashMap<>();
     void activateSkill();
 }

@@ -22,8 +22,7 @@ public class AnotherTrigger extends SkillManager {
         if(skillSection == null) return;
         List<String> skillFile = skillSection.getStringList(data().getType().getType());
         for(String skill : skillFile){
-            PlayerSkill playerSkill = new PlayerSkill(skill,  data());
-            playerSkill.activateSkill();
+
         }
     }
 }

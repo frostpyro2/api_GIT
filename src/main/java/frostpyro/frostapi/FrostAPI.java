@@ -4,18 +4,19 @@ import frostpyro.frostapi.api.command.Command;
 import frostpyro.frostapi.api.damageManager.damageData.DamageManage;
 import frostpyro.frostapi.api.listeners.fake.FakeEventManager;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
+import frostpyro.frostapi.event.CritDamage;
 import frostpyro.frostapi.event.DataListener;
 import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.casting.SkillItem;
-import frostpyro.frostapi.util.skill.ymlSkill.run.PlayerSkill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,16 +38,15 @@ public final class FrostAPI extends JavaPlugin {
         new DataListener(this);
         new AttackEventListener(this);
         new SkillTriggerListener(this);
+        new CritDamage(this);
 
         for(Player player : Bukkit.getOnlinePlayers()){
             PlayerDataTmp.upload(player.getUniqueId(), new PlayerDataTmp(player.getUniqueId()));
         }
 
         damageManage = new DamageManage();
-        SkillManager.registerSkill();
-        SkillItem.registerItem();
-        PlayerSkill.registerSkill();
 
+        SkillItem.registerItem();
         try{
             this.getCommand("skill").setExecutor(new Command());
         }
@@ -67,6 +67,8 @@ public final class FrostAPI extends JavaPlugin {
     public static FrostAPI getPlugin(){
         return plugin;
     }
+
+    public YamlConfiguration skillF, item, mobs;
     private void generateSkillFolder(){
         File FOLDER = new File(getDataFolder(), "\\skill");
         if(FOLDER.exists()) return;
@@ -109,6 +111,28 @@ public final class FrostAPI extends JavaPlugin {
         FOLDER.mkdirs();
     }
 
+    private void skillYml(){
+        File YML = new File(getDataFolder(), "\\skill\\skill.yml");
+        if(YML.exists()) {
+            skillF = new YamlConfiguration();
+            try{
+                skillF.load(YML);
+            }
+            catch (Exception any){
+                //nothing
+            }
+            return;
+        }
+        YML.mkdirs();
+        skillF = new YamlConfiguration();
+        try{
+            skillF.load(YML);
+        }
+        catch (Exception any){
+            //nothing
+        }
+    }
+
     private void generateFolders(){
         generateSkillFolder();
         generateSkillBuildFolder();
@@ -117,6 +141,7 @@ public final class FrostAPI extends JavaPlugin {
         generateYmlSkillFolder();
         generateArmorEntityFolder();
         generateEffectItem();
+        skillYml();
     }
 
     public FileConfiguration skill, build, sql, stats;
@@ -155,7 +180,7 @@ public final class FrostAPI extends JavaPlugin {
         getLogger().info("config enabled!");
     }
 
-    public NamespacedKey exp = new NamespacedKey(this, "EXP");
+    public NamespacedKey customEntity = new NamespacedKey(this, "customEntity");
 
     public DamageManage damage(){
         return damageManage;

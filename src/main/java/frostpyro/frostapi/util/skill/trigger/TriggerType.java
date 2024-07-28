@@ -28,7 +28,8 @@ public class TriggerType {
     SHIFT = new TriggerType("SHIFT"),
     SHIFT_SHIFT = new TriggerType("SHIFT_SHIFT"),
     GENERAL = new TriggerType("GENERAL"),
-    KILL_ENTITY = new TriggerType("KILL_ENTITY")
+    KILL_ENTITY = new TriggerType("KILL_ENTITY"),
+    ON_TICK = new TriggerType("ON_TICK")
     ;
     private static final Map<String, TriggerType> ID = new HashMap<>();
     private TriggerType(String type){
@@ -51,6 +52,7 @@ public class TriggerType {
         register(GENERAL);
         register(KILL_ENTITY);
         register(SHIFT_SHIFT);
+        register(ON_TICK);
     }
     public String getType(){
         return this.type;

@@ -2,163 +2,60 @@ package frostpyro.frostapi.util.skill.ymlSkill.run;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.damageManager.damageData.DamageType;
-import frostpyro.frostapi.util.skill.SkillManager;
+import frostpyro.frostapi.util.lib.Utility;
 import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
-import frostpyro.frostapi.util.skill.trigger.TriggerType;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
-import java.util.*;
 
 public class PlayerSkill implements Skill{
 
-    private FileConfiguration configuration;
+    private ConfigurationSection configuration;
     private final PlayerTriggerData data;
 
-    public PlayerSkill(@NotNull String fileName, PlayerTriggerData data){
+    public PlayerSkill(@NotNull String skillName, PlayerTriggerData data){
         try{
-            configuration = skillMapCache.computeIfAbsent(fileName, NONE -> null);
+            configuration = FrostAPI.getPlugin().skillF.getConfigurationSection(skillName);
         }
         catch (Exception any){
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "failed to load skill file!");
+            //do nothing
         }
         this.data = data;
     }
 
     public void activateSkill() {
         if(configuration == null) return;
-        skillMechanism();
+        firstFloor();
     }
 
-    private void skillMechanism(){
-        if(data.getEvent() != null){
-            if(data.getCast().isDamaged(data.getEvent().getEntity())){
-                data.getCast().removeDamage(data.getEvent().getEntity());
-                data.getEvent().getAttack().getDamage().setDamageType(DamageType.MELEESKILL);
-            }
-        }
-
-        if(data.getCast().isCoolDown(configuration)) {
+    private void firstFloor(){
+        if(data.getCast().isCoolDown((Configuration) configuration)){
             try{
-                if(!data.getEvent().getAttack().getDamage().getDamageType().contains(DamageType.PHYSICAL)) return;
-                data.getEvent().setCancelled(true);
-            }
-            catch (Exception e){
-                //
-            }
-            return;
-        }
+                if(configuration.getBoolean("noDamageOnCoolDown")){
+                    if(data.getData().getDamage().getDamageType().contains(DamageType.PHYSICAL)){
+                        if(data.getData().getDamage().getDamageType().contains(DamageType.PROJECTILE)) data.getData().getDamage().setDamageType(DamageType.PROJECTILESKILL);
+                        else data.getData().getDamage().setDamageType(DamageType.MELEESKILL);
 
-        toggleSkill();
-
-        triggerSkill();
-    }
-
-    private void toggleSkill(){
-
-        if(data.getCast().getToggle() != null){
-            if(data.getCast().notDuration(data.getCast().getToggle())){
-                data.getCast().removeDuration(data.getCast().getToggle());
-                data.getCast().setToggle(null);
-                data.getCast().clearToggleCache();
-            }
-            return;
-        }
-        boolean isToggle;
-
-        try{
-            isToggle = configuration.getBoolean("skill.isToggle");
-        }
-        catch (Exception any){
-            return;
-        }
-
-        if(!isToggle) {
-            return;
-        }
-        toggleSet();
-    }
-    private void triggerSkill(){
-        if(!data.getCast().getToggleMap().isEmpty()){
-            Map<String, FileConfiguration> toggleCheck = data.getCast().getToggleMap().get(data.getCast().getToggle());
-            if(toggleCheck == null){
-                return;
-            }
-            if(toggleCheck.containsKey(data.getType().getType())){
-                configuration = toggleCheck.get(data.getType().getType());
-            }
-        }
-
-
-
-        data.getCast().removeCoolDown(configuration);
-
-        double coolDown ;
-
-        try{
-            coolDown = configuration.getDouble("skill.coolDown");
-        }
-        catch (Exception any){
-            coolDown = .01;
-        }
-
-
-
-        data.getCast().setCoolDown(configuration, coolDown);
-    }
-
-    private void toggleSet(){
-        Map<String, FileConfiguration> tmp = new HashMap<>();
-
-        for(String skillTrigger: TriggerType.getKeys()){
-            FileConfiguration skillConfig;
-            String skill;
-            try{
-                skill = configuration.getString("skill."+skillTrigger);
-                if(skill == null) continue;
-                File skillFileTmp = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills" + skill + ".yml");
-                skillConfig = YamlConfiguration.loadConfiguration(skillFileTmp);
-                tmp.put(skillTrigger, skillConfig);
-            }
-            catch (Exception e){
-                Bukkit.getConsoleSender().sendMessage(skillTrigger);
-            }
-        }
-
-        double duration;
-
-        try{
-            duration = configuration.getDouble("skill.duration");
-        }
-        catch (Exception e){
-            duration = 0;
-        }
-        if(data.getCast().getToggle() != null){
-            data.getCast().removeToggle(data.getCast().getToggle());
-        }
-        data.getCast().setToggle(configuration);
-        data.getCast().setDuration(configuration, duration);
-        data.getCast().registerToggle(configuration, tmp);
-    }
-
-    public static void registerSkill(){
-        for(String fileName : SkillManager.getSkills()){
-            File file = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills\\" + fileName + ".yml");
-            FileConfiguration fileConfig = new YamlConfiguration();
-            try{
-                fileConfig.load(file);
+                        data.getEvent().setCancelled(true);
+                    }
+                }
             }
             catch (Exception any){
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "failed to load:" + fileName);
-                continue;
+                // do nothing
             }
-            skillMapCache.put(fileName, fileConfig);
-            Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "skill yml successfully added:" + file.getName());
+            return;
         }
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "--------------------------------");
+        secondFloor();
+    }
+
+    private void secondFloor(){
+        double coolDown = .01;
+        if(configuration.getDouble("coolDown") != 0) coolDown = configuration.getDouble("coolDown");
+        data.getCast().setCoolDown((Configuration) configuration, coolDown);
+        thirdFloor();
+    }
+
+    private void thirdFloor(){
+        Utility.runSKill(data, configuration);
     }
 }
