@@ -28,6 +28,8 @@ public abstract class SkillManager{
         return skills;
     }
 
+    @Deprecated
+    //no usage for cache data
     public static void registerSkill(){
         File dir = new File(FrostAPI.getPlugin().getDataFolder(), "skill\\skills");
         File[] skills = dir.listFiles();

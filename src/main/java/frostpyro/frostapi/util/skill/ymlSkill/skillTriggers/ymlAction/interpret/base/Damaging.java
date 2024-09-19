@@ -3,12 +3,14 @@ package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.interpret
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
 public class Damaging {
     private Entity target;
-    public Damaging(Entity target){
+
+    public void setTarget(Entity target){
         this.target = target;
     }
 

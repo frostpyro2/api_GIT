@@ -9,13 +9,17 @@ import java.util.List;
 
 public class Targeting {
     public TriggerData data;
+    public Targeting(){
+
+    }
+
     public Targeting(TriggerData data){
         this.data = data;
     }
 
-    public Entity nearby(boolean isLiving){
-        if(isLiving) return livingNearby();
-        return nonLivingNearby();
+    public Entity nearby(boolean isLiving, List<? extends Entity> target){
+        if(isLiving) return livingNearby(target);
+        return nonLivingNearby(target);
     }
 
     public List<? extends Entity> range(boolean isLiving, double x, double y, double z){
@@ -37,18 +41,18 @@ public class Targeting {
         return livingEntities;
     }
 
-    private Entity nonLivingNearby(){
+    private Entity nonLivingNearby(List<? extends Entity> target){
         Entity result = null;
-        for(Entity entity : data.getCast().getEntity().getWorld().getEntities()){
+        for(Entity entity : target){
             if(result == null) result = entity;
             if(result.getLocation().distance(data.getSource()) < entity.getLocation().distance(data.getSource())) result = entity;
         }
         return result;
     }
 
-    private LivingEntity livingNearby(){
+    private LivingEntity livingNearby(List<? extends Entity> target){
         LivingEntity result = null;
-        for(Entity entity : data.getCast().getEntity().getWorld().getEntities()){
+        for(Entity entity : target){
             if(!(entity instanceof LivingEntity lE)) continue;
             if(result == null) result = lE;
             if(result.getLocation().distance(data.getSource()) < lE.getLocation().distance(data.getSource())) result = lE;

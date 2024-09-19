@@ -39,4 +39,8 @@ public interface StatProvider {
     static StatProvider getNonPlayer(String dataKey, frostpyro.frostapi.dataManage.stat.nonPlayer.EquipSlot slot, boolean cache){
          return null;
     }
+
+    default boolean equals(StatProvider provider){
+        return this.getEntity() == provider.getEntity();
+    }
 }

@@ -19,4 +19,8 @@ public class TriggeredConfig {
     public ConfigurationSection getSection(){
         return section;
     }
+
+    public void setSection(ConfigurationSection section){
+        this.section = section;
+    }
 }

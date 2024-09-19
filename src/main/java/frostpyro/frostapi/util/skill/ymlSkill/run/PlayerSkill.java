@@ -24,25 +24,15 @@ public class PlayerSkill implements Skill{
     }
 
     public void activateSkill() {
-        if(configuration == null) return;
+        if(configuration == null){
+            return;
+        }
         firstFloor();
     }
 
     private void firstFloor(){
         if(data.getCast().isCoolDown((Configuration) configuration)){
-            try{
-                if(configuration.getBoolean("noDamageOnCoolDown")){
-                    if(data.getData().getDamage().getDamageType().contains(DamageType.PHYSICAL)){
-                        if(data.getData().getDamage().getDamageType().contains(DamageType.PROJECTILE)) data.getData().getDamage().setDamageType(DamageType.PROJECTILESKILL);
-                        else data.getData().getDamage().setDamageType(DamageType.MELEESKILL);
-
-                        data.getEvent().setCancelled(true);
-                    }
-                }
-            }
-            catch (Exception any){
-                // do nothing
-            }
+            cancelDamage();
             return;
         }
         secondFloor();
@@ -57,5 +47,21 @@ public class PlayerSkill implements Skill{
 
     private void thirdFloor(){
         Utility.runSKill(data, configuration);
+    }
+
+    private void cancelDamage(){
+        try{
+            if(configuration.getBoolean("noDamageOnCoolDown")){
+                if(data.getData().getDamage().getDamageType().contains(DamageType.PHYSICAL)){
+                    if(data.getData().getDamage().getDamageType().contains(DamageType.PROJECTILE)) data.getData().getDamage().setDamageType(DamageType.PROJECTILESKILL);
+                    else data.getData().getDamage().setDamageType(DamageType.MELEESKILL);
+
+                    data.getEvent().setCancelled(true);
+                }
+            }
+        }
+        catch (Exception any){
+            // do nothing
+        }
     }
 }

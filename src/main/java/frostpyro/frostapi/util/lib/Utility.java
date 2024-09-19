@@ -7,6 +7,8 @@ import frostpyro.frostapi.dataManage.stat.player.PlayerData;
 import frostpyro.frostapi.util.skill.trigger.NonPlayerTrigger;
 import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.interpret.base.TriggeredConfig;
+import frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.interpret.script.SkillThread;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityEvent;
@@ -29,10 +31,10 @@ public class Utility {
 
     public static void runSKill(TriggerData provider, ConfigurationSection section){
         if(provider instanceof PlayerTriggerData dt){
-
+            new SkillThread(new TriggeredConfig(dt, section)).run();
         }
         else if(provider instanceof NonPlayerTrigger dt){
-
+            new SkillThread(new TriggeredConfig(dt, section)).run();
         }
     }
 }

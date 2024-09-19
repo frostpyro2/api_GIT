@@ -39,6 +39,7 @@ public class PlayerTriggerData implements TriggerData{
         this.cast = cast;
     }
 
+
     public PlayerDataTmp getTmp() {
         return tmp;
     }
