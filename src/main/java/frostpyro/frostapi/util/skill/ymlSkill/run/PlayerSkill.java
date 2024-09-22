@@ -27,25 +27,25 @@ public class PlayerSkill implements Skill{
         if(configuration == null){
             return;
         }
-        firstFloor();
+        onCoolDown();
     }
 
-    private void firstFloor(){
+    private void onCoolDown(){
         if(data.getCast().isCoolDown((Configuration) configuration)){
             cancelDamage();
             return;
         }
-        secondFloor();
+        coolDownSet();
     }
 
-    private void secondFloor(){
+    private void coolDownSet(){
         double coolDown = .01;
         if(configuration.getDouble("coolDown") != 0) coolDown = configuration.getDouble("coolDown");
         data.getCast().setCoolDown((Configuration) configuration, coolDown);
-        thirdFloor();
+        run();
     }
 
-    private void thirdFloor(){
+    private void run(){
         Utility.runSKill(data, configuration);
     }
 
