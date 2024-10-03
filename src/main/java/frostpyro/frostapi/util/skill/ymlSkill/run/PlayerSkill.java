@@ -4,18 +4,22 @@ import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.api.damageManager.damageData.DamageType;
 import frostpyro.frostapi.util.lib.Utility;
 import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerSkill implements Skill{
 
-    private ConfigurationSection configuration;
+    private Configuration configuration;
     private final PlayerTriggerData data;
 
+    private final String skillName;
+
     public PlayerSkill(@NotNull String skillName, PlayerTriggerData data){
+        this.skillName = skillName;
         try{
-            configuration = FrostAPI.getPlugin().skillF.getConfigurationSection(skillName);
+            configuration = Skill.getSkill(skillName);
         }
         catch (Exception any){
             //do nothing
@@ -46,7 +50,7 @@ public class PlayerSkill implements Skill{
     }
 
     private void run(){
-        Utility.runSKill(data, configuration);
+        Utility.runSKill(data, skillName);
     }
 
     private void cancelDamage(){

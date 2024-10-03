@@ -1,9 +1,12 @@
 package frostpyro.frostapi.util.skill.casting;
 
 import frostpyro.frostapi.FrostAPI;
+import frostpyro.frostapi.dataManage.stat.data.PlayerFile;
+import frostpyro.frostapi.util.lib.Utility;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.container.SkillItemContainer;
 import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
+import frostpyro.frostapi.util.skill.ymlSkill.run.PlayerSkill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -33,12 +36,17 @@ public class SkillItem extends SkillManager {
     public void cast() {
         PlayerTriggerData data = data();
         Player player = (Player) data.getTmp().getEntity();
-        if(!skillItems.contains(player.getInventory().getItemInMainHand())) return;
-        Map<String, List<String>> getSkill = skillActivate.get(player.getInventory().getItemInMainHand());
-        List<String> files = getSkill.computeIfAbsent(data.getType().getType(), NONE -> null);
-        if(files == null) return;
-        for(String file: files){
-
+        FileConfiguration file = PlayerFile.getFile(player);
+        ConfigurationSection section = file.getConfigurationSection("skill");
+        if(section == null){
+            player.sendMessage("no skill section!");
+            return;
+        }
+        List<?> skills = section.getList(data.getType().getType());
+        if(skills == null) return;
+        for(Object skill : skills){
+            if(skill instanceof String str)
+                new PlayerSkill(str, data).activateSkill();
         }
     }
 

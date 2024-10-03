@@ -6,6 +6,7 @@ import frostpyro.frostapi.util.skill.trigger.PlayerTriggerData;
 import frostpyro.frostapi.util.skill.ymlSkill.run.PlayerSkill;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,19 @@ public class AnotherTrigger extends SkillManager {
 
     @Override
     public void cast() {
-        FileConfiguration playerFile = PlayerFile.getFile(data().getCast().getEntity());
-        ConfigurationSection skillSection = playerFile.getConfigurationSection("skill");
-        if(skillSection == null) return;
-        List<String> skillFile = skillSection.getStringList(data().getType().getType());
-        for(String skill : skillFile){
-
+        PlayerTriggerData data = data();
+        Player player = (Player) data.getTmp().getEntity();
+        FileConfiguration file = PlayerFile.getFile(player);
+        ConfigurationSection section = file.getConfigurationSection("skill");
+        if(section == null){
+            player.sendMessage("no skill section!");
+            return;
+        }
+        List<?> skills = section.getList(data.getType().getType());
+        if(skills == null) return;
+        for(Object skill : skills){
+            if(skill instanceof String str)
+                new PlayerSkill(str, data).activateSkill();
         }
     }
 }

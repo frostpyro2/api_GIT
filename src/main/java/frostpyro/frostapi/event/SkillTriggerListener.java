@@ -37,6 +37,7 @@ public class SkillTriggerListener implements Listener {
     @EventHandler
     //Non-player-entity attack trigger
     private void hit(AttackEvent event){
+        if(event.getAttack().getAttacker() == null) return;
         NonPlayerTrigger data = new NonPlayerTrigger(event, TriggerType.ATTACK);
         data.getCast().triggerSkill(data);
     }

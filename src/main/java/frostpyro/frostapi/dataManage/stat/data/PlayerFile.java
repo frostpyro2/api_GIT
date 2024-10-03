@@ -2,6 +2,8 @@ package frostpyro.frostapi.dataManage.stat.data;
 
 import frostpyro.frostapi.FrostAPI;
 import frostpyro.frostapi.dataManage.stat.player.PlayerDataTmp;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -62,6 +64,7 @@ public class PlayerFile {
             configuration.load(file);
         }
         catch (IOException | InvalidConfigurationException e){
+            Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "yml went wrong");
             return new YamlConfiguration();
         }
 

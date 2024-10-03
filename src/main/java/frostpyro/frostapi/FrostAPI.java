@@ -10,6 +10,7 @@ import frostpyro.frostapi.event.SkillTriggerListener;
 import frostpyro.frostapi.api.listeners.customEventListener.AttackEventListener;
 import frostpyro.frostapi.util.skill.SkillManager;
 import frostpyro.frostapi.util.skill.casting.SkillItem;
+import frostpyro.frostapi.util.skill.ymlSkill.run.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -18,6 +19,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -27,6 +29,14 @@ public final class FrostAPI extends JavaPlugin {
     private static FrostAPI plugin;
     private DamageManage damageManage;
     private final FakeEventManager fakeEventManager = new FakeEventManager();
+
+    @Override
+    public void onLoad() {
+
+        super.onLoad();
+
+    }
+
     @Override
     public void onEnable() {
         plugin = this;
@@ -47,6 +57,7 @@ public final class FrostAPI extends JavaPlugin {
         damageManage = new DamageManage();
 
         SkillItem.registerItem();
+        Skill.addSkillCache();
         try{
             this.getCommand("skill").setExecutor(new Command());
         }
@@ -62,6 +73,9 @@ public final class FrostAPI extends JavaPlugin {
         for(Player player : Bukkit.getOnlinePlayers()){
             PlayerDataTmp.flush(player.getUniqueId());
         }
+        Skill.flushAll();
+        Bukkit.getScheduler().cancelTasks(this);
+        HandlerList.unregisterAll(this);
         // Plugin shutdown logic
     }
     public static FrostAPI getPlugin(){

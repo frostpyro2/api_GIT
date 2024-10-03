@@ -1,6 +1,7 @@
 package frostpyro.frostapi.util.skill.ymlSkill.skillTriggers.ymlAction.interpret.base;
 
 import frostpyro.frostapi.util.skill.trigger.TriggerData;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class TriggeredConfig {
@@ -20,7 +21,7 @@ public class TriggeredConfig {
         return section;
     }
 
-    public void setSection(ConfigurationSection section){
+    public void setSection(Configuration section){
         this.section = section;
     }
 }
